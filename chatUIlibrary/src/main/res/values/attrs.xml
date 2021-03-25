@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="CustomTextView">
+        <attr name="customTextViewFont" format="string" />
+    </declare-styleable>
+
+    <declare-styleable name="CustomEditText">
+        <attr name="customEditTextFont" format="string" />
+    </declare-styleable>
+
+    <declare-styleable name="CustomButton">
+        <attr name="customButtonFont" format="string" />
+    </declare-styleable>
+
+    <declare-styleable name="CustomMaterialButton">
+        <attr name="customMaterialButtonFont" format="string" />
+        <attr name="buttonAllCornerFamily" format="integer" />
+        <attr name="buttonAllCornerSize" format="dimension|fraction" />
+        <attr name="buttonTopLeftCornerSize" format="dimension|fraction" />
+        <attr name="buttonTopRightCornerSize" format="dimension|fraction" />
+        <attr name="buttonBottomLeftCornerSize" format="dimension|fraction" />
+        <attr name="buttonBottomRightCornerSize" format="dimension|fraction" />
+    </declare-styleable>
+
+    <declare-styleable name="CustomMaterialCardView">
+        <attr name="allCornerFamily" format="integer" />
+        <attr name="allCornerSize" format="dimension|fraction" />
+        <attr name="topLeftCornerSize" format="dimension|fraction" />
+        <attr name="topRightCornerSize" format="dimension|fraction" />
+        <attr name="bottomLeftCornerSize" format="dimension|fraction" />
+        <attr name="bottomRightCornerSize" format="dimension|fraction" />
+    </declare-styleable>
+</resources>

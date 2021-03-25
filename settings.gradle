@@ -1,0 +1,3 @@
+include ':chatUIlibrary'
+include ':app'
+rootProject.name = "ChatUIFrameWork"

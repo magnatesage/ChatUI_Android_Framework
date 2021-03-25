@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="@dimen/_25sdp"
+    android:layout_marginEnd="@dimen/_25sdp"
+    android:background="@drawable/bg_rectangle_rounded_white"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_rectangle_top_rounded_blue">
+
+        <com.example.chatuilib.customviews.CustomTextView
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:padding="@dimen/_5sdp"
+            android:textColor="@color/colorWhite"
+            android:textSize="@dimen/_18ssp"
+            app:customTextViewFont="@string/Roboto_Medium"
+            tools:text="Title" />
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorWhite"
+        android:orientation="vertical"
+        android:visibility="visible">
+
+        <com.example.chatuilib.customviews.CustomTextView
+            android:id="@+id/tv_message"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingStart="@dimen/_5sdp"
+            android:paddingEnd="@dimen/_5sdp"
+            android:paddingTop="@dimen/_15sdp"
+            android:paddingBottom="@dimen/_15sdp"
+            android:textColor="@color/fontColorDark"
+            android:textSize="@dimen/_16ssp"
+            app:customTextViewFont="@string/Roboto_Regular"
+            tools:text="Message" />
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/colorBorder" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="2"
+        android:background="@drawable/bg_rectangle_bottom_rounded_white"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:visibility="visible">
+
+        <com.example.chatuilib.customviews.CustomTextView
+            android:id="@+id/tv_second_button"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:padding="@dimen/_5sdp"
+            android:textColor="@color/fontColorDark"
+            android:textSize="@dimen/_16ssp"
+            android:visibility="gone"
+            app:customTextViewFont="@string/Roboto_Medium"
+            tools:text="Second" />
+
+        <View
+            android:id="@+id/view"
+            android:layout_width="1dp"
+            android:layout_height="@dimen/_20sdp"
+            android:background="@color/colorBorder"
+            android:visibility="gone" />
+
+        <com.example.chatuilib.customviews.CustomTextView
+            android:id="@+id/tv_first_button"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:padding="@dimen/_5sdp"
+            android:textColor="@color/fontColorDark"
+            android:textSize="@dimen/_16ssp"
+            app:customTextViewFont="@string/Roboto_Medium"
+            tools:text="First" />
+
+    </LinearLayout>
+</LinearLayout>

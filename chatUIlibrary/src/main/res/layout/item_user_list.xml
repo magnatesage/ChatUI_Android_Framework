@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="@dimen/_10sdp"
+    android:layout_marginTop="@dimen/_10sdp"
+    android:layout_marginEnd="@dimen/_10sdp"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/ll_parent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/iv_user"
+            android:layout_width="@dimen/_40sdp"
+            android:layout_height="@dimen/_40sdp"
+            android:background="@color/colorWhite"
+            android:src="@drawable/ic_user"
+            app:shapeAppearanceOverlay="@style/CircleShapeImageView"
+            app:strokeColor="@android:color/black"
+            app:strokeWidth="1dp" />
+
+        <com.example.chatuilib.customviews.CustomTextView
+            android:id="@+id/tv_name"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:clickable="false"
+            android:enabled="false"
+            android:gravity="center_vertical"
+            android:text="Name"
+            android:textColor="@android:color/black"
+            android:textSize="@dimen/_16ssp"
+            app:customTextViewFont="@string/Roboto_Bold" />
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:background="@android:color/black" />
+
+</LinearLayout>

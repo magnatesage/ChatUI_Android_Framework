@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <com.example.chatuilib.customviews.CustomMaterialCardView
+        android:id="@+id/cv_chat_bubble"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_22sdp"
+        android:layout_marginTop="@dimen/_6sdp"
+        android:layout_marginEnd="@dimen/_50sdp"
+        app:cardPreventCornerOverlap="false">
+
+        <com.example.chatuilib.customviews.CustomTextView
+            android:id="@+id/tv_chat_bubble"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_margin="@dimen/_5sdp"
+            android:fadeScrollbars="false"
+            android:scrollbars="vertical"
+            android:text="@string/lorem_ipsum" />
+
+    </com.example.chatuilib.customviews.CustomMaterialCardView>
+
+    <RelativeLayout
+        android:layout_width="@dimen/_25sdp"
+        android:layout_height="@dimen/_25sdp"
+        android:layout_below="@id/cv_chat_bubble">
+
+        <com.example.chatuilib.customviews.CustomShapeableImageView
+            android:id="@+id/iv_circle_1"
+            android:layout_width="@dimen/_10sdp"
+            android:layout_height="@dimen/_10sdp"
+            android:layout_alignParentEnd="true"
+            android:background="@color/colorWhite"
+            android:src="@color/colorWhite"
+            app:shapeAppearanceOverlay="@style/CircleShapeImageView" />
+
+        <com.example.chatuilib.customviews.CustomShapeableImageView
+            android:id="@+id/iv_circle_2"
+            android:layout_width="@dimen/_6sdp"
+            android:layout_height="@dimen/_6sdp"
+            android:layout_below="@id/iv_circle_1"
+            android:layout_centerHorizontal="true"
+            android:background="@color/colorWhite"
+            android:src="@color/colorWhite"
+            app:shapeAppearanceOverlay="@style/CircleShapeImageView" />
+
+        <com.example.chatuilib.customviews.CustomShapeableImageView
+            android:id="@+id/iv_circle_3"
+            android:layout_width="@dimen/_3sdp"
+            android:layout_height="@dimen/_3sdp"
+            android:layout_below="@id/iv_circle_2"
+            android:layout_marginStart="@dimen/_6sdp"
+            android:layout_marginTop="@dimen/_1sdp"
+            android:background="@color/colorWhite"
+            android:src="@color/colorWhite"
+            app:shapeAppearanceOverlay="@style/CircleShapeImageView" />
+
+    </RelativeLayout>
+</RelativeLayout>

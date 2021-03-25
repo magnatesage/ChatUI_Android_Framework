@@ -1,0 +1,419 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include
+        android:id="@+id/title_layout"
+        layout="@layout/toolbar_layout" />
+
+    <LinearLayout
+        android:id="@+id/ll_chat_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorWhite"
+        android:orientation="vertical">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_chat_list"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <RelativeLayout
+            android:id="@+id/rl_button_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="@dimen/_6sdp"
+            android:visibility="gone">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_button_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rl_conversation_bar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/_6sdp"
+            android:paddingTop="@dimen/_2sdp"
+            android:paddingBottom="@dimen/_2sdp"
+            android:visibility="visible">
+
+            <RelativeLayout
+                android:id="@+id/rl_rounded_rect"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/_4sdp"
+                android:visibility="visible">
+
+                <LinearLayout
+                    android:id="@+id/ll_rounded_rect"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:layout_marginTop="@dimen/_6sdp"
+                    android:layout_marginBottom="@dimen/_6sdp"
+                    android:gravity="bottom"
+                    android:orientation="horizontal"
+                    android:paddingTop="@dimen/_10sdp"
+                    android:paddingBottom="@dimen/_10sdp">
+
+                    <com.example.chatuilib.customviews.CustomShapeableImageView
+                        android:id="@+id/iv_rounded_rect_flash"
+                        android:layout_width="0dp"
+                        android:layout_height="@dimen/_30sdp"
+                        android:layout_marginStart="@dimen/_10sdp"
+                        android:layout_marginEnd="@dimen/_2sdp"
+                        android:layout_weight="0.8"
+                        android:scaleType="centerCrop"
+                        app:shapeAppearanceOverlay="@style/RoundedCorners_5sdp" />
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/cv_rounded_rect"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_2sdp"
+                        android:layout_marginEnd="@dimen/_2sdp"
+                        android:layout_weight="6"
+                        app:cardCornerRadius="@dimen/_5sdp">
+
+                        <com.example.chatuilib.customviews.CustomEditText
+                            android:id="@+id/et_rounded_rect"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:background="@null"
+                            android:hint="Type message"
+                            android:minHeight="@dimen/_30sdp"
+                            android:paddingStart="@dimen/_10sdp"
+                            android:paddingTop="@dimen/_5sdp"
+                            android:paddingBottom="@dimen/_5sdp"
+                            android:textColor="@android:color/black"
+                            android:textSize="@dimen/_13ssp"
+                            app:customEditTextFont="@string/Roboto_Light"
+                            tools:ignore="RtlSymmetry" />
+
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <com.example.chatuilib.customviews.CustomShapeableImageView
+                        android:id="@+id/ib_rounded_rect_send"
+                        android:layout_width="0dp"
+                        android:layout_height="@dimen/_30sdp"
+                        android:layout_marginStart="@dimen/_2sdp"
+                        android:layout_marginEnd="@dimen/_10sdp"
+                        android:layout_weight="0.8"
+                        android:background="@drawable/chat_bubble_corner_rounded_rect"
+                        android:src="@drawable/send_small" />
+
+                </LinearLayout>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/rl_square_rect"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/rl_rounded_rect"
+                android:padding="@dimen/_4sdp"
+                android:visibility="gone">
+
+                <LinearLayout
+                    android:id="@+id/ll_square_rect"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:layout_marginTop="@dimen/_6sdp"
+                    android:layout_marginBottom="@dimen/_6sdp"
+                    android:gravity="bottom"
+                    android:orientation="horizontal"
+                    android:paddingTop="@dimen/_10sdp"
+                    android:paddingBottom="@dimen/_10sdp">
+
+                    <com.example.chatuilib.customviews.CustomShapeableImageView
+                        android:id="@+id/iv_square_rect_flash"
+                        android:layout_width="0dp"
+                        android:layout_height="@dimen/_30sdp"
+                        android:layout_marginStart="@dimen/_10sdp"
+                        android:layout_marginEnd="@dimen/_2sdp"
+                        android:layout_weight="1"
+                        android:src="@drawable/flash_small" />
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/cv_square_rect"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_2sdp"
+                        android:layout_marginEnd="@dimen/_2sdp"
+                        android:layout_weight="6"
+                        app:cardCornerRadius="0dp">
+
+                        <com.example.chatuilib.customviews.CustomEditText
+                            android:id="@+id/et_square_rect"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:background="@null"
+                            android:hint="Type message"
+                            android:minHeight="@dimen/_30sdp"
+                            android:paddingStart="@dimen/_10sdp"
+                            android:paddingTop="@dimen/_5sdp"
+                            android:paddingBottom="@dimen/_5sdp"
+                            android:textColor="@android:color/black"
+                            android:textSize="@dimen/_13ssp"
+                            app:customEditTextFont="@string/Roboto_Light"
+                            tools:ignore="RtlSymmetry" />
+
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <com.example.chatuilib.customviews.CustomShapeableImageView
+                        android:id="@+id/iv_square_rect_send"
+                        android:layout_width="0dp"
+                        android:layout_height="@dimen/_30sdp"
+                        android:layout_marginStart="@dimen/_2sdp"
+                        android:layout_marginEnd="@dimen/_10sdp"
+                        android:layout_weight="1"
+                        android:src="@drawable/send_small" />
+
+                </LinearLayout>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/rl_semi_rounded_rect"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/rl_square_rect"
+                android:padding="@dimen/_4sdp"
+                android:visibility="gone">
+
+                <com.example.chatuilib.customviews.CustomShapeableImageView
+                    android:id="@+id/iv_semi_rounded_rect_flash"
+                    android:layout_width="@dimen/_30sdp"
+                    android:layout_height="@dimen/_30sdp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginStart="@dimen/_10sdp"
+                    android:layout_marginEnd="@dimen/_10sdp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/flash_small"
+                    app:shapeAppearanceOverlay="@style/TopLeftBottomRightRoundedCorners_10sdp" />
+
+                <LinearLayout
+                    android:id="@+id/ll_semi_rounded_rect"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/iv_semi_rounded_rect_flash"
+                    android:layout_marginTop="@dimen/_6sdp"
+                    android:layout_marginBottom="@dimen/_6sdp"
+                    android:orientation="horizontal"
+                    android:paddingTop="@dimen/_4sdp"
+                    android:paddingBottom="@dimen/_10sdp">
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/cv_semi_rounded_rect"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="@dimen/_2sdp"
+                        android:layout_marginEnd="@dimen/_2sdp"
+                        app:cardCornerRadius="0dp">
+
+                        <LinearLayout
+                            android:id="@+id/ll_semi_rounded_rect_edit_text"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="bottom"
+                            android:orientation="horizontal">
+
+                            <com.example.chatuilib.customviews.CustomEditText
+                                android:id="@+id/et_semi_rounded_rect"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
+                                android:layout_weight="4"
+                                android:background="@null"
+                                android:hint="Type message"
+                                android:minHeight="@dimen/_30sdp"
+                                android:paddingStart="@dimen/_10sdp"
+                                android:paddingTop="@dimen/_5sdp"
+                                android:paddingBottom="@dimen/_5sdp"
+                                android:textColor="@android:color/black"
+                                android:textSize="@dimen/_13ssp"
+                                app:customEditTextFont="@string/Roboto_Light"
+                                tools:ignore="RtlSymmetry" />
+
+                            <com.example.chatuilib.customviews.CustomShapeableImageView
+                                android:id="@+id/iv_semi_rounded_rect_send"
+                                android:layout_width="0dp"
+                                android:layout_height="@dimen/_30sdp"
+                                android:layout_marginStart="@dimen/_2sdp"
+                                android:layout_marginEnd="@dimen/_4sdp"
+                                android:layout_weight="0.5"
+                                android:src="@drawable/send_small" />
+
+                        </LinearLayout>
+                    </com.google.android.material.card.MaterialCardView>
+                </LinearLayout>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/rl_oval_rect"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/rl_semi_rounded_rect"
+                android:padding="@dimen/_4sdp"
+                android:visibility="gone">
+
+                <LinearLayout
+                    android:id="@+id/ll_oval_rect"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_6sdp"
+                    android:layout_marginBottom="@dimen/_6sdp"
+                    android:gravity="bottom"
+                    android:orientation="horizontal"
+                    android:paddingTop="@dimen/_10sdp"
+                    android:paddingBottom="@dimen/_10sdp">
+
+                    <com.example.chatuilib.customviews.CustomShapeableImageView
+                        android:id="@+id/iv_oval_rect_flash"
+                        android:layout_width="@dimen/_30sdp"
+                        android:layout_height="@dimen/_30sdp"
+                        android:layout_marginStart="@dimen/_10sdp"
+                        android:layout_marginEnd="@dimen/_2sdp"
+                        android:background="@color/colorBorder"
+                        android:src="@drawable/flash_small"
+                        app:shapeAppearanceOverlay="@style/CircleShapeImageView" />
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/cv_oval_rect"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_2sdp"
+                        android:layout_marginEnd="@dimen/_10sdp"
+                        android:layout_weight="6"
+                        app:cardCornerRadius="@dimen/_15sdp"
+                        app:cardElevation="0dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="bottom"
+                            android:orientation="horizontal">
+
+                            <com.example.chatuilib.customviews.CustomEditText
+                                android:id="@+id/et_oval_rect"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
+                                android:layout_weight="4"
+                                android:background="@null"
+                                android:hint="Type message"
+                                android:minHeight="@dimen/_30sdp"
+                                android:paddingStart="@dimen/_10sdp"
+                                android:paddingTop="@dimen/_5sdp"
+                                android:paddingBottom="@dimen/_5sdp"
+                                android:textColor="@android:color/black"
+                                android:textSize="@dimen/_13ssp"
+                                app:customEditTextFont="@string/Roboto_Light"
+                                tools:ignore="RtlSymmetry" />
+
+                            <com.example.chatuilib.customviews.CustomShapeableImageView
+                                android:id="@+id/iv_oval_rect_send"
+                                android:layout_width="0dp"
+                                android:layout_height="@dimen/_30sdp"
+                                android:layout_marginStart="@dimen/_2sdp"
+                                android:layout_marginEnd="@dimen/_10sdp"
+                                android:layout_weight="0.5"
+                                android:src="@drawable/send_small" />
+
+                        </LinearLayout>
+                    </com.google.android.material.card.MaterialCardView>
+                </LinearLayout>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/rl_circle_rect"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/rl_oval_rect"
+                android:padding="@dimen/_4sdp"
+                android:visibility="gone">
+
+                <com.example.chatuilib.customviews.CustomShapeableImageView
+                    android:id="@+id/iv_circle_rect_flash"
+                    android:layout_width="@dimen/_30sdp"
+                    android:layout_height="@dimen/_30sdp"
+                    android:layout_alignParentEnd="false"
+                    android:layout_marginStart="@dimen/_10sdp"
+                    android:layout_marginEnd="@dimen/_10sdp"
+                    android:background="@color/colorBorder"
+                    android:src="@drawable/flash_small"
+                    app:shapeAppearanceOverlay="@style/CircleShapeImageView" />
+
+                <LinearLayout
+                    android:id="@+id/ll_circle_rect"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/iv_circle_rect_flash"
+                    android:layout_marginTop="@dimen/_6sdp"
+                    android:layout_marginBottom="@dimen/_6sdp"
+                    android:orientation="horizontal"
+                    android:paddingTop="@dimen/_4sdp"
+                    android:paddingBottom="@dimen/_10sdp">
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/cv_circle_rect"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_2sdp"
+                        android:layout_marginEnd="@dimen/_2sdp"
+                        app:cardCornerRadius="0dp">
+
+                        <LinearLayout
+                            android:id="@+id/ll_circle_rect_edit_text"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="bottom"
+                            android:orientation="horizontal">
+
+                            <com.example.chatuilib.customviews.CustomEditText
+                                android:id="@+id/et_circle_rect"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
+                                android:layout_weight="4"
+                                android:background="@null"
+                                android:hint="Type message"
+                                android:minHeight="@dimen/_30sdp"
+                                android:paddingStart="@dimen/_10sdp"
+                                android:paddingTop="@dimen/_5sdp"
+                                android:paddingBottom="@dimen/_5sdp"
+                                android:textColor="@android:color/black"
+                                android:textSize="@dimen/_13ssp"
+                                app:customEditTextFont="@string/Roboto_Light"
+                                tools:ignore="RtlSymmetry" />
+
+                            <com.example.chatuilib.customviews.CustomShapeableImageView
+                                android:id="@+id/iv_circle_rect_send"
+                                android:layout_width="0dp"
+                                android:layout_height="@dimen/_30sdp"
+                                android:layout_marginStart="@dimen/_2sdp"
+                                android:layout_marginEnd="@dimen/_4sdp"
+                                android:layout_weight="0.5"
+                                android:src="@drawable/send_small" />
+
+                        </LinearLayout>
+                    </com.google.android.material.card.MaterialCardView>
+                </LinearLayout>
+            </RelativeLayout>
+        </RelativeLayout>
+
+    </LinearLayout>
+    
+</LinearLayout>
