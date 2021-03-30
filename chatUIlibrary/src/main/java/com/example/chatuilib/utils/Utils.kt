@@ -6,7 +6,7 @@ import android.content.Context
 import android.content.res.ColorStateList
 import android.graphics.BitmapFactory
 import android.graphics.Color
-import android.graphics.drawable.Drawable
+import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.GradientDrawable
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
@@ -16,15 +16,10 @@ import android.os.Looper
 import android.util.TypedValue
 import android.view.*
 import android.view.inputmethod.InputMethodManager
-import android.widget.ImageView
 import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat
-import com.bumptech.glide.Glide
-import com.bumptech.glide.load.DataSource
-import com.bumptech.glide.load.engine.GlideException
-import com.bumptech.glide.request.RequestListener
-import com.bumptech.glide.request.target.Target
+import androidx.recyclerview.widget.RecyclerView
 import com.example.chatuilib.R
 import com.example.chatuilib.customviews.CustomShapeableImageView
 import com.google.android.material.button.MaterialButton
@@ -210,7 +205,7 @@ object Utils {
         if (view is MaterialButton) {
             view.strokeColor = ColorStateList.valueOf(strokeColor)
             view.strokeWidth = strokeWidth
-        } else if (view is MaterialCardView){
+        } else if (view is MaterialCardView) {
             view.strokeColor = strokeColor
             view.strokeWidth = strokeWidth
         }
@@ -277,7 +272,7 @@ object Utils {
         imageView: CustomShapeableImageView,
         placeHolder: Int
     ) {
-        Utils.showProgressBar(context)
+        showProgressBar(context)
         val executor = Executors.newSingleThreadExecutor()
         val handler = Handler(Looper.getMainLooper())
         imageView.setImageResource(placeHolder)
@@ -286,7 +281,28 @@ object Utils {
             val bmp = BitmapFactory.decodeStream(url.openConnection().getInputStream())
             handler.post {
                 imageView.setImageBitmap(bmp);
-                Utils.dismissProgressBar()
+                dismissProgressBar()
+            }
+        }
+    }
+
+    fun loadImageWithExecutor(
+        context: Activity,
+        imageUrl: String,
+        recyclerView: RecyclerView,
+        placeHolderId: Int
+    ) {
+        showProgressBar(context)
+        val executor = Executors.newSingleThreadExecutor()
+        val handler = Handler(Looper.getMainLooper())
+        recyclerView.background = ContextCompat.getDrawable(context,placeHolderId)
+        executor.execute {
+            val url = URL(imageUrl)
+            val bmp = BitmapFactory.decodeStream(url.openConnection().getInputStream())
+            val drawable = BitmapDrawable(context.resources, bmp)
+            handler.post {
+                recyclerView.background =  drawable
+                dismissProgressBar()
             }
         }
     }

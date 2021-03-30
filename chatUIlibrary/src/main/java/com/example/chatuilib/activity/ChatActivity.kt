@@ -9,9 +9,6 @@ import android.widget.RelativeLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
-import com.bumptech.glide.request.target.SimpleTarget
-import com.bumptech.glide.request.transition.Transition
 import com.example.chatuilib.R
 import com.example.chatuilib.adapter.ChatButtonListAdapter
 import com.example.chatuilib.adapter.ChatListAdapter
@@ -175,15 +172,13 @@ open class ChatActivity : AppCompatActivity() {
         if (chatBubbleConfigModel.chatBotBgType?.toLowerCase(Locale.ROOT) == AppConstants.COLOR) {
             binding.rvChatList.setBackgroundColor(getParsedColorValue(chatBubbleConfigModel.chatBotBgColor!!))
         } else {
-            Glide.with(this).load(chatBubbleConfigModel.chatBotBgImageUrl)
-                .into(object : SimpleTarget<Drawable>() {
-                    override fun onResourceReady(
-                        resource: Drawable,
-                        transition: Transition<in Drawable>?
-                    ) {
-                        binding.rvChatList.background = resource
-                    }
-                })
+            if (!chatBubbleConfigModel.chatBotBgImageUrl.isNullOrBlank()) {
+                loadImageWithExecutor(
+                    this,
+                    chatBubbleConfigModel.chatBotBgImageUrl,
+                    binding.rvChatList, R.drawable.upload
+                )
+            }
         }
     }
 
