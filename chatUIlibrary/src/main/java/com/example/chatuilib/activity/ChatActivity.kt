@@ -7,7 +7,6 @@ import android.os.Bundle
 import android.view.View
 import android.widget.RelativeLayout
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -19,11 +18,9 @@ import com.example.chatuilib.adapter.ChatListAdapter
 import com.example.chatuilib.customviews.CustomEditText
 import com.example.chatuilib.customviews.CustomShapeableImageView
 import com.example.chatuilib.databinding.ActivityChatBinding
+import com.example.chatuilib.listener.HTTPCallback
 import com.example.chatuilib.listener.OnButtonClickListener
-import com.example.chatuilib.model.ButtonConfigModel
-import com.example.chatuilib.model.ChatBubbleConfigModel
-import com.example.chatuilib.model.ConversationBarConfigModel
-import com.example.chatuilib.model.MessageModel
+import com.example.chatuilib.model.*
 import com.example.chatuilib.utils.*
 import com.example.chatuilib.utils.AppConstants.CIRCLE_RECT
 import com.example.chatuilib.utils.AppConstants.HORIZONTAL
@@ -39,12 +36,12 @@ import com.example.chatuilib.utils.Utils.getSizeInSDP
 import com.example.chatuilib.utils.Utils.loadImageWithGlide
 import com.example.chatuilib.utils.Utils.setBackgroundColorOfDrawable
 import com.example.chatuilib.utils.Utils.setStrokeColorAndWidth
-import com.example.chatuilib.viewModel.AppConfigViewModel
+import org.json.JSONObject
 import java.util.*
 import kotlin.collections.ArrayList
 
 open class ChatActivity : AppCompatActivity() {
-
+    private val TAG = ChatActivity::class.java.simpleName
     private var companyId = ""
     private var chatButtonListAdapter: ChatButtonListAdapter? = null
     private var chatListAdapter: ChatListAdapter? = null
@@ -53,10 +50,10 @@ open class ChatActivity : AppCompatActivity() {
     private var buttonTitleList: ArrayList<String> = ArrayList()
     private var organizationName = "ABC"
     private var editTextView: CustomEditText? = null
-    private var appConfigModel: AppConfigViewModel? = null
     private lateinit var sendButtonImageView: CustomShapeableImageView
     private lateinit var flashButtonImageView: CustomShapeableImageView
     lateinit var binding: ActivityChatBinding
+    private lateinit var httpRequest: HTTPRequest
 
     override fun setContentView(layoutResID: Int) {
 
@@ -76,34 +73,91 @@ open class ChatActivity : AppCompatActivity() {
         sendButtonImageView = binding.ivSquareRectSend
         flashButtonImageView = binding.ivSemiRoundedRectFlash
 
-        appConfigModel = ViewModelProvider(this).get(AppConfigViewModel::class.java)
-
         if (companyId.isNotBlank()) {
             val hashMap: HashMap<String, String> = HashMap()
             hashMap["application_id"] = companyId
-            appConfigModel?.getAppConfig(this, hashMap, true)
+            httpRequest = HTTPRequest(
+                AppConstants.BASE_URL + AppConstants.GET_APP_CONFIG,
+                hashMap,
+                object : HTTPCallback {
+                    override fun onSuccessResponse(output: String) {
+                        val jsonObject = JSONObject(output)
+                        try {
+                            val status = jsonObject.optString("status")
+                            val statusCode = jsonObject.optInt("status_code")
+                            val message = jsonObject.optString("message")
+                            val data = jsonObject.optJSONObject("data")
+                            if (status == "success" && statusCode == 200) {
+
+                                val chatBubbleObject = data?.optJSONObject("Chat Bubble")
+                                val chatBubbleConfigModel = ChatBubbleConfigModel(
+                                    chatBubbleObject?.optInt("chatBubbleStyle")!!,
+                                    chatBubbleObject.optString("chatBotBgType"),
+                                    chatBubbleObject.optString("chatBotBgColor"),
+                                    chatBubbleObject.optString("chatBotBgImageUrl"),
+                                    chatBubbleObject.optString("senderChatBubbleColor"),
+                                    chatBubbleObject.optString("senderTextColor"),
+                                    chatBubbleObject.optString("receiverChatBubbleColor"),
+                                    chatBubbleObject.optString("receiverTextColor"),
+                                    chatBubbleObject.optBoolean("cardBgDropShadow")
+                                )
+                                setBackgroundOfRecyclerView(chatBubbleConfigModel)
+
+                                val buttonObject = data.optJSONObject("Button")
+                                val buttonConfigModel = ButtonConfigModel(
+                                    buttonObject?.optInt("buttonShapeSelectedBg")!!,
+                                    buttonObject.optString("normalButtonColor"),
+                                    buttonObject.optString("normalTextColor"),
+                                    buttonObject.optString("normalBorderColor"),
+                                    buttonObject.optString("normalBorderSize"),
+                                    buttonObject.optString("clickedButtonColor"),
+                                    buttonObject.optString("clickedTextColor"),
+                                    buttonObject.optString("clickedBorderColor"),
+                                    buttonObject.optString("clickedBorderSize"),
+                                    buttonObject.optString("normalIconColor"),
+                                    buttonObject.optString("clickedIconColor"),
+                                    buttonObject.optString("iconSize"),
+                                    buttonObject.optString("buttonPlacementStyle"),
+                                    buttonObject.optBoolean("buttonBgDropShadow"),
+                                    buttonObject.optInt("buttonShapeSelectedId")
+                                )
+                                setUpButtonShapesRecyclerViewDisplay(buttonConfigModel)
+
+                                val conversationBarStylingObject =
+                                    data.optJSONObject("Conversation Bar Styling")
+                                val conversationBarConfigModel = ConversationBarConfigModel(
+                                    conversationBarStylingObject?.optString("conversationBarShapeSelected"),
+                                    conversationBarStylingObject?.optString("floatingIconUrl")
+                                )
+                                setUpConversationBarStylingDisplay(conversationBarConfigModel)
+
+                                val cardViewObject = data.optJSONObject("Card View")
+                                val cardViewConfigModel = CardViewConfigModel(
+                                    cardViewObject?.optInt("cardviewShapeSelectedId")!!,
+                                    cardViewObject.optBoolean("cardviewBgDropShadow"),
+                                    cardViewObject.optString("cardviewBorderColor"),
+                                    cardViewObject.optString("cardviewBorderSize"),
+                                    cardViewObject.optString("cardviewHeaderBgColor"),
+                                    cardViewObject.optString("cardviewHeaderTextColor"),
+                                    cardViewObject.optString("cardviewHeaderTextSize"),
+                                    cardViewObject.optString("cardviewFooterButtonBgColor"),
+                                    cardViewObject.optString("cardviewFooterButtonTextColor"),
+                                    cardViewObject.optString("cardviewFooterButtonTextSize")
+                                )
+                                setupChatRecyclerViewDisplay(chatBubbleConfigModel, cardViewConfigModel)
+                            } else {
+                                AppLog.e("Response :: ", jsonObject.toString())
+                            }
+                        } catch (e: Exception) {
+                            e.printStackTrace()
+                        }
+                    }
+
+                    override fun onErrorResponse(responseCode: Int, output: String) {
+                        AppLog.e(TAG, getString(R.string.error_api_msg))
+                    }
+                })
         }
-
-        appConfigModel?.getChatBubbleConfigModel()
-            ?.observe(this, {
-                if (it != null) {
-                    setBackgroundOfRecyclerView(it)
-                }
-            })
-
-        appConfigModel?.getButtonConfigModel()
-            ?.observe(this, {
-                if (it != null) {
-                    setUpButtonShapesRecyclerViewDisplay(it)
-                }
-            })
-
-        appConfigModel?.getConversationBarConfigModel()
-            ?.observe(this, {
-                if (it != null) {
-                    setUpConversationBarStylingDisplay(it)
-                }
-            })
 
         binding.rlConversationBar.visibility = View.VISIBLE
         binding.rlRoundedRect.visibility = View.VISIBLE
@@ -127,35 +181,30 @@ open class ChatActivity : AppCompatActivity() {
                     }
                 })
         }
-        setupChatRecyclerViewDisplay(chatBubbleConfigModel)
     }
 
     /**
      * This method is used to set adapter for RecyclerView & bind data to Recyclerview of chat
      */
-    private fun setupChatRecyclerViewDisplay(chatBubbleConfigModel: ChatBubbleConfigModel) {
+    private fun setupChatRecyclerViewDisplay(chatBubbleConfigModel: ChatBubbleConfigModel, cardViewConfigModel: CardViewConfigModel) {
         binding.rvChatList.apply {
             layoutManager = LinearLayoutManager(this@ChatActivity)
         }
 
-        appConfigModel?.getCardViewConfigModel()
-            ?.observe(this, {
-                if (it != null) {
-                    chatListAdapter =
-                        ChatListAdapter(this, chatList, chatBubbleConfigModel, it, loaderList)
-                    binding.rvChatList.adapter = chatListAdapter
+        if (cardViewConfigModel != null) {
+            chatListAdapter = ChatListAdapter(this, chatList, chatBubbleConfigModel, cardViewConfigModel, loaderList)
+            binding.rvChatList.adapter = chatListAdapter
 
-                    binding.rvChatList.addOnLayoutChangeListener { _, _, _, _, bottom, _, _, _, oldBottom ->
-                        if (bottom < oldBottom) {
-                            if (binding.rvChatList.adapter?.itemCount!! > 0) {
-                                binding.rvChatList.adapter?.itemCount?.minus(
-                                    1
-                                )?.let { it1 -> binding.rvChatList.smoothScrollToPosition(it1) }
-                            }
-                        }
+            binding.rvChatList.addOnLayoutChangeListener { _, _, _, _, bottom, _, _, _, oldBottom ->
+                if (bottom < oldBottom) {
+                    if (binding.rvChatList.adapter?.itemCount!! > 0) {
+                        binding.rvChatList.adapter?.itemCount?.minus(
+                            1
+                        )?.let { it1 -> binding.rvChatList.smoothScrollToPosition(it1) }
                     }
                 }
-            })
+            }
+        }
     }
 
     /**
@@ -355,7 +404,7 @@ open class ChatActivity : AppCompatActivity() {
     open inner class ChatScreen(baseUrl: String, userCompanyId: String) {
         init {
             companyId = userCompanyId
-            Endpoints.BASE_URL = baseUrl
+            AppConstants.BASE_URL = baseUrl
             init()
         }
 

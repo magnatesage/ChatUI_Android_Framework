@@ -29,7 +29,7 @@
         Your content will appear here, you can see it here for now as preview.
         Your content will appear here, you can see it here for now as preview.
         Your content will appear here, you can see it here for now as preview.</string>
-        <string name="error_api_msg">Something went wrong. Please try again.</string>
+    <string name="error_api_msg">Something went wrong. Please try again.</string>
     <string name="under_development">Under development</string>
     <string name="error_internet_connection">Please check your internet connection.</string>
     <string name="logout">Logout</string>

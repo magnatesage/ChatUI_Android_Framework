@@ -7,8 +7,8 @@ import com.example.chatuilib.activity.ChatActivity
 import com.example.chatuilib.customviews.CustomEditText
 import com.example.chatuilib.listener.OnButtonClickListener
 import com.example.chatuilib.model.MessageModel
+import com.example.chatuilib.utils.AppConstants
 import com.example.chatuilib.utils.AppLog
-import com.example.chatuilib.utils.Endpoints
 
 class MainActivity : ChatActivity() {
 
@@ -25,7 +25,7 @@ class MainActivity : ChatActivity() {
         buttonTitleList.add("2004")
 
 
-        val chatScreen = ChatScreen(userCompanyId = "2", baseUrl = Endpoints.BASE_URL)
+        val chatScreen = ChatScreen(userCompanyId = "2", baseUrl = AppConstants.BASE_URL)
         chatScreen.apply {
             setTitle(getString(R.string.hp))
             addMessage(

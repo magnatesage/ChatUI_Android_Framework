@@ -40,7 +40,7 @@ object Utils {
     fun showProgressBar(context: Context) {
         if (dialog != null && dialog!!.isShowing) {
             dialog!!.dismiss()
-            dialog == null
+            dialog = null
         }
         dialog = Dialog(context)
         dialog!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
@@ -56,7 +56,7 @@ object Utils {
     fun dismissProgressBar() {
         if (dialog != null && dialog!!.isShowing) {
             dialog!!.dismiss()
-            dialog == null
+            dialog = null
         }
     }
 

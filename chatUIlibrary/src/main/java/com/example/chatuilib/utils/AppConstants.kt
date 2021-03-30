@@ -5,34 +5,19 @@ package com.example.chatuilib.utils
  */
 object AppConstants {
     /**
+     * Endpoints
+     */
+    var BASE_URL = "http://app-demo.core-chat.magnatesage.net/api/"
+    val GET_APP_CONFIG = "get-app-config"
+
+
+    /**
      * Common constants
      */
-    const val TITLE = "title"
-    const val COMPANY_ID = "company_id"
-    const val ROOM_ID = "room_id"
-    const val ROOM_NAME = "room_name"
-    const val BROADCAST_MESSAGE = "broadcast_message"
-    const val BROADCAST_PUSH_MESSAGE = "broadcast_push_message"
-    const val IMAGE = "image"
     const val COLOR = "color"
     const val HORIZONTAL = "horizontal"
     const val VERTICAL = "vertical"
 
-    /**
-     * This Constants are used to parse API call response
-     */
-    const val API_TAG = "_API_TAG"
-    const val STATUS_CODE = "status_code"
-    const val STATUS = "status"
-    const val MESSAGE = "message"
-
-    /**
-     * This Constants are used for SplashScreen logo shape
-     */
-    const val SHAPE_NONE = "0"
-    const val SHAPE_SQUARE = "1"
-    const val SHAPE_ROUNDED_CORNER = "2"
-    const val SHAPE_CIRCLE = "3"
 
     /**
      * This Constants are used for ConversationBar shape
