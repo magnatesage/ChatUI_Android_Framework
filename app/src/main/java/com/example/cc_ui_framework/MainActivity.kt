@@ -95,6 +95,7 @@ class MainActivity : ChatActivity() {
             AppLog.e("getChatListAdapter:: ", getChatListAdapter().toString())
             AppLog.e("getSendButtonImageView:: ", getSendButtonImageView().toString())
             AppLog.e("getEditText:: ", getEditText().toString())
+            AppLog.e("getFlashButtonImageView:: ", getFlashButtonImageView().toString())
         }
     }
 }

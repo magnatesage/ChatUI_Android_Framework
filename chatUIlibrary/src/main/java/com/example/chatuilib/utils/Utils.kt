@@ -4,12 +4,15 @@ import android.app.Activity
 import android.app.Dialog
 import android.content.Context
 import android.content.res.ColorStateList
+import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.graphics.drawable.Drawable
 import android.graphics.drawable.GradientDrawable
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.os.Build
+import android.os.Handler
+import android.os.Looper
 import android.util.TypedValue
 import android.view.*
 import android.view.inputmethod.InputMethodManager
@@ -23,8 +26,11 @@ import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
 import com.example.chatuilib.R
+import com.example.chatuilib.customviews.CustomShapeableImageView
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.card.MaterialCardView
+import java.net.URL
+import java.util.concurrent.Executors
 
 /**
  * This class is used for global functions used in entire application
@@ -259,36 +265,30 @@ object Utils {
     }
 
     /**
-     * This method is used to load Image to ImageView using Glide Library
+     * This method is used to load Image to ImageView using Executor
+     * @param context Context of Activity or Fragment
      * @param imageUrl the string image url
-     * @param imageView the view to load image url
-     * @param placeholder the id of the resource to use as a placeholder and error holder
+     * @param imageView the view to load image
+     * @param placeHolder the id of the resource to use as a placeholder and error holder
      */
-    fun loadImageWithGlide(context: Activity, imageUrl: String, imageView: ImageView, placeholder: Int) {
-        showProgressBar(context)
-        Glide.with(context)
-            .load(imageUrl)
-            .placeholder(placeholder)
-            .error(placeholder)
-            .listener(object : RequestListener<Drawable> {
-                override fun onLoadFailed(
-                    e: GlideException?, model: Any?,
-                    target: Target<Drawable>?, isFirstResource: Boolean
-                ): Boolean {
-                    return false
-                }
-
-                override fun onResourceReady(
-                    resource: Drawable?, model: Any?,
-                    target: Target<Drawable>?, dataSource: DataSource?,
-                    isFirstResource: Boolean
-                ): Boolean {
-                    dismissProgressBar()
-                    return false
-                }
-
-            })
-            .into(imageView)
+    fun loadImageWithExecutor(
+        context: Activity,
+        imageUrl: String,
+        imageView: CustomShapeableImageView,
+        placeHolder: Int
+    ) {
+        Utils.showProgressBar(context)
+        val executor = Executors.newSingleThreadExecutor()
+        val handler = Handler(Looper.getMainLooper())
+        imageView.setImageResource(placeHolder)
+        executor.execute {
+            val url = URL(imageUrl)
+            val bmp = BitmapFactory.decodeStream(url.openConnection().getInputStream())
+            handler.post {
+                imageView.setImageBitmap(bmp);
+                Utils.dismissProgressBar()
+            }
+        }
     }
 
     /**

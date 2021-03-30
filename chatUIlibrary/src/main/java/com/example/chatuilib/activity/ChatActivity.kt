@@ -33,12 +33,13 @@ import com.example.chatuilib.utils.Utils.changeBg
 import com.example.chatuilib.utils.Utils.getDesiredColorFromXML
 import com.example.chatuilib.utils.Utils.getParsedColorValue
 import com.example.chatuilib.utils.Utils.getSizeInSDP
-import com.example.chatuilib.utils.Utils.loadImageWithGlide
+import com.example.chatuilib.utils.Utils.loadImageWithExecutor
 import com.example.chatuilib.utils.Utils.setBackgroundColorOfDrawable
 import com.example.chatuilib.utils.Utils.setStrokeColorAndWidth
 import org.json.JSONObject
 import java.util.*
 import kotlin.collections.ArrayList
+
 
 open class ChatActivity : AppCompatActivity() {
     private val TAG = ChatActivity::class.java.simpleName
@@ -144,7 +145,10 @@ open class ChatActivity : AppCompatActivity() {
                                     cardViewObject.optString("cardviewFooterButtonTextColor"),
                                     cardViewObject.optString("cardviewFooterButtonTextSize")
                                 )
-                                setupChatRecyclerViewDisplay(chatBubbleConfigModel, cardViewConfigModel)
+                                setupChatRecyclerViewDisplay(
+                                    chatBubbleConfigModel,
+                                    cardViewConfigModel
+                                )
                             } else {
                                 AppLog.e("Response :: ", jsonObject.toString())
                             }
@@ -186,13 +190,22 @@ open class ChatActivity : AppCompatActivity() {
     /**
      * This method is used to set adapter for RecyclerView & bind data to Recyclerview of chat
      */
-    private fun setupChatRecyclerViewDisplay(chatBubbleConfigModel: ChatBubbleConfigModel, cardViewConfigModel: CardViewConfigModel) {
+    private fun setupChatRecyclerViewDisplay(
+        chatBubbleConfigModel: ChatBubbleConfigModel,
+        cardViewConfigModel: CardViewConfigModel
+    ) {
         binding.rvChatList.apply {
             layoutManager = LinearLayoutManager(this@ChatActivity)
         }
 
         if (cardViewConfigModel != null) {
-            chatListAdapter = ChatListAdapter(this, chatList, chatBubbleConfigModel, cardViewConfigModel, loaderList)
+            chatListAdapter = ChatListAdapter(
+                this,
+                chatList,
+                chatBubbleConfigModel,
+                cardViewConfigModel,
+                loaderList
+            )
             binding.rvChatList.adapter = chatListAdapter
 
             binding.rvChatList.addOnLayoutChangeListener { _, _, _, _, bottom, _, _, _, oldBottom ->
@@ -281,10 +294,9 @@ open class ChatActivity : AppCompatActivity() {
                         R.dimen._1sdp
                     )
                 )
-                loadImageWithGlide(
+                loadImageWithExecutor(
                     this,
-                    floatingImageUrl!!,
-                    binding.ivRoundedRectFlash,
+                    floatingImageUrl!!, binding.ivRoundedRectFlash,
                     R.drawable.flash_small
                 )
                 setBackgroundColorOfDrawable(binding.ibRoundedRectSend, bgColor)
@@ -302,7 +314,7 @@ open class ChatActivity : AppCompatActivity() {
                         R.dimen._1sdp
                     )
                 )
-                loadImageWithGlide(
+                loadImageWithExecutor(
                     this,
                     floatingImageUrl!!,
                     binding.ivSquareRectFlash,
@@ -321,7 +333,7 @@ open class ChatActivity : AppCompatActivity() {
                     bgColor,
                     getSizeInSDP(this, R.dimen._1sdp)
                 )
-                loadImageWithGlide(
+                loadImageWithExecutor(
                     this,
                     floatingImageUrl!!,
                     binding.ivSemiRoundedRectFlash,
@@ -341,7 +353,7 @@ open class ChatActivity : AppCompatActivity() {
                         R.dimen._1sdp
                     )
                 )
-                loadImageWithGlide(
+                loadImageWithExecutor(
                     this,
                     floatingImageUrl!!,
                     binding.ivOvalRectFlash,
@@ -361,7 +373,7 @@ open class ChatActivity : AppCompatActivity() {
                         R.dimen._1sdp
                     )
                 )
-                loadImageWithGlide(
+                loadImageWithExecutor(
                     this,
                     floatingImageUrl!!,
                     binding.ivCircleRectFlash,
