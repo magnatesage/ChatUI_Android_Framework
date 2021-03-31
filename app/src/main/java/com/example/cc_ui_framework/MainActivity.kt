@@ -3,12 +3,14 @@ package com.example.cc_ui_framework
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.widget.Toast
 import com.example.chatuilib.activity.ChatActivity
 import com.example.chatuilib.customviews.CustomEditText
 import com.example.chatuilib.listener.OnButtonClickListener
 import com.example.chatuilib.model.MessageModel
 import com.example.chatuilib.utils.AppConstants
 import com.example.chatuilib.utils.AppLog
+import com.example.chatuilib.utils.Utils
 
 class MainActivity : ChatActivity() {
 
@@ -72,6 +74,10 @@ class MainActivity : ChatActivity() {
                     chatScreen.addButtonList(buttonTitleList)
                 }
             }
+        }
+
+        chatScreen.getBackButton().setOnClickListener {
+            Toast.makeText(this@MainActivity,"Back Button Clicked",Toast.LENGTH_SHORT).show()
         }
 
         chatScreen.setButtonListClickListener(object : OnButtonClickListener {

@@ -267,12 +267,10 @@ object Utils {
      * @param placeHolder the id of the resource to use as a placeholder and error holder
      */
     fun loadImageWithExecutor(
-        context: Activity,
         imageUrl: String,
         imageView: CustomShapeableImageView,
         placeHolder: Int
     ) {
-        showProgressBar(context)
         val executor = Executors.newSingleThreadExecutor()
         val handler = Handler(Looper.getMainLooper())
         imageView.setImageResource(placeHolder)
@@ -281,28 +279,24 @@ object Utils {
             val bmp = BitmapFactory.decodeStream(url.openConnection().getInputStream())
             handler.post {
                 imageView.setImageBitmap(bmp);
-                dismissProgressBar()
             }
         }
     }
 
     fun loadImageWithExecutor(
-        context: Activity,
         imageUrl: String,
         recyclerView: RecyclerView,
         placeHolderId: Int
     ) {
-        showProgressBar(context)
         val executor = Executors.newSingleThreadExecutor()
         val handler = Handler(Looper.getMainLooper())
-        recyclerView.background = ContextCompat.getDrawable(context,placeHolderId)
+        recyclerView.setBackgroundColor(Color.WHITE)
         executor.execute {
             val url = URL(imageUrl)
             val bmp = BitmapFactory.decodeStream(url.openConnection().getInputStream())
-            val drawable = BitmapDrawable(context.resources, bmp)
+            val drawable = BitmapDrawable(recyclerView.context.resources, bmp)
             handler.post {
                 recyclerView.background =  drawable
-                dismissProgressBar()
             }
         }
     }

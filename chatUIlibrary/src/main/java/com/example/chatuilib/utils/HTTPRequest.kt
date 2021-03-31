@@ -10,8 +10,11 @@ import java.net.URLEncoder
 import java.util.concurrent.Executors
 import javax.net.ssl.HttpsURLConnection
 
-
-class HTTPRequest (requestURL: String, params: HashMap<String, String>?, httpCallback: HTTPCallback?){
+class HTTPRequest(
+    requestURL: String,
+    params: HashMap<String, String>?,
+    httpCallback: HTTPCallback?
+) {
     private val executor = Executors.newSingleThreadExecutor()
     private val handler = Handler(Looper.getMainLooper())
 

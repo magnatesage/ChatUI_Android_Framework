@@ -3,26 +3,19 @@ package com.example.chatuilib.adapter
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.graphics.Color
-import android.graphics.drawable.Drawable
 import android.text.method.ScrollingMovementMethod
 import android.view.*
 import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.RelativeLayout
-import androidx.annotation.Nullable
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
-import androidx.vectordrawable.graphics.drawable.Animatable2Compat
-import com.bumptech.glide.Glide
-import com.bumptech.glide.load.DataSource
-import com.bumptech.glide.load.engine.GlideException
-import com.bumptech.glide.load.resource.gif.GifDrawable
-import com.bumptech.glide.request.RequestListener
-import com.bumptech.glide.request.target.Target
 import com.example.chatuilib.R
 import com.example.chatuilib.customviews.CustomMaterialButton
 import com.example.chatuilib.customviews.CustomMaterialCardView
 import com.example.chatuilib.customviews.CustomTextView
+import com.example.chatuilib.databinding.ItemChatListBinding
 import com.example.chatuilib.model.CardViewConfigModel
 import com.example.chatuilib.model.ChatBubbleConfigModel
 import com.example.chatuilib.model.MessageModel
@@ -51,8 +44,8 @@ class ChatListAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ChatListViewHolder {
         val inflater = LayoutInflater.from(parent.context)
-        val v = inflater.inflate(R.layout.item_chat_list, parent, false)
-        return ChatListViewHolder(v)
+        val binding = ItemChatListBinding.inflate(inflater, parent, false)
+        return ChatListViewHolder(binding)
     }
 
     override fun getItemCount(): Int = chatList.size
@@ -87,7 +80,8 @@ class ChatListAdapter(
         }
     }
 
-    class ChatListViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    class ChatListViewHolder(private val itemBinding: ItemChatListBinding) :
+        RecyclerView.ViewHolder(itemBinding.root) {
         lateinit var chatBubbleLayout: RelativeLayout
 
         @SuppressLint("ClickableViewAccessibility")
@@ -98,7 +92,7 @@ class ChatListAdapter(
             position: Int,
             loaderList: ArrayList<Int>
         ) {
-            val llParent: LinearLayout = itemView.findViewById(R.id.ll_parent)
+            val llParent: LinearLayout = itemBinding.llParent
             val chatListModel = chatList[position]
 
             llParent.removeAllViews()
@@ -380,38 +374,40 @@ class ChatListAdapter(
                         context, R.layout.loader_image_view,
                         llParent, RelativeLayout::class.java
                     )
-                    val imageView = loaderLayout!!.findViewById<ImageView>(R.id.iv_loader)
+//                    val imageView = loaderLayout!!.findViewById<ImageView>(R.id.iv_loader)
+//
+//                    Glide.with(context).asGif().load(R.raw.loading)
+//                        .listener(object : RequestListener<GifDrawable?> {
+//                            override fun onLoadFailed(
+//                                @Nullable e: GlideException?,
+//                                model: Any?,
+//                                target: com.bumptech.glide.request.target.Target<GifDrawable?>?,
+//                                isFirstResource: Boolean
+//                            ): Boolean {
+//                                return false
+//                            }
+//
+//                            override fun onResourceReady(
+//                                resource: GifDrawable?,
+//                                model: Any?,
+//                                target: com.bumptech.glide.request.target.Target<GifDrawable?>?,
+//                                dataSource: DataSource?,
+//                                isFirstResource: Boolean
+//                            ): Boolean {
+//                                resource?.setLoopCount(3)
+//                                resource?.registerAnimationCallback(object :
+//                                    Animatable2Compat.AnimationCallback() {
+//                                    override fun onAnimationEnd(drawable: Drawable) {
+//                                        llParent.removeAllViews()
+//                                        llParent.addView(chatBubbleLayout)
+//                                    }
+//                                })
+//                                return false
+//                            }
+//                        }).into(imageView)
 
-                    Glide.with(context).asGif().load(R.raw.loading)
-                        .listener(object : RequestListener<GifDrawable?> {
-                            override fun onLoadFailed(
-                                @Nullable e: GlideException?,
-                                model: Any?,
-                                target: Target<GifDrawable?>?,
-                                isFirstResource: Boolean
-                            ): Boolean {
-                                return false
-                            }
-
-                            override fun onResourceReady(
-                                resource: GifDrawable?,
-                                model: Any?,
-                                target: Target<GifDrawable?>?,
-                                dataSource: DataSource?,
-                                isFirstResource: Boolean
-                            ): Boolean {
-                                resource?.setLoopCount(3)
-                                resource?.registerAnimationCallback(object :
-                                    Animatable2Compat.AnimationCallback() {
-                                    override fun onAnimationEnd(drawable: Drawable) {
-                                        llParent.removeAllViews()
-                                        llParent.addView(chatBubbleLayout)
-                                    }
-                                })
-                                return false
-                            }
-                        }).into(imageView)
-
+                    llParent.removeAllViews()
+                    llParent.addView(chatBubbleLayout)
                     llParent.addView(loaderLayout)
                     loaderList.add(position)
                 } else {
@@ -425,11 +421,11 @@ class ChatListAdapter(
             messageModel: MessageModel,
             cardViewConfigModel: CardViewConfigModel
         ) {
-            val cardViewParent: CustomMaterialCardView = itemView.findViewById(R.id.cv_parent)
-            val header: CustomMaterialButton = itemView.findViewById(R.id.btn_header)
-            val content: CustomTextView = itemView.findViewById(R.id.tv_content)
-            val llContent: LinearLayout = itemView.findViewById(R.id.ll_content)
-            val footer: CustomMaterialButton = itemView.findViewById(R.id.btn_footer)
+            val cardViewParent: CustomMaterialCardView = itemBinding.cvParent
+            val header: CustomMaterialButton = itemBinding.btnHeader
+            val content: CustomTextView = itemBinding.tvContent
+            val llContent: LinearLayout = itemBinding.llContent
+            val footer: CustomMaterialButton = itemBinding.btnFooter
 
             cardViewParent.visibility = View.VISIBLE
 
@@ -471,7 +467,12 @@ class ChatListAdapter(
                     getSizeInSDP(context, R.dimen._5sdp), getSizeInSDP(context, R.dimen._5sdp)
                 )
                 imageView.layoutParams = params
-                imageView.setImageDrawable(context.getDrawable(R.drawable.attendance))
+                imageView.setImageDrawable(
+                    ContextCompat.getDrawable(
+                        context,
+                        R.drawable.attendance
+                    )
+                )
                 llContent.addView(imageView)
             } else {
                 content.visibility = View.VISIBLE

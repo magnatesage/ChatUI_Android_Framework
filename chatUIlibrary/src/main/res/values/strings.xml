@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">CoreChat Client App</string>
+    <string name="app_name">Chat UI Library</string>
 
     <!--========================================= Fonts =========================================-->
     <string name="Roboto_Black" translatable="false">Roboto-Black.ttf</string>
@@ -36,5 +36,6 @@
     <string name="logout_msg">Are you sure you want to Logout?</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
+    <string name="back_icon">T</string>
     <string name="circle_checkmark_icon" translatable="false">E</string>
 </resources>

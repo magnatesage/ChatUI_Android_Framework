@@ -2,7 +2,6 @@ package com.example.chatuilib.activity
 
 import android.annotation.SuppressLint
 import android.content.res.Configuration
-import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.view.View
 import android.widget.RelativeLayout
@@ -14,6 +13,7 @@ import com.example.chatuilib.adapter.ChatButtonListAdapter
 import com.example.chatuilib.adapter.ChatListAdapter
 import com.example.chatuilib.customviews.CustomEditText
 import com.example.chatuilib.customviews.CustomShapeableImageView
+import com.example.chatuilib.customviews.CustomTextView
 import com.example.chatuilib.databinding.ActivityChatBinding
 import com.example.chatuilib.listener.HTTPCallback
 import com.example.chatuilib.listener.OnButtonClickListener
@@ -174,7 +174,6 @@ open class ChatActivity : AppCompatActivity() {
         } else {
             if (!chatBubbleConfigModel.chatBotBgImageUrl.isNullOrBlank()) {
                 loadImageWithExecutor(
-                    this,
                     chatBubbleConfigModel.chatBotBgImageUrl,
                     binding.rvChatList, R.drawable.upload
                 )
@@ -290,7 +289,6 @@ open class ChatActivity : AppCompatActivity() {
                     )
                 )
                 loadImageWithExecutor(
-                    this,
                     floatingImageUrl!!, binding.ivRoundedRectFlash,
                     R.drawable.flash_small
                 )
@@ -310,7 +308,6 @@ open class ChatActivity : AppCompatActivity() {
                     )
                 )
                 loadImageWithExecutor(
-                    this,
                     floatingImageUrl!!,
                     binding.ivSquareRectFlash,
                     R.drawable.flash_small
@@ -329,7 +326,6 @@ open class ChatActivity : AppCompatActivity() {
                     getSizeInSDP(this, R.dimen._1sdp)
                 )
                 loadImageWithExecutor(
-                    this,
                     floatingImageUrl!!,
                     binding.ivSemiRoundedRectFlash,
                     R.drawable.flash_small
@@ -349,7 +345,6 @@ open class ChatActivity : AppCompatActivity() {
                     )
                 )
                 loadImageWithExecutor(
-                    this,
                     floatingImageUrl!!,
                     binding.ivOvalRectFlash,
                     R.drawable.flash_small
@@ -369,7 +364,6 @@ open class ChatActivity : AppCompatActivity() {
                     )
                 )
                 loadImageWithExecutor(
-                    this,
                     floatingImageUrl!!,
                     binding.ivCircleRectFlash,
                     R.drawable.flash_small
@@ -469,6 +463,13 @@ open class ChatActivity : AppCompatActivity() {
          */
         fun getSendButtonImageView(): CustomShapeableImageView {
             return sendButtonImageView
+        }
+
+        /**
+         * Returns CustomTextView back button icon instance
+         */
+        fun getBackButton(): CustomTextView{
+            return binding.titleLayout.tvBack
         }
 
         /**

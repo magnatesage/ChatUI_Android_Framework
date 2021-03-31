@@ -8,5 +8,6 @@ data class MessageModel(
     val data: String?,
     val isSender: Boolean,
     val isCardView: Boolean,
-    val cardViewHeader: String
+    val cardViewHeader: String,
+    var time: String = ""
 )
