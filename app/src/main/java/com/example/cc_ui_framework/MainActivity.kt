@@ -3,14 +3,14 @@ package com.example.cc_ui_framework
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.widget.Toast
+import android.util.Log
 import com.example.chatuilib.activity.ChatActivity
 import com.example.chatuilib.customviews.CustomEditText
 import com.example.chatuilib.listener.OnButtonClickListener
 import com.example.chatuilib.model.MessageModel
-import com.example.chatuilib.utils.AppConstants
-import com.example.chatuilib.utils.AppLog
-import com.example.chatuilib.utils.Utils
+import java.text.SimpleDateFormat
+import java.util.*
+import kotlin.collections.ArrayList
 
 class MainActivity : ChatActivity() {
 
@@ -26,21 +26,29 @@ class MainActivity : ChatActivity() {
         buttonTitleList.add("2003")
         buttonTitleList.add("2004")
 
+        val sdf = SimpleDateFormat("dd MMMM yyyy", Locale.ENGLISH)
+        val todayDate = sdf.format(Date())
+        val cal = Calendar.getInstance()
+        cal.add(Calendar.DATE, -1)
+        val yesterdayDate = sdf.format(cal.time)
 
-        val chatScreen = ChatScreen(userCompanyId = "2", baseUrl = AppConstants.BASE_URL)
+        val chatScreen = ChatScreen(
+            userCompanyId = "2",
+            userApiUrl = "http://app-demo.core-chat.magnatesage.net/api/get-app-config"
+        )
         chatScreen.apply {
             setTitle(getString(R.string.hp))
             addMessage(
                 MessageModel(
                     data = "Welcome to Chatbot", isSender = false,
-                    isCardView = false, cardViewHeader = ""
+                    isCardView = false, cardViewHeader = "", date = "31 March 2021"
                 )
             )
             Handler(Looper.getMainLooper()).postDelayed({
                 addMessage(
                     MessageModel(
                         data = "Please Enter your Org Name", isSender = false,
-                        isCardView = false, cardViewHeader = ""
+                        isCardView = false, cardViewHeader = "", date = yesterdayDate
                     )
                 )
             }, 3000)
@@ -51,12 +59,18 @@ class MainActivity : ChatActivity() {
         chatScreen.getSendButtonImageView().setOnClickListener {
             val etValue = et?.text.toString()
             et?.text?.clear()
+            var time = ""
             if (!etValue.isNullOrBlank()) {
+                time = if (etValue == "button") {
+                    todayDate
+                } else {
+                    yesterdayDate
+                }
                 chatScreen.addMessage(
                     MessageModel(
                         etValue, isSender = true,
                         isCardView = false,
-                        cardViewHeader = ""
+                        cardViewHeader = "", date = time
                     )
                 )
             }
@@ -65,7 +79,7 @@ class MainActivity : ChatActivity() {
                     chatScreen.addMessage(
                         MessageModel(
                             data = "Welcome $etValue", isSender = false,
-                            isCardView = false, cardViewHeader = ""
+                            isCardView = true, cardViewHeader = "", date = todayDate
                         )
                     )
                 }
@@ -76,32 +90,31 @@ class MainActivity : ChatActivity() {
             }
         }
 
-        chatScreen.getBackButton().setOnClickListener {
-            Toast.makeText(this@MainActivity,"Back Button Clicked",Toast.LENGTH_SHORT).show()
-        }
-
         chatScreen.setButtonListClickListener(object : OnButtonClickListener {
             override fun onButtonClick(buttonTitle: String) {
                 chatScreen.addMessage(
                     MessageModel(
                         data = buttonTitle, isSender = true,
-                        isCardView = false, cardViewHeader = ""
+                        isCardView = false, cardViewHeader = "", date = todayDate
                     )
                 )
             }
         })
 
+        chatScreen.getBackButton().setOnClickListener {
+            this.finish()
+        }
 
         chatScreen.apply {
-            AppLog.e("getCompanyId:: ", getCompanyId())
-            AppLog.e("getTitle:: ", getTitle())
-            AppLog.e("getChatListRecyclerview:: ", getChatListRecyclerview().toString())
-            AppLog.e("getButtonListRecyclerview:: ", getButtonListRecyclerview().toString())
-            AppLog.e("getChatButtonListAdapter:: ", getChatButtonListAdapter().toString())
-            AppLog.e("getChatListAdapter:: ", getChatListAdapter().toString())
-            AppLog.e("getSendButtonImageView:: ", getSendButtonImageView().toString())
-            AppLog.e("getEditText:: ", getEditText().toString())
-            AppLog.e("getFlashButtonImageView:: ", getFlashButtonImageView().toString())
+            Log.e("CompanyId:: ", getCompanyId())
+            Log.e("Title:: ", getTitle())
+            Log.e("ChatListRecyclerview:: ", getChatListRecyclerview().toString())
+            Log.e("ButtonListRecyview:: ", getButtonListRecyclerview().toString())
+            Log.e("ChatButtonListAdptr:: ", getChatButtonListAdapter().toString())
+            Log.e("getChatListAdapter:: ", getChatListAdapter().toString())
+            Log.e("SendButtonImageView:: ", getSendButtonImageView().toString())
+            Log.e("EditText:: ", getEditText().toString())
+            Log.e("FlashButtonImageView:: ", getFlashButtonImageView().toString())
         }
     }
 }

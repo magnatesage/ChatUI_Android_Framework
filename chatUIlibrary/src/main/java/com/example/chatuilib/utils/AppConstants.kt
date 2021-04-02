@@ -3,14 +3,7 @@ package com.example.chatuilib.utils
 /**
  * This class contains all the Constants of the app
  */
-object AppConstants {
-    /**
-     * Endpoints
-     */
-    var BASE_URL = "http://app-demo.core-chat.magnatesage.net/api/"
-    val GET_APP_CONFIG = "get-app-config"
-
-
+internal object AppConstants {
     /**
      * Common constants
      */

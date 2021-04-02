@@ -3,7 +3,7 @@ package com.example.chatuilib.model
 /**
  * This is data model class for header and tab bar configuration
  */
-data class HeaderTabBarModel(
+internal data class HeaderTabBarModel(
     val headerBgColor: String,
     val headerFontColor: String,
     val headerFontSize: String,

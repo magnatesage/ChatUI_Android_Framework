@@ -10,6 +10,7 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.RelativeLayout
 import androidx.core.content.ContextCompat
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.example.chatuilib.R
 import com.example.chatuilib.customviews.CustomMaterialButton
@@ -32,6 +33,8 @@ import com.example.chatuilib.utils.Utils.setElevationShadow
 import com.example.chatuilib.utils.Utils.setStrokeColorAndWidth
 import com.google.android.material.imageview.ShapeableImageView
 import com.google.android.material.shape.CornerFamily
+import java.text.SimpleDateFormat
+import java.util.*
 
 const val MAX_LINES = 10
 
@@ -63,7 +66,8 @@ class ChatListAdapter(
             if (cardViewConfigModel != null) {
                 holder.bindCardView(
                     context,
-                    chatList[position],
+                    chatList,
+                    position,
                     cardViewConfigModel
                 )
             }
@@ -82,7 +86,16 @@ class ChatListAdapter(
 
     class ChatListViewHolder(private val itemBinding: ItemChatListBinding) :
         RecyclerView.ViewHolder(itemBinding.root) {
+        private val llParent: LinearLayout = itemBinding.llParent
         lateinit var chatBubbleLayout: RelativeLayout
+        private val timeStampLayout: RelativeLayout = getLayoutFromInflater(
+            itemBinding.llParent.context, R.layout.item_date_time_header,
+            itemBinding.llParent, RelativeLayout::class.java
+        )!!
+        private val tvDateTimeStamp: CustomTextView =
+            timeStampLayout.findViewById(R.id.tv_date_time_stamp)
+        private val cvDateTimeStamp: CustomMaterialCardView =
+            timeStampLayout.findViewById(R.id.cv_date_time_stamp)
 
         @SuppressLint("ClickableViewAccessibility")
         fun bindMessageView(
@@ -92,10 +105,10 @@ class ChatListAdapter(
             position: Int,
             loaderList: ArrayList<Int>
         ) {
-            val llParent: LinearLayout = itemBinding.llParent
             val chatListModel = chatList[position]
-
             llParent.removeAllViews()
+
+            showDateSectionHeader(chatList, position)
 
             val chatBubbleShape = when (chatBubbleConfigModel.chatBubbleStyle) {
                 AppConstants.CHAT_BUBBLE_SLOPE -> R.layout.item_chat_bubble_image
@@ -253,7 +266,9 @@ class ChatListAdapter(
                 }
 
                 chatBubbleLayout.gravity = Gravity.END
-
+                if (timeStampLayout.isVisible) {
+                    llParent.addView(timeStampLayout)
+                }
                 llParent.addView(chatBubbleLayout)
             } else {
                 tvChatBubble.setTextColor(getParsedColorValue(chatBubbleConfigModel.receiverTextColor!!))
@@ -369,56 +384,46 @@ class ChatListAdapter(
 
                 chatBubbleLayout.gravity = Gravity.START
 
-                if (position == chatList.size - 1 && !loaderList.contains(position)) {
-                    val loaderLayout = getLayoutFromInflater(
-                        context, R.layout.loader_image_view,
-                        llParent, RelativeLayout::class.java
-                    )
-//                    val imageView = loaderLayout!!.findViewById<ImageView>(R.id.iv_loader)
-//
-//                    Glide.with(context).asGif().load(R.raw.loading)
-//                        .listener(object : RequestListener<GifDrawable?> {
-//                            override fun onLoadFailed(
-//                                @Nullable e: GlideException?,
-//                                model: Any?,
-//                                target: com.bumptech.glide.request.target.Target<GifDrawable?>?,
-//                                isFirstResource: Boolean
-//                            ): Boolean {
-//                                return false
-//                            }
-//
-//                            override fun onResourceReady(
-//                                resource: GifDrawable?,
-//                                model: Any?,
-//                                target: com.bumptech.glide.request.target.Target<GifDrawable?>?,
-//                                dataSource: DataSource?,
-//                                isFirstResource: Boolean
-//                            ): Boolean {
-//                                resource?.setLoopCount(3)
-//                                resource?.registerAnimationCallback(object :
-//                                    Animatable2Compat.AnimationCallback() {
-//                                    override fun onAnimationEnd(drawable: Drawable) {
-//                                        llParent.removeAllViews()
-//                                        llParent.addView(chatBubbleLayout)
-//                                    }
-//                                })
-//                                return false
-//                            }
-//                        }).into(imageView)
-
-                    llParent.removeAllViews()
-                    llParent.addView(chatBubbleLayout)
-                    llParent.addView(loaderLayout)
-                    loaderList.add(position)
-                } else {
-                    llParent.addView(chatBubbleLayout)
+                if (timeStampLayout.isVisible) {
+                    llParent.addView(timeStampLayout)
                 }
+                llParent.addView(chatBubbleLayout)
+            }
+        }
+
+        private fun showDateSectionHeader(chatList: ArrayList<MessageModel>, position: Int) {
+            val sdf = SimpleDateFormat("dd MMMM yyyy", Locale.ENGLISH)
+            val todayDate = sdf.format(Date())
+            val cal = Calendar.getInstance()
+            cal.add(Calendar.DATE, -1)
+            val yesterdayDate = sdf.format(cal.time)
+
+            if (position > 0) {
+                if (chatList[position].date.equals((chatList[position - 1].date), true)) {
+                    timeStampLayout.visibility = View.GONE
+                } else {
+                    timeStampLayout.visibility = View.VISIBLE
+                }
+            } else {
+                timeStampLayout.visibility = View.VISIBLE
+            }
+            if (timeStampLayout.isVisible) {
+                val dateTextValue: String = when (val date = chatList[position].date) {
+                    todayDate ->
+                        tvDateTimeStamp.context.getString(R.string.today)
+                    yesterdayDate ->
+                        tvDateTimeStamp.context.getString(R.string.yesterday)
+                    else ->
+                        date
+                }
+                tvDateTimeStamp.text = dateTextValue
             }
         }
 
         fun bindCardView(
             context: Activity,
-            messageModel: MessageModel,
+            chatList: ArrayList<MessageModel>,
+            position: Int,
             cardViewConfigModel: CardViewConfigModel
         ) {
             val cardViewParent: CustomMaterialCardView = itemBinding.cvParent
@@ -428,12 +433,18 @@ class ChatListAdapter(
             val footer: CustomMaterialButton = itemBinding.btnFooter
 
             cardViewParent.visibility = View.VISIBLE
+            val messageModel = chatList[position]
 
-            setCardElevation(
-                context,
-                cardViewParent,
-                cardViewConfigModel.cardviewBgDropShadow
-            )
+            showDateSectionHeader(chatList, position)
+
+            if (timeStampLayout.isVisible) {
+                if (timeStampLayout.parent != null) {
+                    (timeStampLayout.parent as ViewGroup).removeView(timeStampLayout)
+                }
+                llParent.addView(timeStampLayout, 0)
+            }
+
+            setCardElevation(context, cardViewParent, cardViewConfigModel.cardviewBgDropShadow)
 
             setStrokeColorAndWidth(
                 cardViewParent, getParsedColorValue(cardViewConfigModel.cardviewBorderColor!!),

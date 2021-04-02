@@ -3,7 +3,7 @@ package com.example.chatuilib.model
 /**
  * This is data model class for button configuration
  */
-data class ButtonConfigModel (
+internal data class ButtonConfigModel (
     val buttonShapeSelectedBg: Int,
 
     val normalButtonColor: String?,

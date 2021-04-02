@@ -37,5 +37,7 @@
     <string name="yes">Yes</string>
     <string name="no">No</string>
     <string name="back_icon">T</string>
+    <string name="today">Today</string>
+    <string name="yesterday">Yesterday</string>
     <string name="circle_checkmark_icon" translatable="false">E</string>
 </resources>

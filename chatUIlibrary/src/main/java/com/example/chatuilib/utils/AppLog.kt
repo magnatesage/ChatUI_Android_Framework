@@ -6,7 +6,7 @@ import com.example.chatuilib.BuildConfig
 /**
  * This Log class is used to print logs in debug build only
  */
-object AppLog {
+internal object AppLog {
     private val TAG = AppLog::class.java.simpleName
     private val DO_LOG: Boolean = BuildConfig.DEBUG
 

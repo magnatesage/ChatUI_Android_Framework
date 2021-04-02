@@ -15,7 +15,7 @@ import com.example.chatuilib.R
 /**
  * This AlertDialogView class is used to show alert
  */
-object AlertDialogView {
+internal object AlertDialogView {
     const val FIRST_BUTTON = 1
     const val SECOND_BUTTON = 2
     var dialog: Dialog? = null

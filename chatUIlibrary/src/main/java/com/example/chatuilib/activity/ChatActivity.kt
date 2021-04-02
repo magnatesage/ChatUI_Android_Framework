@@ -37,10 +37,10 @@ import org.json.JSONObject
 import java.util.*
 import kotlin.collections.ArrayList
 
-
 open class ChatActivity : AppCompatActivity() {
     private val TAG = ChatActivity::class.java.simpleName
     private var companyId = ""
+    private var apiUrl = ""
     private var chatButtonListAdapter: ChatButtonListAdapter? = null
     private var chatListAdapter: ChatListAdapter? = null
     private var chatList: ArrayList<MessageModel> = ArrayList()
@@ -74,9 +74,7 @@ open class ChatActivity : AppCompatActivity() {
         if (companyId.isNotBlank()) {
             val hashMap: HashMap<String, String> = HashMap()
             hashMap["application_id"] = companyId
-            httpRequest = HTTPRequest(
-                AppConstants.BASE_URL + AppConstants.GET_APP_CONFIG,
-                hashMap,
+            httpRequest = HTTPRequest(apiUrl, hashMap,
                 object : HTTPCallback {
                     override fun onSuccessResponse(output: String) {
                         val jsonObject = JSONObject(output)
@@ -402,10 +400,10 @@ open class ChatActivity : AppCompatActivity() {
         chatListAdapter?.notifyDataSetChanged()
     }
 
-    open inner class ChatScreen(baseUrl: String, userCompanyId: String) {
+    open inner class ChatScreen(userApiUrl: String, userCompanyId: String) {
         init {
             companyId = userCompanyId
-            AppConstants.BASE_URL = baseUrl
+            apiUrl = userApiUrl
             init()
         }
 
@@ -468,7 +466,7 @@ open class ChatActivity : AppCompatActivity() {
         /**
          * Returns CustomTextView back button icon instance
          */
-        fun getBackButton(): CustomTextView{
+        fun getBackButton(): CustomTextView {
             return binding.titleLayout.tvBack
         }
 

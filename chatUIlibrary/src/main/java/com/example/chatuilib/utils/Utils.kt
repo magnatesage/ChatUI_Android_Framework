@@ -30,7 +30,7 @@ import java.util.concurrent.Executors
 /**
  * This class is used for global functions used in entire application
  */
-object Utils {
+internal object Utils {
 
     private var dialog: Dialog? = null
 
@@ -90,7 +90,7 @@ object Utils {
      * @return T
      */
     fun <T> getLayoutFromInflater(
-        context: Activity,
+        context: Context,
         shape: Int,
         parent: ViewGroup,
         aClass: Class<T>
@@ -296,7 +296,7 @@ object Utils {
             val bmp = BitmapFactory.decodeStream(url.openConnection().getInputStream())
             val drawable = BitmapDrawable(recyclerView.context.resources, bmp)
             handler.post {
-                recyclerView.background =  drawable
+                recyclerView.background = drawable
             }
         }
     }

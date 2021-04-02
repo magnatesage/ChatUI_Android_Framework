@@ -10,7 +10,7 @@ import java.net.URLEncoder
 import java.util.concurrent.Executors
 import javax.net.ssl.HttpsURLConnection
 
-class HTTPRequest(
+internal class HTTPRequest(
     requestURL: String,
     params: HashMap<String, String>?,
     httpCallback: HTTPCallback?

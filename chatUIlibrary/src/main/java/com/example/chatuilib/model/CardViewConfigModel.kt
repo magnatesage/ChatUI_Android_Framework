@@ -3,7 +3,7 @@ package com.example.chatuilib.model
 /**
  * This is data model class for cardview configuration
  */
-data class CardViewConfigModel(
+internal data class CardViewConfigModel(
     val cardviewShapeSelectedId : Int,
     val cardviewBgDropShadow: Boolean,
     val cardviewBorderColor: String?,

@@ -9,5 +9,5 @@ data class MessageModel(
     val isSender: Boolean,
     val isCardView: Boolean,
     val cardViewHeader: String,
-    var time: String = ""
+    val date: String
 )
