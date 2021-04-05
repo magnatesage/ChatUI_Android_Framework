@@ -19,7 +19,7 @@ class MainActivity : ChatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_chat)
+        setContentView(R.layout.activity_main)
 
         buttonTitleList.add("2001")
         buttonTitleList.add("2002")

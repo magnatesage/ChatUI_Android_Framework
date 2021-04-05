@@ -3,7 +3,7 @@ package com.example.chatuilib.model
 /**
  * This is data model class for chat bubble configuration
  */
-internal data class ChatBubbleConfigModel (
+data class ChatBubbleConfigModel (
     val chatBubbleStyle : Int,
     val chatBotBgType: String?,
     val chatBotBgColor: String?,

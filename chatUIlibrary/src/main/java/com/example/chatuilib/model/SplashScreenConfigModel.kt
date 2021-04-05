@@ -3,7 +3,7 @@ package com.example.chatuilib.model
 /**
  * This is data model class for splash screen configuration
  */
-internal data class SplashScreenConfigModel(
+data class SplashScreenConfigModel(
     val orgName: String?,
     val orgNameFontType: String?,
     val orgNameFontSize: String?,
