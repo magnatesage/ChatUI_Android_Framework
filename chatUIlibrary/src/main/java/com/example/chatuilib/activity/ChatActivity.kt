@@ -1,9 +1,11 @@
 package com.example.chatuilib.activity
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.content.res.Configuration
 import android.os.Bundle
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.RelativeLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -14,7 +16,6 @@ import com.example.chatuilib.adapter.ChatListAdapter
 import com.example.chatuilib.customviews.CustomEditText
 import com.example.chatuilib.customviews.CustomShapeableImageView
 import com.example.chatuilib.customviews.CustomTextView
-import com.example.chatuilib.databinding.ActivityChatBinding
 import com.example.chatuilib.listener.HTTPCallback
 import com.example.chatuilib.listener.OnButtonClickListener
 import com.example.chatuilib.model.*
@@ -33,6 +34,7 @@ import com.example.chatuilib.utils.Utils.getSizeInSDP
 import com.example.chatuilib.utils.Utils.loadImageWithExecutor
 import com.example.chatuilib.utils.Utils.setBackgroundColorOfDrawable
 import com.example.chatuilib.utils.Utils.setStrokeColorAndWidth
+import com.google.android.material.card.MaterialCardView
 import org.json.JSONObject
 import java.util.*
 import kotlin.collections.ArrayList
@@ -48,28 +50,89 @@ open class ChatActivity : AppCompatActivity() {
     private var buttonTitleList: ArrayList<String> = ArrayList()
     private var organizationName = "ABC"
     private var editTextView: CustomEditText? = null
-    private lateinit var sendButtonImageView: CustomShapeableImageView
-    private lateinit var flashButtonImageView: CustomShapeableImageView
-    lateinit var binding: ActivityChatBinding
     private lateinit var httpRequest: HTTPRequest
+    private lateinit var etRoundedRect: CustomEditText
+    private lateinit var etSquareRect: CustomEditText
+    private lateinit var etSemiRoundedRect: CustomEditText
+    private lateinit var etOvalRect: CustomEditText
+    private lateinit var etCircleRect: CustomEditText
+    lateinit var rlConversationBar: RelativeLayout
+    private lateinit var rlRoundedRect: RelativeLayout
+    lateinit var rlButtonList: RelativeLayout
+    private lateinit var rlSquareRect: RelativeLayout
+    private lateinit var rlSemiRoundedRect: RelativeLayout
+    private lateinit var rlOvalRect: RelativeLayout
+    private lateinit var rlCircleRect: RelativeLayout
+    private lateinit var rvChatList: RecyclerView
+    private lateinit var rvButtonList: RecyclerView
+    private lateinit var cvRoundedRect: MaterialCardView
+    private lateinit var cvSquareRect: MaterialCardView
+    private lateinit var cvSemiRoundedRect: MaterialCardView
+    private lateinit var cvOvalRect: MaterialCardView
+    private lateinit var cvCircleRect: MaterialCardView
+    private lateinit var flashButtonImageView: CustomShapeableImageView
+    private lateinit var sendButtonImageView: CustomShapeableImageView
+    private lateinit var ivSquareRectFlash: CustomShapeableImageView
+    private lateinit var ivSquareRectSend: CustomShapeableImageView
+    private lateinit var ivSemiRoundedRectFlash: CustomShapeableImageView
+    private lateinit var ivSemiRoundedRectSend: CustomShapeableImageView
+    private lateinit var ivRoundedRectFlash: CustomShapeableImageView
+    private lateinit var ivRoundedRectSend: CustomShapeableImageView
+    private lateinit var ivOvalRectFlash: CustomShapeableImageView
+    private lateinit var ivOvalRectSend: CustomShapeableImageView
+    private lateinit var ivCircleRectFlash: CustomShapeableImageView
+    private lateinit var ivCircleRectSend: CustomShapeableImageView
+    private lateinit var titleLayout: View
+    private lateinit var tvBack: CustomTextView
+    private lateinit var tvTitle: CustomTextView
 
-    override fun setContentView(layoutResID: Int) {
-
-    }
+    override fun setContentView(layoutResID: Int) {}
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityChatBinding.inflate(layoutInflater)
-        val view = binding.root
-        super.setContentView(view)
+        super.setContentView(R.layout.activity_chat)
     }
 
     private fun init() {
         chatListAdapter = ChatListAdapter(this, chatList, null, null, loaderList)
         chatButtonListAdapter = ChatButtonListAdapter(this, null, buttonTitleList)
-        editTextView = binding.etRoundedRect
-        sendButtonImageView = binding.ivSquareRectSend
-        flashButtonImageView = binding.ivSemiRoundedRectFlash
+
+        titleLayout = findViewById(R.id.title_layout)
+        tvBack = titleLayout.findViewById(R.id.tv_back)
+        tvTitle = titleLayout.findViewById(R.id.tv_title)
+        etRoundedRect = findViewById(R.id.et_rounded_rect)
+        etSquareRect = findViewById(R.id.et_square_rect)
+        etSemiRoundedRect = findViewById(R.id.et_semi_rounded_rect)
+        etOvalRect = findViewById(R.id.et_oval_rect)
+        etCircleRect = findViewById(R.id.et_circle_rect)
+        rlConversationBar = findViewById(R.id.rl_conversation_bar)
+        rlRoundedRect = findViewById(R.id.rl_rounded_rect)
+        rlButtonList = findViewById(R.id.rl_button_list)
+        rlSquareRect = findViewById(R.id.rl_square_rect)
+        rlSemiRoundedRect = findViewById(R.id.rl_semi_rounded_rect)
+        rlOvalRect = findViewById(R.id.rl_oval_rect)
+        rlCircleRect = findViewById(R.id.rl_circle_rect)
+        rvChatList = findViewById(R.id.rv_chat_list)
+        rvButtonList = findViewById(R.id.rv_button_list)
+        cvRoundedRect = findViewById(R.id.cv_rounded_rect)
+        cvSquareRect = findViewById(R.id.cv_square_rect)
+        cvSemiRoundedRect = findViewById(R.id.cv_semi_rounded_rect)
+        cvOvalRect = findViewById(R.id.cv_oval_rect)
+        cvCircleRect = findViewById(R.id.cv_circle_rect)
+        ivRoundedRectFlash = findViewById(R.id.iv_rounded_rect_flash)
+        ivRoundedRectSend = findViewById(R.id.iv_rounded_rect_send)
+        ivSquareRectFlash = findViewById(R.id.iv_square_rect_flash)
+        ivSquareRectSend = findViewById(R.id.iv_square_rect_send)
+        ivSemiRoundedRectFlash = findViewById(R.id.iv_semi_rounded_rect_flash)
+        ivSemiRoundedRectSend = findViewById(R.id.iv_semi_rounded_rect_send)
+        ivOvalRectFlash = findViewById(R.id.iv_oval_rect_flash)
+        ivOvalRectSend = findViewById(R.id.iv_oval_rect_send)
+        ivCircleRectFlash = findViewById(R.id.iv_circle_rect_flash)
+        ivCircleRectSend = findViewById(R.id.iv_circle_rect_send)
+
+        sendButtonImageView = ivSquareRectSend
+        flashButtonImageView = ivSemiRoundedRectFlash
+        editTextView = etRoundedRect
 
         if (companyId.isNotBlank()) {
             val hashMap: HashMap<String, String> = HashMap()
@@ -158,8 +221,8 @@ open class ChatActivity : AppCompatActivity() {
                 })
         }
 
-        binding.rlConversationBar.visibility = View.VISIBLE
-        binding.rlRoundedRect.visibility = View.VISIBLE
+        rlConversationBar.visibility = View.VISIBLE
+        rlRoundedRect.visibility = View.VISIBLE
     }
 
     /**
@@ -168,12 +231,12 @@ open class ChatActivity : AppCompatActivity() {
     @SuppressLint("CheckResult")
     private fun setBackgroundOfRecyclerView(chatBubbleConfigModel: ChatBubbleConfigModel) {
         if (chatBubbleConfigModel.chatBotBgType?.toLowerCase(Locale.ROOT) == AppConstants.COLOR) {
-            binding.rvChatList.setBackgroundColor(getParsedColorValue(chatBubbleConfigModel.chatBotBgColor!!))
+            rvChatList.setBackgroundColor(getParsedColorValue(chatBubbleConfigModel.chatBotBgColor!!))
         } else {
             if (!chatBubbleConfigModel.chatBotBgImageUrl.isNullOrBlank()) {
                 loadImageWithExecutor(
                     chatBubbleConfigModel.chatBotBgImageUrl,
-                    binding.rvChatList, R.drawable.upload
+                    rvChatList, R.drawable.upload
                 )
             }
         }
@@ -186,7 +249,7 @@ open class ChatActivity : AppCompatActivity() {
         chatBubbleConfigModel: ChatBubbleConfigModel,
         cardViewConfigModel: CardViewConfigModel
     ) {
-        binding.rvChatList.apply {
+        rvChatList.apply {
             layoutManager = LinearLayoutManager(this@ChatActivity)
         }
 
@@ -198,14 +261,14 @@ open class ChatActivity : AppCompatActivity() {
                 cardViewConfigModel,
                 loaderList
             )
-            binding.rvChatList.adapter = chatListAdapter
+            rvChatList.adapter = chatListAdapter
 
-            binding.rvChatList.addOnLayoutChangeListener { _, _, _, _, bottom, _, _, _, oldBottom ->
+            rvChatList.addOnLayoutChangeListener { _, _, _, _, bottom, _, _, _, oldBottom ->
                 if (bottom < oldBottom) {
-                    if (binding.rvChatList.adapter?.itemCount!! > 0) {
-                        binding.rvChatList.adapter?.itemCount?.minus(
+                    if (rvChatList.adapter?.itemCount!! > 0) {
+                        rvChatList.adapter?.itemCount?.minus(
                             1
-                        )?.let { it1 -> binding.rvChatList.smoothScrollToPosition(it1) }
+                        )?.let { it1 -> rvChatList.smoothScrollToPosition(it1) }
                     }
                 }
             }
@@ -216,10 +279,10 @@ open class ChatActivity : AppCompatActivity() {
      * This method is used to set adapter for RecyclerView & bind data to Recyclerview of Button
      */
     private fun setUpButtonShapesRecyclerViewDisplay(buttonConfigModel: ButtonConfigModel) {
-        binding.rlConversationBar.visibility = View.GONE
-        binding.rlButtonList.visibility = View.VISIBLE
+        rlConversationBar.visibility = View.GONE
+        rlButtonList.visibility = View.VISIBLE
         changeBg(
-            binding.rlButtonList,
+            rlButtonList,
             getDesiredColorFromXML(this, R.color.colorWhite)
         )
 
@@ -231,7 +294,7 @@ open class ChatActivity : AppCompatActivity() {
 
         val onButtonClickListener = chatButtonListAdapter?.onButtonClickListener
         chatButtonListAdapter = ChatButtonListAdapter(this, buttonConfigModel, buttonTitleList)
-        binding.rvButtonList.adapter = chatButtonListAdapter
+        rvButtonList.adapter = chatButtonListAdapter
         if (onButtonClickListener != null) {
             chatButtonListAdapter?.setButtonListClickListener(onButtonClickListener)
         }
@@ -244,7 +307,7 @@ open class ChatActivity : AppCompatActivity() {
     private fun setButtonListOrientation(orientation: String) {
         when (orientation) {
             HORIZONTAL -> {
-                binding.rvButtonList.apply {
+                rvButtonList.apply {
                     layoutManager =
                         LinearLayoutManager(
                             this@ChatActivity,
@@ -259,8 +322,8 @@ open class ChatActivity : AppCompatActivity() {
                     RelativeLayout.LayoutParams.MATCH_PARENT,
                     getSizeInSDP(this, R.dimen._150sdp)
                 )
-                binding.rvButtonList.layoutParams = layoutParams
-                binding.rvButtonList.apply {
+                rvButtonList.layoutParams = layoutParams
+                rvButtonList.apply {
                     layoutManager = LinearLayoutManager(this@ChatActivity)
                 }
             }
@@ -273,103 +336,103 @@ open class ChatActivity : AppCompatActivity() {
     private fun setUpConversationBarStylingDisplay(conversationBarConfigModel: ConversationBarConfigModel) {
         val bgColor = getDesiredColorFromXML(this, R.color.colorBorder)
         val floatingImageUrl = conversationBarConfigModel.floatingIconUrl
-        binding.rlConversationBar.visibility = View.VISIBLE
+        rlConversationBar.visibility = View.VISIBLE
         val onClickListener = sendButtonImageView.clickListener
         val flashBtnOnClickListener = flashButtonImageView.clickListener
 
         when (conversationBarConfigModel.conversationBarShapeSelected) {
             ROUNDED_CORNERS_RECT -> {
-                binding.rlRoundedRect.visibility = View.VISIBLE
+                rlRoundedRect.visibility = View.VISIBLE
                 setStrokeColorAndWidth(
-                    binding.cvRoundedRect, bgColor, getSizeInSDP(
+                    cvRoundedRect, bgColor, getSizeInSDP(
                         this,
                         R.dimen._1sdp
                     )
                 )
                 loadImageWithExecutor(
-                    floatingImageUrl!!, binding.ivRoundedRectFlash,
+                    floatingImageUrl!!, ivRoundedRectFlash,
                     R.drawable.flash_small
                 )
-                setBackgroundColorOfDrawable(binding.ibRoundedRectSend, bgColor)
+                setBackgroundColorOfDrawable(ivRoundedRectSend, bgColor)
 
-                editTextView = binding.etRoundedRect
-                sendButtonImageView = binding.ibRoundedRectSend
-                flashButtonImageView = binding.ivRoundedRectFlash
+                editTextView = etRoundedRect
+                sendButtonImageView = ivRoundedRectSend
+                flashButtonImageView = ivRoundedRectFlash
             }
 
             SQUARE_RECT -> {
-                binding.rlSquareRect.visibility = View.VISIBLE
+                rlSquareRect.visibility = View.VISIBLE
                 setStrokeColorAndWidth(
-                    binding.cvSquareRect, bgColor, getSizeInSDP(
+                    cvSquareRect, bgColor, getSizeInSDP(
                         this,
                         R.dimen._1sdp
                     )
                 )
                 loadImageWithExecutor(
                     floatingImageUrl!!,
-                    binding.ivSquareRectFlash,
+                    ivSquareRectFlash,
                     R.drawable.flash_small
                 )
 
-                editTextView = binding.etSquareRect
-                sendButtonImageView = binding.ivSquareRectSend
-                flashButtonImageView = binding.ivSquareRectFlash
+                editTextView = etSquareRect
+                sendButtonImageView = ivSquareRectSend
+                flashButtonImageView = ivSquareRectFlash
             }
 
             SEMI_ROUNDED_CORNERS_RECT -> {
-                binding.rlSemiRoundedRect.visibility = View.VISIBLE
+                rlSemiRoundedRect.visibility = View.VISIBLE
                 setStrokeColorAndWidth(
-                    binding.cvSemiRoundedRect,
+                    cvSemiRoundedRect,
                     bgColor,
                     getSizeInSDP(this, R.dimen._1sdp)
                 )
                 loadImageWithExecutor(
                     floatingImageUrl!!,
-                    binding.ivSemiRoundedRectFlash,
+                    ivSemiRoundedRectFlash,
                     R.drawable.flash_small
                 )
 
-                editTextView = binding.etSemiRoundedRect
-                sendButtonImageView = binding.ivSemiRoundedRectFlash
-                flashButtonImageView = binding.ivSemiRoundedRectFlash
+                editTextView = etSemiRoundedRect
+                sendButtonImageView = ivSemiRoundedRectSend
+                flashButtonImageView = ivSemiRoundedRectFlash
             }
 
             OVAL_RECT -> {
-                binding.rlOvalRect.visibility = View.VISIBLE
+                rlOvalRect.visibility = View.VISIBLE
                 setStrokeColorAndWidth(
-                    binding.cvOvalRect, bgColor, getSizeInSDP(
+                    cvOvalRect, bgColor, getSizeInSDP(
                         this,
                         R.dimen._1sdp
                     )
                 )
                 loadImageWithExecutor(
                     floatingImageUrl!!,
-                    binding.ivOvalRectFlash,
+                    ivOvalRectFlash,
                     R.drawable.flash_small
                 )
 
-                editTextView = binding.etOvalRect
-                sendButtonImageView = binding.ivOvalRectSend
-                flashButtonImageView = binding.ivOvalRectFlash
+                editTextView = etOvalRect
+                sendButtonImageView = ivOvalRectSend
+                flashButtonImageView = ivOvalRectFlash
             }
 
             CIRCLE_RECT -> {
-                binding.rlCircleRect.visibility = View.VISIBLE
+                rlCircleRect.visibility = View.VISIBLE
                 setStrokeColorAndWidth(
-                    binding.cvCircleRect, bgColor, getSizeInSDP(
+                    cvCircleRect, bgColor, getSizeInSDP(
                         this,
                         R.dimen._1sdp
                     )
                 )
                 loadImageWithExecutor(
                     floatingImageUrl!!,
-                    binding.ivCircleRectFlash,
+                    ivCircleRectFlash,
                     R.drawable.flash_small
                 )
 
-                editTextView = binding.etCircleRect
-                sendButtonImageView = binding.ivCircleRectSend
-                flashButtonImageView = binding.ivCircleRectFlash
+                editTextView = etCircleRect
+                sendButtonImageView = ivCircleRectSend
+                flashButtonImageView = ivCircleRectFlash
             }
         }
 
@@ -418,7 +481,7 @@ open class ChatActivity : AppCompatActivity() {
          * Returns Title of Chat Screen
          */
         fun getTitle(): String {
-            return binding.titleLayout.tvTitle.text.toString()
+            return tvTitle.text.toString()
         }
 
         /**
@@ -439,14 +502,14 @@ open class ChatActivity : AppCompatActivity() {
          * Returns ChatList Recyclerview
          */
         fun getChatListRecyclerview(): RecyclerView {
-            return binding.rvChatList
+            return rvChatList
         }
 
         /**
          * Returns ButtonList Recyclerview
          */
         fun getButtonListRecyclerview(): RecyclerView {
-            return binding.rvButtonList
+            return rvButtonList
         }
 
         /**
@@ -467,7 +530,7 @@ open class ChatActivity : AppCompatActivity() {
          * Returns CustomTextView back button icon instance
          */
         fun getBackButton(): CustomTextView {
-            return binding.titleLayout.tvBack
+            return tvBack
         }
 
         /**
@@ -490,7 +553,7 @@ open class ChatActivity : AppCompatActivity() {
          * @param title: String
          */
         fun setTitle(title: String) {
-            binding.titleLayout.tvTitle.text = title
+            tvTitle.text = title
         }
 
         /**
@@ -498,9 +561,10 @@ open class ChatActivity : AppCompatActivity() {
          * @param messageModel: MessageModel
          */
         fun addMessage(messageModel: MessageModel) {
+            Utils.hideKeyboard(sendButtonImageView)
             chatList.add(messageModel)
             chatListAdapter?.notifyDataSetChanged()
-            binding.rvChatList.scrollToPosition(chatList.size - 1)
+            rvChatList.scrollToPosition(chatList.size - 1)
         }
 
         /**
@@ -508,9 +572,10 @@ open class ChatActivity : AppCompatActivity() {
          * @param messageModelList: List<MessageModel>
          */
         fun addMessageList(messageModelList: List<MessageModel>) {
+            Utils.hideKeyboard(sendButtonImageView)
             chatList.addAll(messageModelList)
             chatListAdapter?.notifyDataSetChanged()
-            binding.rvChatList.scrollToPosition(chatList.size - 1)
+            rvChatList.scrollToPosition(chatList.size - 1)
         }
 
         /**
@@ -518,10 +583,11 @@ open class ChatActivity : AppCompatActivity() {
          * @param buttonTitleArrayList: ArrayList<String>
          */
         fun addButtonList(buttonTitleArrayList: ArrayList<String>) {
+            Utils.hideKeyboard(sendButtonImageView)
             buttonTitleList.clear()
             buttonTitleList.addAll(buttonTitleArrayList)
-            binding.rlConversationBar.visibility = View.GONE
-            binding.rlButtonList.visibility = View.VISIBLE
+            rlConversationBar.visibility = View.GONE
+            rlButtonList.visibility = View.VISIBLE
             chatButtonListAdapter?.notifyDataSetChanged()
         }
     }

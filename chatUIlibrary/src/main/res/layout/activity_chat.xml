@@ -104,7 +104,7 @@
                     </com.google.android.material.card.MaterialCardView>
 
                     <com.example.chatuilib.customviews.CustomShapeableImageView
-                        android:id="@+id/ib_rounded_rect_send"
+                        android:id="@+id/iv_rounded_rect_send"
                         android:layout_width="0dp"
                         android:layout_height="@dimen/_30sdp"
                         android:layout_marginStart="@dimen/_2sdp"

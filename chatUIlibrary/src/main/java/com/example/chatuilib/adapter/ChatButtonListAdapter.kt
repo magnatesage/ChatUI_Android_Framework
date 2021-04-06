@@ -12,7 +12,6 @@ import com.example.chatuilib.R
 import com.example.chatuilib.activity.ChatActivity
 import com.example.chatuilib.customviews.CustomButton
 import com.example.chatuilib.customviews.CustomMaterialButton
-import com.example.chatuilib.databinding.ItemChatButtonBinding
 import com.example.chatuilib.listener.OnButtonClickListener
 import com.example.chatuilib.model.ButtonConfigModel
 import com.example.chatuilib.utils.AppConstants
@@ -38,9 +37,8 @@ class ChatButtonListAdapter(
         viewType: Int
     ): ChatButtonListViewHolder {
         val inflater = LayoutInflater.from(parent.context)
-        val binding = ItemChatButtonBinding.inflate(inflater,parent, false)
-//        val v = inflater.inflate(R.layout.item_chat_button, parent, false)
-        return ChatButtonListViewHolder(binding)
+        val v = inflater.inflate(R.layout.item_chat_button, parent, false)
+        return ChatButtonListViewHolder(v)
     }
 
     override fun getItemCount(): Int = buttonTitleList.size
@@ -64,7 +62,7 @@ class ChatButtonListAdapter(
         }
     }
 
-    class ChatButtonListViewHolder(private val itemBinding: ItemChatButtonBinding) : RecyclerView.ViewHolder(itemBinding.root) {
+    class ChatButtonListViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(
             context: Activity,
             buttonConfigModel: ButtonConfigModel,
@@ -72,7 +70,8 @@ class ChatButtonListAdapter(
             onButtonClickListener: OnButtonClickListener?,
         ) {
             val parentLayout: RelativeLayout = itemView.findViewById(R.id.rl_parent)
-            val customMaterialButton: CustomMaterialButton = itemBinding.customMaterialButton
+            val customMaterialButton: CustomMaterialButton =
+                itemView.findViewById(R.id.custom_material_button)
 
             customMaterialButton.text = buttonTitle
 
@@ -94,8 +93,8 @@ class ChatButtonListAdapter(
 
             customMaterialButton.setOnClickListener {
                 setButtonClicked(customMaterialButton, buttonConfigModel)
-                (context as ChatActivity).binding.rlConversationBar.visibility = View.VISIBLE
-                context.binding.rlButtonList.visibility = View.GONE
+                (context as ChatActivity).rlConversationBar.visibility = View.VISIBLE
+                context.rlButtonList.visibility = View.GONE
                 Handler(Looper.getMainLooper()).postDelayed({
                     onButtonClickListener?.onButtonClick(customMaterialButton.text.toString())
                 }, 1000)

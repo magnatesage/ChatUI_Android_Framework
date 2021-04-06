@@ -21,3 +21,6 @@
 #-renamesourcefileattribute SourceFile
 -keepattributes InnerClasses
 -keep class com.example.chatuilib.activity.ChatActivity$* { *; }
+-keep class com.example.chatuilib.model.MessageModel { *; }
+-keepparameternames
+-keep interface com.example.chatuilib.listener.OnButtonClickListener { *; }

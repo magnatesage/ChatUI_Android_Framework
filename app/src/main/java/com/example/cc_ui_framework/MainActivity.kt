@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.util.Log
+import android.view.View
 import com.example.chatuilib.activity.ChatActivity
 import com.example.chatuilib.customviews.CustomEditText
 import com.example.chatuilib.listener.OnButtonClickListener
@@ -26,7 +27,7 @@ class MainActivity : ChatActivity() {
         buttonTitleList.add("2003")
         buttonTitleList.add("2004")
 
-        val sdf = SimpleDateFormat("dd MMMM yyyy", Locale.ENGLISH)
+        val sdf = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.ENGLISH)
         val todayDate = sdf.format(Date())
         val cal = Calendar.getInstance()
         cal.add(Calendar.DATE, -1)
@@ -41,7 +42,7 @@ class MainActivity : ChatActivity() {
             addMessage(
                 MessageModel(
                     data = "Welcome to Chatbot", isSender = false,
-                    isCardView = false, cardViewHeader = "", date = "31 March 2021"
+                    isCardView = false, cardViewHeader = "", date = "2021-03-31T11:55:53.004Z"
                 )
             )
             Handler(Looper.getMainLooper()).postDelayed({

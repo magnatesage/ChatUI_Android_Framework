@@ -16,7 +16,6 @@ import com.example.chatuilib.R
 import com.example.chatuilib.customviews.CustomMaterialButton
 import com.example.chatuilib.customviews.CustomMaterialCardView
 import com.example.chatuilib.customviews.CustomTextView
-import com.example.chatuilib.databinding.ItemChatListBinding
 import com.example.chatuilib.model.CardViewConfigModel
 import com.example.chatuilib.model.ChatBubbleConfigModel
 import com.example.chatuilib.model.MessageModel
@@ -47,8 +46,8 @@ class ChatListAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ChatListViewHolder {
         val inflater = LayoutInflater.from(parent.context)
-        val binding = ItemChatListBinding.inflate(inflater, parent, false)
-        return ChatListViewHolder(binding)
+        val v = inflater.inflate(R.layout.item_chat_list, parent, false)
+        return ChatListViewHolder(v)
     }
 
     override fun getItemCount(): Int = chatList.size
@@ -84,13 +83,13 @@ class ChatListAdapter(
         }
     }
 
-    class ChatListViewHolder(private val itemBinding: ItemChatListBinding) :
-        RecyclerView.ViewHolder(itemBinding.root) {
-        private val llParent: LinearLayout = itemBinding.llParent
+    class ChatListViewHolder(itemView: View) :
+        RecyclerView.ViewHolder(itemView) {
+        private val llParent: LinearLayout = itemView.findViewById(R.id.ll_parent)
         lateinit var chatBubbleLayout: RelativeLayout
         private val timeStampLayout: RelativeLayout = getLayoutFromInflater(
-            itemBinding.llParent.context, R.layout.item_date_time_header,
-            itemBinding.llParent, RelativeLayout::class.java
+            llParent.context, R.layout.item_date_time_header,
+            llParent, RelativeLayout::class.java
         )!!
         private val tvDateTimeStamp: CustomTextView =
             timeStampLayout.findViewById(R.id.tv_date_time_stamp)
@@ -392,14 +391,22 @@ class ChatListAdapter(
         }
 
         private fun showDateSectionHeader(chatList: ArrayList<MessageModel>, position: Int) {
-            val sdf = SimpleDateFormat("dd MMMM yyyy", Locale.ENGLISH)
-            val todayDate = sdf.format(Date())
+            val sdf = SimpleDateFormat(AppConstants.serverDateFormat, Locale.ENGLISH)
+
+            val sectionDateFormat = SimpleDateFormat(AppConstants.sectionDateFormat, Locale.ENGLISH)
+
+            val currentMessageModelDate = sdf.parse(chatList[position].date)
+            val currentMessageModelDateInString = sectionDateFormat.format(currentMessageModelDate!!)
+
             val cal = Calendar.getInstance()
             cal.add(Calendar.DATE, -1)
-            val yesterdayDate = sdf.format(cal.time)
+            val todayDate = sectionDateFormat.format(Date())
+            val yesterdayDate = sectionDateFormat.format(cal.time)
 
             if (position > 0) {
-                if (chatList[position].date.equals((chatList[position - 1].date), true)) {
+                val previousMessageModelDate = sdf.parse(chatList[position -1].date)
+                val previousMessageModelDateInString = sectionDateFormat.format(previousMessageModelDate!!)
+                if (currentMessageModelDateInString.equals(previousMessageModelDateInString, true)) {
                     timeStampLayout.visibility = View.GONE
                 } else {
                     timeStampLayout.visibility = View.VISIBLE
@@ -408,13 +415,13 @@ class ChatListAdapter(
                 timeStampLayout.visibility = View.VISIBLE
             }
             if (timeStampLayout.isVisible) {
-                val dateTextValue: String = when (val date = chatList[position].date) {
+                val dateTextValue: String = when (currentMessageModelDateInString) {
                     todayDate ->
                         tvDateTimeStamp.context.getString(R.string.today)
                     yesterdayDate ->
                         tvDateTimeStamp.context.getString(R.string.yesterday)
                     else ->
-                        date
+                        currentMessageModelDateInString
                 }
                 tvDateTimeStamp.text = dateTextValue
             }
@@ -426,11 +433,11 @@ class ChatListAdapter(
             position: Int,
             cardViewConfigModel: CardViewConfigModel
         ) {
-            val cardViewParent: CustomMaterialCardView = itemBinding.cvParent
-            val header: CustomMaterialButton = itemBinding.btnHeader
-            val content: CustomTextView = itemBinding.tvContent
-            val llContent: LinearLayout = itemBinding.llContent
-            val footer: CustomMaterialButton = itemBinding.btnFooter
+            val cardViewParent: CustomMaterialCardView = itemView.findViewById(R.id.cv_parent)
+            val header: CustomMaterialButton = itemView.findViewById(R.id.btn_header)
+            val content: CustomTextView = itemView.findViewById(R.id.tv_content)
+            val llContent: LinearLayout = itemView.findViewById(R.id.ll_content)
+            val footer: CustomMaterialButton = itemView.findViewById(R.id.btn_footer)
 
             cardViewParent.visibility = View.VISIBLE
             val messageModel = chatList[position]

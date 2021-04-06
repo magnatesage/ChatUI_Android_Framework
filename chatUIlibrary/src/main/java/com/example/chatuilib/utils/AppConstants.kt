@@ -11,6 +11,8 @@ internal object AppConstants {
     const val HORIZONTAL = "horizontal"
     const val VERTICAL = "vertical"
 
+    const val serverDateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
+    const val sectionDateFormat = "dd MMMM yyyy"
 
     /**
      * This Constants are used for ConversationBar shape

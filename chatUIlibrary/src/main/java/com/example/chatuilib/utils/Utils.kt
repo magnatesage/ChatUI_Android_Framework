@@ -250,12 +250,11 @@ internal object Utils {
 
     /**
      * This method is used to hide keyboard
-     * @param context the context to hide keyboard
      * @param view the view is used to get window token
      */
-    fun hideKeyboard(context: Context, view: View) {
+    fun hideKeyboard(view: View) {
         val inputMethodManager =
-            context.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+            view.context.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
         inputMethodManager.hideSoftInputFromWindow(view.windowToken, 0)
     }
 
