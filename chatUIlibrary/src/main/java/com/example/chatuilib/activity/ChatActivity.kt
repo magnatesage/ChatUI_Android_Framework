@@ -1,11 +1,9 @@
 package com.example.chatuilib.activity
 
 import android.annotation.SuppressLint
-import android.app.Activity
 import android.content.res.Configuration
 import android.os.Bundle
 import android.view.View
-import android.view.inputmethod.InputMethodManager
 import android.widget.RelativeLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -90,7 +88,7 @@ open class ChatActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        super.setContentView(R.layout.activity_chat)
+        super.setContentView(R.layout.lib_activity_chat)
     }
 
     private fun init() {
@@ -216,7 +214,7 @@ open class ChatActivity : AppCompatActivity() {
                     }
 
                     override fun onErrorResponse(responseCode: Int, output: String) {
-                        AppLog.e(TAG, getString(R.string.error_api_msg))
+                        AppLog.e(TAG, getString(R.string.lib_error_api_msg))
                     }
                 })
         }
@@ -236,7 +234,7 @@ open class ChatActivity : AppCompatActivity() {
             if (!chatBubbleConfigModel.chatBotBgImageUrl.isNullOrBlank()) {
                 loadImageWithExecutor(
                     chatBubbleConfigModel.chatBotBgImageUrl,
-                    rvChatList, R.drawable.upload
+                    rvChatList, R.drawable.lib_upload
                 )
             }
         }
@@ -283,7 +281,7 @@ open class ChatActivity : AppCompatActivity() {
         rlButtonList.visibility = View.VISIBLE
         changeBg(
             rlButtonList,
-            getDesiredColorFromXML(this, R.color.colorWhite)
+            getDesiredColorFromXML(this, R.color.lib_colorWhite)
         )
 
         if (buttonConfigModel.buttonPlacementStyle?.toLowerCase(Locale.ROOT) == HORIZONTAL) {
@@ -334,7 +332,7 @@ open class ChatActivity : AppCompatActivity() {
      * This method is used to set conversation bar style
      */
     private fun setUpConversationBarStylingDisplay(conversationBarConfigModel: ConversationBarConfigModel) {
-        val bgColor = getDesiredColorFromXML(this, R.color.colorBorder)
+        val bgColor = getDesiredColorFromXML(this, R.color.lib_colorBorder)
         val floatingImageUrl = conversationBarConfigModel.floatingIconUrl
         rlConversationBar.visibility = View.VISIBLE
         val onClickListener = sendButtonImageView.clickListener
@@ -351,7 +349,7 @@ open class ChatActivity : AppCompatActivity() {
                 )
                 loadImageWithExecutor(
                     floatingImageUrl!!, ivRoundedRectFlash,
-                    R.drawable.flash_small
+                    R.drawable.lib_flash_small
                 )
                 setBackgroundColorOfDrawable(ivRoundedRectSend, bgColor)
 
@@ -371,7 +369,7 @@ open class ChatActivity : AppCompatActivity() {
                 loadImageWithExecutor(
                     floatingImageUrl!!,
                     ivSquareRectFlash,
-                    R.drawable.flash_small
+                    R.drawable.lib_flash_small
                 )
 
                 editTextView = etSquareRect
@@ -389,7 +387,7 @@ open class ChatActivity : AppCompatActivity() {
                 loadImageWithExecutor(
                     floatingImageUrl!!,
                     ivSemiRoundedRectFlash,
-                    R.drawable.flash_small
+                    R.drawable.lib_flash_small
                 )
 
                 editTextView = etSemiRoundedRect
@@ -408,7 +406,7 @@ open class ChatActivity : AppCompatActivity() {
                 loadImageWithExecutor(
                     floatingImageUrl!!,
                     ivOvalRectFlash,
-                    R.drawable.flash_small
+                    R.drawable.lib_flash_small
                 )
 
                 editTextView = etOvalRect
@@ -427,7 +425,7 @@ open class ChatActivity : AppCompatActivity() {
                 loadImageWithExecutor(
                     floatingImageUrl!!,
                     ivCircleRectFlash,
-                    R.drawable.flash_small
+                    R.drawable.lib_flash_small
                 )
 
                 editTextView = etCircleRect
@@ -452,9 +450,9 @@ open class ChatActivity : AppCompatActivity() {
     private fun showUnderDevelopmentDialog() {
         AlertDialogView.showAlert(
             this,
-            getString(R.string.app_name),
-            getString(R.string.under_development),
-            getString(R.string.ok)
+            getString(R.string.lib_app_name),
+            getString(R.string.lib_under_development),
+            getString(R.string.lib_ok)
         )?.show()
     }
 

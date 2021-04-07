@@ -45,7 +45,7 @@ internal object Utils {
         }
         dialog = Dialog(context)
         dialog!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
-        dialog!!.setContentView(R.layout.custom_progress_dialog)
+        dialog!!.setContentView(R.layout.lib_custom_progress_dialog)
         dialog!!.window?.setBackgroundDrawableResource(android.R.color.transparent)
         dialog!!.setCancelable(false)
         dialog!!.show()
@@ -336,9 +336,9 @@ internal object Utils {
         if (informToUser && !isConnected) {
             AlertDialogView.showAlert(
                 context,
-                context.getString(R.string.app_name),
-                context.getString(R.string.error_internet_connection),
-                context.getString(R.string.ok)
+                context.getString(R.string.lib_app_name),
+                context.getString(R.string.lib_error_internet_connection),
+                context.getString(R.string.lib_ok)
             )?.show()
         }
 

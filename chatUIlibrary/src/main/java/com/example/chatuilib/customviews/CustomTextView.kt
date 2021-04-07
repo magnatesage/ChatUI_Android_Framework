@@ -9,7 +9,7 @@ import com.example.chatuilib.R
 /**
  * This is Custom TextView Class extended from AppCompatTextView Class of Android
  * Using @property setCustomFont we can set Custom Fonts to text of TextView
- * This class can also be used for showing custom text from ttf files as icons.
+ * This class can also be used for showing custom text from ttf files as lib_icons.
  */
 class CustomTextView : AppCompatTextView {
 

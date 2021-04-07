@@ -6,13 +6,13 @@
     android:layout_height="wrap_content"
     android:layout_marginStart="@dimen/_25sdp"
     android:layout_marginEnd="@dimen/_25sdp"
-    android:background="@drawable/bg_rectangle_rounded_white"
+    android:background="@drawable/lib_bg_rectangle_rounded_white"
     android:orientation="vertical">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/bg_rectangle_top_rounded_blue">
+        android:background="@drawable/lib_bg_rectangle_top_rounded_blue">
 
         <com.example.chatuilib.customviews.CustomTextView
             android:id="@+id/tv_title"
@@ -20,9 +20,9 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:padding="@dimen/_5sdp"
-            android:textColor="@color/colorWhite"
+            android:textColor="@color/lib_colorWhite"
             android:textSize="@dimen/_18ssp"
-            app:customTextViewFont="@string/Roboto_Medium"
+            app:customTextViewFont="@string/lib_Roboto_Medium"
             tools:text="Title" />
 
     </RelativeLayout>
@@ -30,7 +30,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorWhite"
+        android:background="@color/lib_colorWhite"
         android:orientation="vertical"
         android:visibility="visible">
 
@@ -42,9 +42,9 @@
             android:paddingEnd="@dimen/_5sdp"
             android:paddingTop="@dimen/_15sdp"
             android:paddingBottom="@dimen/_15sdp"
-            android:textColor="@color/fontColorDark"
+            android:textColor="@color/lib_fontColorDark"
             android:textSize="@dimen/_16ssp"
-            app:customTextViewFont="@string/Roboto_Regular"
+            app:customTextViewFont="@string/lib_Roboto_Regular"
             tools:text="Message" />
 
     </LinearLayout>
@@ -52,13 +52,13 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="@color/colorBorder" />
+        android:background="@color/lib_colorBorder" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="2"
-        android:background="@drawable/bg_rectangle_bottom_rounded_white"
+        android:background="@drawable/lib_bg_rectangle_bottom_rounded_white"
         android:gravity="center"
         android:orientation="horizontal"
         android:visibility="visible">
@@ -70,17 +70,17 @@
             android:layout_weight="1"
             android:gravity="center"
             android:padding="@dimen/_5sdp"
-            android:textColor="@color/fontColorDark"
+            android:textColor="@color/lib_fontColorDark"
             android:textSize="@dimen/_16ssp"
             android:visibility="gone"
-            app:customTextViewFont="@string/Roboto_Medium"
+            app:customTextViewFont="@string/lib_Roboto_Medium"
             tools:text="Second" />
 
         <View
             android:id="@+id/view"
             android:layout_width="1dp"
             android:layout_height="@dimen/_20sdp"
-            android:background="@color/colorBorder"
+            android:background="@color/lib_colorBorder"
             android:visibility="gone" />
 
         <com.example.chatuilib.customviews.CustomTextView
@@ -90,9 +90,9 @@
             android:layout_weight="1"
             android:gravity="center"
             android:padding="@dimen/_5sdp"
-            android:textColor="@color/fontColorDark"
+            android:textColor="@color/lib_fontColorDark"
             android:textSize="@dimen/_16ssp"
-            app:customTextViewFont="@string/Roboto_Medium"
+            app:customTextViewFont="@string/lib_Roboto_Medium"
             tools:text="First" />
 
     </LinearLayout>

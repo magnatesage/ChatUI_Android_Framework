@@ -8,13 +8,13 @@
 
     <include
         android:id="@+id/title_layout"
-        layout="@layout/toolbar_layout" />
+        layout="@layout/lib_toolbar_layout" />
 
     <LinearLayout
         android:id="@+id/ll_chat_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/colorWhite"
+        android:background="@color/lib_colorWhite"
         android:orientation="vertical">
 
         <androidx.recyclerview.widget.RecyclerView
@@ -98,7 +98,7 @@
                             android:paddingBottom="@dimen/_5sdp"
                             android:textColor="@android:color/black"
                             android:textSize="@dimen/_13ssp"
-                            app:customEditTextFont="@string/Roboto_Light"
+                            app:customEditTextFont="@string/lib_Roboto_Light"
                             tools:ignore="RtlSymmetry" />
 
                     </com.google.android.material.card.MaterialCardView>
@@ -110,8 +110,8 @@
                         android:layout_marginStart="@dimen/_2sdp"
                         android:layout_marginEnd="@dimen/_10sdp"
                         android:layout_weight="0.8"
-                        android:background="@drawable/chat_bubble_corner_rounded_rect"
-                        android:src="@drawable/send_small" />
+                        android:background="@drawable/lib_chat_bubble_corner_rounded_rect"
+                        android:src="@drawable/lib_send_small" />
 
                 </LinearLayout>
             </RelativeLayout>
@@ -143,7 +143,7 @@
                         android:layout_marginStart="@dimen/_10sdp"
                         android:layout_marginEnd="@dimen/_2sdp"
                         android:layout_weight="1"
-                        android:src="@drawable/flash_small" />
+                        android:src="@drawable/lib_flash_small" />
 
                     <com.google.android.material.card.MaterialCardView
                         android:id="@+id/cv_square_rect"
@@ -167,7 +167,7 @@
                             android:paddingBottom="@dimen/_5sdp"
                             android:textColor="@android:color/black"
                             android:textSize="@dimen/_13ssp"
-                            app:customEditTextFont="@string/Roboto_Light"
+                            app:customEditTextFont="@string/lib_Roboto_Light"
                             tools:ignore="RtlSymmetry" />
 
                     </com.google.android.material.card.MaterialCardView>
@@ -179,7 +179,7 @@
                         android:layout_marginStart="@dimen/_2sdp"
                         android:layout_marginEnd="@dimen/_10sdp"
                         android:layout_weight="1"
-                        android:src="@drawable/send_small" />
+                        android:src="@drawable/lib_send_small" />
 
                 </LinearLayout>
 
@@ -201,7 +201,7 @@
                     android:layout_marginStart="@dimen/_10sdp"
                     android:layout_marginEnd="@dimen/_10sdp"
                     android:scaleType="centerCrop"
-                    android:src="@drawable/flash_small"
+                    android:src="@drawable/lib_flash_small"
                     app:shapeAppearanceOverlay="@style/TopLeftBottomRightRoundedCorners_10sdp" />
 
                 <LinearLayout
@@ -244,7 +244,7 @@
                                 android:paddingBottom="@dimen/_5sdp"
                                 android:textColor="@android:color/black"
                                 android:textSize="@dimen/_13ssp"
-                                app:customEditTextFont="@string/Roboto_Light"
+                                app:customEditTextFont="@string/lib_Roboto_Light"
                                 tools:ignore="RtlSymmetry" />
 
                             <com.example.chatuilib.customviews.CustomShapeableImageView
@@ -254,7 +254,7 @@
                                 android:layout_marginStart="@dimen/_2sdp"
                                 android:layout_marginEnd="@dimen/_4sdp"
                                 android:layout_weight="0.5"
-                                android:src="@drawable/send_small" />
+                                android:src="@drawable/lib_send_small" />
 
                         </LinearLayout>
                     </com.google.android.material.card.MaterialCardView>
@@ -286,8 +286,8 @@
                         android:layout_height="@dimen/_30sdp"
                         android:layout_marginStart="@dimen/_10sdp"
                         android:layout_marginEnd="@dimen/_2sdp"
-                        android:background="@color/colorBorder"
-                        android:src="@drawable/flash_small"
+                        android:background="@color/lib_colorBorder"
+                        android:src="@drawable/lib_flash_small"
                         app:shapeAppearanceOverlay="@style/CircleShapeImageView" />
 
                     <com.google.android.material.card.MaterialCardView
@@ -320,7 +320,7 @@
                                 android:paddingBottom="@dimen/_5sdp"
                                 android:textColor="@android:color/black"
                                 android:textSize="@dimen/_13ssp"
-                                app:customEditTextFont="@string/Roboto_Light"
+                                app:customEditTextFont="@string/lib_Roboto_Light"
                                 tools:ignore="RtlSymmetry" />
 
                             <com.example.chatuilib.customviews.CustomShapeableImageView
@@ -330,7 +330,7 @@
                                 android:layout_marginStart="@dimen/_2sdp"
                                 android:layout_marginEnd="@dimen/_10sdp"
                                 android:layout_weight="0.5"
-                                android:src="@drawable/send_small" />
+                                android:src="@drawable/lib_send_small" />
 
                         </LinearLayout>
                     </com.google.android.material.card.MaterialCardView>
@@ -352,8 +352,8 @@
                     android:layout_alignParentEnd="false"
                     android:layout_marginStart="@dimen/_10sdp"
                     android:layout_marginEnd="@dimen/_10sdp"
-                    android:background="@color/colorBorder"
-                    android:src="@drawable/flash_small"
+                    android:background="@color/lib_colorBorder"
+                    android:src="@drawable/lib_flash_small"
                     app:shapeAppearanceOverlay="@style/CircleShapeImageView" />
 
                 <LinearLayout
@@ -396,7 +396,7 @@
                                 android:paddingBottom="@dimen/_5sdp"
                                 android:textColor="@android:color/black"
                                 android:textSize="@dimen/_13ssp"
-                                app:customEditTextFont="@string/Roboto_Light"
+                                app:customEditTextFont="@string/lib_Roboto_Light"
                                 tools:ignore="RtlSymmetry" />
 
                             <com.example.chatuilib.customviews.CustomShapeableImageView
@@ -406,7 +406,7 @@
                                 android:layout_marginStart="@dimen/_2sdp"
                                 android:layout_marginEnd="@dimen/_4sdp"
                                 android:layout_weight="0.5"
-                                android:src="@drawable/send_small" />
+                                android:src="@drawable/lib_send_small" />
 
                         </LinearLayout>
                     </com.google.android.material.card.MaterialCardView>

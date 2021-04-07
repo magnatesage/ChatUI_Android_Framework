@@ -46,7 +46,7 @@ class ChatListAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ChatListViewHolder {
         val inflater = LayoutInflater.from(parent.context)
-        val v = inflater.inflate(R.layout.item_chat_list, parent, false)
+        val v = inflater.inflate(R.layout.lib_item_chat_list, parent, false)
         return ChatListViewHolder(v)
     }
 
@@ -88,7 +88,7 @@ class ChatListAdapter(
         private val llParent: LinearLayout = itemView.findViewById(R.id.ll_parent)
         lateinit var chatBubbleLayout: RelativeLayout
         private val timeStampLayout: RelativeLayout = getLayoutFromInflater(
-            llParent.context, R.layout.item_date_time_header,
+            llParent.context, R.layout.lib_item_date_time_header,
             llParent, RelativeLayout::class.java
         )!!
         private val tvDateTimeStamp: CustomTextView =
@@ -110,16 +110,16 @@ class ChatListAdapter(
             showDateSectionHeader(chatList, position)
 
             val chatBubbleShape = when (chatBubbleConfigModel.chatBubbleStyle) {
-                AppConstants.CHAT_BUBBLE_SLOPE -> R.layout.item_chat_bubble_image
-                AppConstants.CHAT_BUBBLE_TALKIE_TOP -> R.layout.item_chat_bubble_image
-                AppConstants.CHAT_BUBBLE_TALKIE_BOTTOM -> R.layout.item_chat_bubble_image
+                AppConstants.CHAT_BUBBLE_SLOPE -> R.layout.lib_item_chat_bubble_image
+                AppConstants.CHAT_BUBBLE_TALKIE_TOP -> R.layout.lib_item_chat_bubble_image
+                AppConstants.CHAT_BUBBLE_TALKIE_BOTTOM -> R.layout.lib_item_chat_bubble_image
                 AppConstants.CHAT_BUBBLE_WITH_DOTS -> {
                     if (chatListModel.isSender)
-                        R.layout.sender_chatbubble_shape_circle_tail
+                        R.layout.lib_sender_chatbubble_shape_circle_tail
                     else
-                        R.layout.receiver_chatbubble_shape_circle_tail
+                        R.layout.lib_receiver_chatbubble_shape_circle_tail
                 }
-                else -> R.layout.item_chat_bubble_cardview
+                else -> R.layout.lib_item_chat_bubble_cardview
             }
 
             chatBubbleLayout = getLayoutFromInflater(
@@ -136,7 +136,7 @@ class ChatListAdapter(
             tvChatBubble.textSize = getSizeInSDP(context, R.dimen._5ssp).toFloat()
 
             var llChatBubble: LinearLayout? = null
-            if (chatBubbleShape == R.layout.item_chat_bubble_image) {
+            if (chatBubbleShape == R.layout.lib_item_chat_bubble_image) {
                 llChatBubble = chatBubbleLayout.findViewById(R.id.ll_chat_bubble)
             }
             tvChatBubble.maxLines = MAX_LINES
@@ -151,16 +151,16 @@ class ChatListAdapter(
             if (chatListModel.isSender) {
                 tvChatBubble.setTextColor(getParsedColorValue(chatBubbleConfigModel.senderTextColor!!))
 
-                if (chatBubbleShape == R.layout.item_chat_bubble_image) {
+                if (chatBubbleShape == R.layout.lib_item_chat_bubble_image) {
                     when (chatBubbleConfigModel.chatBubbleStyle) {
                         AppConstants.CHAT_BUBBLE_SLOPE -> {
-                            llChatBubble?.setBackgroundResource(R.drawable.chat_bubble_shape_slant)
+                            llChatBubble?.setBackgroundResource(R.drawable.lib_chat_bubble_shape_slant)
                         }
                         AppConstants.CHAT_BUBBLE_TALKIE_TOP -> {
-                            llChatBubble?.setBackgroundResource(R.drawable.chat_bubble_shape_sender_top_tail)
+                            llChatBubble?.setBackgroundResource(R.drawable.lib_chat_bubble_shape_sender_top_tail)
                         }
                         AppConstants.CHAT_BUBBLE_TALKIE_BOTTOM -> {
-                            llChatBubble?.setBackgroundResource(R.drawable.chat_bubble_shape_sender_bottom_tail)
+                            llChatBubble?.setBackgroundResource(R.drawable.lib_chat_bubble_shape_sender_bottom_tail)
                         }
                     }
                 } else {
@@ -230,7 +230,7 @@ class ChatListAdapter(
                     }
                 }
 
-                if (chatBubbleShape == R.layout.item_chat_bubble_image) {
+                if (chatBubbleShape == R.layout.lib_item_chat_bubble_image) {
                     llChatBubble?.background?.setTint(
                         getParsedColorValue(
                             chatBubbleConfigModel.senderChatBubbleColor!!
@@ -258,9 +258,9 @@ class ChatListAdapter(
                     getSizeInSDP(context, R.dimen._6sdp), getSizeInSDP(context, R.dimen._6sdp)
                 )
 
-                if (chatBubbleShape == R.layout.item_chat_bubble_image) {
+                if (chatBubbleShape == R.layout.lib_item_chat_bubble_image) {
                     llChatBubble?.layoutParams = layoutParams
-                } else if (chatBubbleShape == R.layout.item_chat_bubble_cardview) {
+                } else if (chatBubbleShape == R.layout.lib_item_chat_bubble_cardview) {
                     cvChatBubble.layoutParams = layoutParams
                 }
 
@@ -272,16 +272,16 @@ class ChatListAdapter(
             } else {
                 tvChatBubble.setTextColor(getParsedColorValue(chatBubbleConfigModel.receiverTextColor!!))
 
-                if (chatBubbleShape == R.layout.item_chat_bubble_image) {
+                if (chatBubbleShape == R.layout.lib_item_chat_bubble_image) {
                     when (chatBubbleConfigModel.chatBubbleStyle) {
                         AppConstants.CHAT_BUBBLE_SLOPE -> {
-                            llChatBubble?.setBackgroundResource(R.drawable.chat_bubble_shape_slant)
+                            llChatBubble?.setBackgroundResource(R.drawable.lib_chat_bubble_shape_slant)
                         }
                         AppConstants.CHAT_BUBBLE_TALKIE_TOP -> {
-                            llChatBubble?.setBackgroundResource(R.drawable.chat_bubble_shape_receiver_top_tail)
+                            llChatBubble?.setBackgroundResource(R.drawable.lib_chat_bubble_shape_receiver_top_tail)
                         }
                         AppConstants.CHAT_BUBBLE_TALKIE_BOTTOM -> {
-                            llChatBubble?.setBackgroundResource(R.drawable.chat_bubble_shape_receiver_bottom_tail)
+                            llChatBubble?.setBackgroundResource(R.drawable.lib_chat_bubble_shape_receiver_bottom_tail)
                         }
                     }
                 } else {
@@ -351,7 +351,7 @@ class ChatListAdapter(
                     }
                 }
 
-                if (chatBubbleShape == R.layout.item_chat_bubble_image) {
+                if (chatBubbleShape == R.layout.lib_item_chat_bubble_image) {
                     llChatBubble?.background?.setTint(
                         getParsedColorValue(chatBubbleConfigModel.receiverChatBubbleColor!!)
                     )
@@ -375,9 +375,9 @@ class ChatListAdapter(
                     getSizeInSDP(context, R.dimen._50sdp), getSizeInSDP(context, R.dimen._6sdp)
                 )
 
-                if (chatBubbleShape == R.layout.item_chat_bubble_image) {
+                if (chatBubbleShape == R.layout.lib_item_chat_bubble_image) {
                     llChatBubble?.layoutParams = layoutParams
-                } else if (chatBubbleShape == R.layout.item_chat_bubble_cardview) {
+                } else if (chatBubbleShape == R.layout.lib_item_chat_bubble_cardview) {
                     cvChatBubble.layoutParams = layoutParams
                 }
 
@@ -417,9 +417,9 @@ class ChatListAdapter(
             if (timeStampLayout.isVisible) {
                 val dateTextValue: String = when (currentMessageModelDateInString) {
                     todayDate ->
-                        tvDateTimeStamp.context.getString(R.string.today)
+                        tvDateTimeStamp.context.getString(R.string.lib_today)
                     yesterdayDate ->
-                        tvDateTimeStamp.context.getString(R.string.yesterday)
+                        tvDateTimeStamp.context.getString(R.string.lib_yesterday)
                     else ->
                         currentMessageModelDateInString
                 }
@@ -466,7 +466,7 @@ class ChatListAdapter(
             )
 
             header.text = messageModel.cardViewHeader
-            footer.text = getStringFromXML(context, R.string.full_view)
+            footer.text = getStringFromXML(context, R.string.lib_full_view)
             header.textSize = cardViewConfigModel.cardviewHeaderTextSize!!.toFloat()
             footer.textSize = cardViewConfigModel.cardviewFooterButtonTextSize!!.toFloat()
             content.gravity = Gravity.CENTER
@@ -488,14 +488,14 @@ class ChatListAdapter(
                 imageView.setImageDrawable(
                     ContextCompat.getDrawable(
                         context,
-                        R.drawable.attendance
+                        R.drawable.lib_attendance
                     )
                 )
                 llContent.addView(imageView)
             } else {
                 content.visibility = View.VISIBLE
                 content.text = messageModel.data
-                content.setCustomFont(getFontsFromApp(context, R.string.Roboto_Regular))
+                content.setCustomFont(getFontsFromApp(context, R.string.lib_Roboto_Regular))
             }
 
             changeTextColor(content, Color.BLACK)

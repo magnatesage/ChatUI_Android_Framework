@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="?actionBarSize"
     android:elevation="@dimen/_5sdp"
-    android:background="@color/colorPrimary">
+    android:background="@color/lib_colorPrimary">
 
     <com.example.chatuilib.customviews.CustomTextView
         android:id="@+id/tv_back"
@@ -18,10 +18,10 @@
         android:paddingEnd="@dimen/_10sdp"
         android:paddingTop="@dimen/_6sdp"
         android:paddingBottom="@dimen/_6sdp"
-        android:textColor="@color/colorWhite"
-        android:text="@string/back_icon"
+        android:textColor="@color/lib_colorWhite"
+        android:text="@string/lib_back_icon"
         android:textSize="@dimen/_18ssp"
-        app:customTextViewFont="@string/icons_new" />
+        app:customTextViewFont="@string/lib_icons_new" />
 
     <com.example.chatuilib.customviews.CustomTextView
         android:id="@+id/tv_title"
@@ -33,9 +33,9 @@
         android:paddingStart="@dimen/_10sdp"
         android:paddingEnd="@dimen/_10sdp"
         android:text=""
-        android:textColor="@color/colorWhite"
+        android:textColor="@color/lib_colorWhite"
         android:textSize="@dimen/_18ssp"
-        app:customTextViewFont="@string/Roboto_Bold"
-        tools:text="@string/app_name" />
+        app:customTextViewFont="@string/lib_Roboto_Bold"
+        tools:text="@string/lib_app_name" />
 
 </RelativeLayout>

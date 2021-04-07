@@ -1,24 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <com.example.chatuilib.customviews.CustomMaterialCardView
-        android:id="@+id/cv_chat_bubble"
+    <LinearLayout
+        android:id="@+id/ll_chat_bubble"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:cardPreventCornerOverlap="false">
+        android:background="@drawable/lib_chat_bubble_shape_slant"
+        android:orientation="vertical">
 
         <com.example.chatuilib.customviews.CustomTextView
             android:id="@+id/tv_chat_bubble"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_margin="@dimen/_5sdp"
             android:fadeScrollbars="false"
             android:scrollbars="vertical"
-            android:text="@string/lorem_ipsum" />
+            android:text="@string/lib_lorem_ipsum" />
 
-    </com.example.chatuilib.customviews.CustomMaterialCardView>
+    </LinearLayout>
 
 </RelativeLayout>

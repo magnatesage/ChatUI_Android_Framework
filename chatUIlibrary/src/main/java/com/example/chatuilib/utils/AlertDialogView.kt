@@ -119,7 +119,7 @@ internal object AlertDialogView {
             }
             dialog = Dialog(context)
             dialog!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
-            dialog!!.setContentView(R.layout.dialog_alert_view)
+            dialog!!.setContentView(R.layout.lib_dialog_alert_view)
             dialog!!.setCancelable(true)
             dialog!!.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
             dialog!!.setOnKeyListener { dialog, keyCode, event ->

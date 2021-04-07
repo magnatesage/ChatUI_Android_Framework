@@ -37,7 +37,7 @@ class ChatButtonListAdapter(
         viewType: Int
     ): ChatButtonListViewHolder {
         val inflater = LayoutInflater.from(parent.context)
-        val v = inflater.inflate(R.layout.item_chat_button, parent, false)
+        val v = inflater.inflate(R.layout.lib_item_chat_button, parent, false)
         return ChatButtonListViewHolder(v)
     }
 
@@ -82,7 +82,7 @@ class ChatButtonListAdapter(
                 parentLayout.layoutParams = params
             }
 
-            val font = getFontsFromApp(context, R.string.Roboto_Light)
+            val font = getFontsFromApp(context, R.string.lib_Roboto_Light)
             customMaterialButton.setCustomFont(font)
             setElevationShadow(
                 context,

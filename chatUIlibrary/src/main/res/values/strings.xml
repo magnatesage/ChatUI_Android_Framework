@@ -1,43 +1,43 @@
 <resources>
-    <string name="app_name">Chat UI Library</string>
+    <string name="lib_app_name">Chat UI Library</string>
 
     <!--========================================= Fonts =========================================-->
-    <string name="Roboto_Black" translatable="false">Roboto-Black.ttf</string>
-    <string name="Roboto_BlackItalic" translatable="false">Roboto-BlackItalic.ttf</string>
-    <string name="Roboto_Bold" translatable="false">Roboto-Bold.ttf</string>
-    <string name="Roboto_BoldItalic" translatable="false">Roboto-BoldItalic.ttf</string>
-    <string name="Roboto_Italic" translatable="false">Roboto-Italic.ttf</string>
-    <string name="Roboto_Light" translatable="false">Roboto-Light.ttf</string>
-    <string name="Roboto_LightItalic" translatable="false">Roboto-LightItalic.ttf</string>
-    <string name="Roboto_Medium" translatable="false">Roboto-Medium.ttf</string>
-    <string name="Roboto_MediumItalic" translatable="false">Roboto-MediumItalic.ttf</string>
-    <string name="Roboto_Regular" translatable="false">Roboto-Regular.ttf</string>
-    <string name="Roboto_Thin" translatable="false">Roboto-Thin.ttf</string>
-    <string name="Roboto_ThinItalic" translatable="false">Roboto-ThinItalic.ttf</string>
-    <string name="icons" translatable="false">icons.ttf</string>
-    <string name="icons_new" translatable="false">icons_new.ttf</string>
-    <string name="select_company">Select Company</string>
-    <string name="next">Next</string>
-    <string name="ok">OK</string>
-    <string name="please_set_company_id">Please set company id.</string>
-    <string name="chat_room">Chat Room</string>
-    <string name="lorem_ipsum">Lorem ipsum</string>
-    <string name="button_title">Button</string>
-    <string name="title">Title</string>
-    <string name="full_view">Full View</string>
-    <string name="card_view_content">Your content will appear here, you can see it here for now as preview.
+    <string name="lib_Roboto_Black" translatable="false">Roboto-Black.ttf</string>
+    <string name="lib_Roboto_BlackItalic" translatable="false">Roboto-BlackItalic.ttf</string>
+    <string name="lib_Roboto_Bold" translatable="false">Roboto-Bold.ttf</string>
+    <string name="lib_Roboto_BoldItalic" translatable="false">Roboto-BoldItalic.ttf</string>
+    <string name="lib_Roboto_Italic" translatable="false">Roboto-Italic.ttf</string>
+    <string name="lib_Roboto_Light" translatable="false">Roboto-Light.ttf</string>
+    <string name="lib_Roboto_LightItalic" translatable="false">Roboto-LightItalic.ttf</string>
+    <string name="lib_Roboto_Medium" translatable="false">Roboto-Medium.ttf</string>
+    <string name="lib_Roboto_MediumItalic" translatable="false">Roboto-MediumItalic.ttf</string>
+    <string name="lib_Roboto_Regular" translatable="false">Roboto-Regular.ttf</string>
+    <string name="lib_Roboto_Thin" translatable="false">Roboto-Thin.ttf</string>
+    <string name="lib_Roboto_ThinItalic" translatable="false">Roboto-ThinItalic.ttf</string>
+    <string name="lib_icons" translatable="false">icons.ttf</string>
+    <string name="lib_icons_new" translatable="false">icons_new.ttf</string>
+    <string name="lib_select_company">Select Company</string>
+    <string name="lib_next">Next</string>
+    <string name="lib_ok">OK</string>
+    <string name="lib_please_set_company_id">Please set company id.</string>
+    <string name="lib_chat_room">Chat Room</string>
+    <string name="lib_lorem_ipsum">Lorem ipsum</string>
+    <string name="lib_button_title">Button</string>
+    <string name="lib_title">Title</string>
+    <string name="lib_full_view">Full View</string>
+    <string name="lib_card_view_content">Your content will appear here, you can see it here for now as preview.
         Your content will appear here, you can see it here for now as preview.
         Your content will appear here, you can see it here for now as preview.
         Your content will appear here, you can see it here for now as preview.</string>
-    <string name="error_api_msg">Something went wrong. Please try again.</string>
-    <string name="under_development">Under development</string>
-    <string name="error_internet_connection">Please check your internet connection.</string>
-    <string name="logout">Logout</string>
-    <string name="logout_msg">Are you sure you want to Logout?</string>
-    <string name="yes">Yes</string>
-    <string name="no">No</string>
-    <string name="back_icon">T</string>
-    <string name="today">Today</string>
-    <string name="yesterday">Yesterday</string>
-    <string name="circle_checkmark_icon" translatable="false">E</string>
+    <string name="lib_error_api_msg">Something went wrong. Please try again.</string>
+    <string name="lib_under_development">Under development</string>
+    <string name="lib_error_internet_connection">Please check your internet connection.</string>
+    <string name="lib_logout">Logout</string>
+    <string name="lib_logout_msg">Are you sure you want to Logout?</string>
+    <string name="lib_yes">Yes</string>
+    <string name="lib_no">No</string>
+    <string name="lib_back_icon">T</string>
+    <string name="lib_today">Today</string>
+    <string name="lib_yesterday">Yesterday</string>
+    <string name="lib_circle_checkmark_icon" translatable="false">E</string>
 </resources>
