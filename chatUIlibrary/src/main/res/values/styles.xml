@@ -33,27 +33,27 @@
     </style>
 
     <!-- For Circle CardView in SplashScreenPreviewActivity -->
-    <style name="CardViewCircle" parent="Widget.MaterialComponents.CardView">
-        <item name="shapeAppearance">@style/CircleShapeCardView</item>
+    <style name="lib_CardViewCircle" parent="Widget.MaterialComponents.CardView">
+        <item name="shapeAppearance">@style/lib_CircleShapeCardView</item>
     </style>
 
-    <style name="RoundedCorners_5sdp" parent="">
+    <style name="lib_RoundedCorners_5sdp" parent="">
         <item name="cornerFamily">rounded</item>
         <item name="cornerSize">@dimen/_5sdp</item>
     </style>
 
-    <style name="CircleShapeImageView" parent="">
+    <style name="lib_CircleShapeImageView" parent="">
         <item name="cornerFamily">rounded</item>
         <item name="cornerSize">50%</item>
     </style>
 
-    <style name="TopLeftBottomRightRoundedCorners_10sdp" parent="">
+    <style name="lib_TopLeftBottomRightRoundedCorners_10sdp" parent="">
         <item name="cornerFamily">rounded</item>
         <item name="cornerSizeTopLeft">@dimen/_10sdp</item>
         <item name="cornerSizeBottomRight">@dimen/_10sdp</item>
     </style>
     
-    <style name="CircleShapeCardView">
+    <style name="lib_CircleShapeCardView">
         <item name="cornerFamily">rounded</item>
         <item name="cornerSize">50%</item>
     </style>

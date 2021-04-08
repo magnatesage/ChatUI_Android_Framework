@@ -37,7 +37,7 @@
             android:layout_height="@dimen/_10sdp"
             android:background="@color/lib_colorWhite"
             android:src="@color/lib_colorWhite"
-            app:shapeAppearanceOverlay="@style/CircleShapeImageView" />
+            app:shapeAppearanceOverlay="@style/lib_CircleShapeImageView" />
 
         <com.example.chatuilib.customviews.CustomShapeableImageView
             android:id="@+id/iv_circle_2"
@@ -47,7 +47,7 @@
             android:layout_centerHorizontal="true"
             android:background="@color/lib_colorWhite"
             android:src="@color/lib_colorWhite"
-            app:shapeAppearanceOverlay="@style/CircleShapeImageView" />
+            app:shapeAppearanceOverlay="@style/lib_CircleShapeImageView" />
 
 
         <com.example.chatuilib.customviews.CustomShapeableImageView
@@ -60,7 +60,7 @@
             android:layout_marginEnd="@dimen/_6sdp"
             android:background="@color/lib_colorWhite"
             android:src="@color/lib_colorWhite"
-            app:shapeAppearanceOverlay="@style/CircleShapeImageView" />
+            app:shapeAppearanceOverlay="@style/lib_CircleShapeImageView" />
 
     </RelativeLayout>
 

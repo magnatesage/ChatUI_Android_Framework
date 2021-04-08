@@ -20,7 +20,7 @@
             android:layout_height="@dimen/_40sdp"
             android:background="@color/lib_colorWhite"
             android:src="@drawable/lib_ic_user"
-            app:shapeAppearanceOverlay="@style/CircleShapeImageView"
+            app:shapeAppearanceOverlay="@style/lib_CircleShapeImageView"
             app:strokeColor="@android:color/black"
             app:strokeWidth="1dp" />
 

@@ -74,7 +74,7 @@
                         android:layout_marginEnd="@dimen/_2sdp"
                         android:layout_weight="0.8"
                         android:scaleType="centerCrop"
-                        app:shapeAppearanceOverlay="@style/RoundedCorners_5sdp" />
+                        app:shapeAppearanceOverlay="@style/lib_RoundedCorners_5sdp" />
 
                     <com.google.android.material.card.MaterialCardView
                         android:id="@+id/cv_rounded_rect"
@@ -202,7 +202,7 @@
                     android:layout_marginEnd="@dimen/_10sdp"
                     android:scaleType="centerCrop"
                     android:src="@drawable/lib_flash_small"
-                    app:shapeAppearanceOverlay="@style/TopLeftBottomRightRoundedCorners_10sdp" />
+                    app:shapeAppearanceOverlay="@style/lib_TopLeftBottomRightRoundedCorners_10sdp" />
 
                 <LinearLayout
                     android:id="@+id/ll_semi_rounded_rect"
@@ -288,7 +288,7 @@
                         android:layout_marginEnd="@dimen/_2sdp"
                         android:background="@color/lib_colorBorder"
                         android:src="@drawable/lib_flash_small"
-                        app:shapeAppearanceOverlay="@style/CircleShapeImageView" />
+                        app:shapeAppearanceOverlay="@style/lib_CircleShapeImageView" />
 
                     <com.google.android.material.card.MaterialCardView
                         android:id="@+id/cv_oval_rect"
@@ -354,7 +354,7 @@
                     android:layout_marginEnd="@dimen/_10sdp"
                     android:background="@color/lib_colorBorder"
                     android:src="@drawable/lib_flash_small"
-                    app:shapeAppearanceOverlay="@style/CircleShapeImageView" />
+                    app:shapeAppearanceOverlay="@style/lib_CircleShapeImageView" />
 
                 <LinearLayout
                     android:id="@+id/ll_circle_rect"
