@@ -132,6 +132,10 @@ open class ChatActivity : AppCompatActivity() {
         flashButtonImageView = ivSemiRoundedRectFlash
         editTextView = etRoundedRect
 
+        tvBack.setOnClickListener {
+            finish()
+        }
+
         if (companyId.isNotBlank()) {
             val hashMap: HashMap<String, String> = HashMap()
             hashMap["application_id"] = companyId
@@ -146,7 +150,22 @@ open class ChatActivity : AppCompatActivity() {
                             val data = jsonObject.optJSONObject("data")
                             if (status == "success" && statusCode == 200) {
 
-                                val chatBubbleObject = data?.optJSONObject("Chat Bubble")
+                                val headerTabBarObject = data?.optJSONObject("Header & Tab Bar")
+                                val headerTabBarModel = HeaderTabBarModel(
+                                    headerTabBarObject?.optString("headerBgColor")!!,
+                                    headerTabBarObject.optString("headerFontColor"),
+                                    headerTabBarObject.optString("headerFontSize"),
+                                    headerTabBarObject.optString("tabBgColor"),
+                                    headerTabBarObject.optString("tabFontColor"),
+                                    headerTabBarObject.optString("tabFontSize")
+                                )
+
+                                titleLayout.setBackgroundColor(getParsedColorValue(headerTabBarModel.headerBgColor))
+                                tvTitle.setTextColor(getParsedColorValue(headerTabBarModel.headerFontColor))
+                                tvTitle.textSize = headerTabBarModel.headerFontSize.toFloat()
+                                tvBack.setTextColor(getParsedColorValue(headerTabBarModel.headerFontColor))
+
+                                val chatBubbleObject = data.optJSONObject("Chat Bubble")
                                 val chatBubbleConfigModel = ChatBubbleConfigModel(
                                     chatBubbleObject?.optInt("chatBubbleStyle")!!,
                                     chatBubbleObject.optString("chatBotBgType"),
@@ -441,7 +460,6 @@ open class ChatActivity : AppCompatActivity() {
         if (flashBtnOnClickListener != null) {
             flashButtonImageView.setOnClickListener(flashBtnOnClickListener)
         }
-        editTextView?.setText(organizationName)
     }
 
     /**

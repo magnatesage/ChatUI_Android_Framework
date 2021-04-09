@@ -132,7 +132,7 @@ class ChatListAdapter(
             val tvChatBubble =
                 chatBubbleLayout.findViewById<CustomTextView>(R.id.tv_chat_bubble)
 
-            tvChatBubble.text = chatListModel.data
+            "${chatListModel.senderName} : ${chatListModel.data}".also { tvChatBubble.text = it }
             tvChatBubble.textSize = getSizeInSDP(context, R.dimen._5ssp).toFloat()
 
             var llChatBubble: LinearLayout? = null

@@ -42,14 +42,16 @@ class MainActivity : ChatActivity() {
             addMessage(
                 MessageModel(
                     data = "Welcome to Chatbot", isSender = false,
-                    isCardView = false, cardViewHeader = "", date = "2021-03-31T11:55:53.004Z"
+                    isCardView = false, cardViewHeader = "",
+                    date = "2021-03-31T11:55:53.004Z", senderName = "Test User"
                 )
             )
             Handler(Looper.getMainLooper()).postDelayed({
                 addMessage(
                     MessageModel(
                         data = "Please Enter your Org Name", isSender = false,
-                        isCardView = false, cardViewHeader = "", date = yesterdayDate
+                        isCardView = false, cardViewHeader = "",
+                        date = yesterdayDate, senderName = "Test User"
                     )
                 )
             }, 3000)
@@ -71,7 +73,8 @@ class MainActivity : ChatActivity() {
                     MessageModel(
                         etValue, isSender = true,
                         isCardView = false,
-                        cardViewHeader = "", date = time
+                        cardViewHeader = "",
+                        date = time, senderName = "Test User"
                     )
                 )
             }
@@ -80,7 +83,8 @@ class MainActivity : ChatActivity() {
                     chatScreen.addMessage(
                         MessageModel(
                             data = "Welcome $etValue", isSender = false,
-                            isCardView = true, cardViewHeader = "", date = todayDate
+                            isCardView = true, cardViewHeader = "",
+                            date = todayDate, senderName = "Test User"
                         )
                     )
                 }
@@ -96,15 +100,12 @@ class MainActivity : ChatActivity() {
                 chatScreen.addMessage(
                     MessageModel(
                         data = buttonTitle, isSender = true,
-                        isCardView = false, cardViewHeader = "", date = todayDate
+                        isCardView = false, cardViewHeader = "",
+                        date = todayDate, senderName = "Test User"
                     )
                 )
             }
         })
-
-        chatScreen.getBackButton().setOnClickListener {
-            this.finish()
-        }
 
         chatScreen.apply {
             Log.e("CompanyId:: ", getCompanyId())
