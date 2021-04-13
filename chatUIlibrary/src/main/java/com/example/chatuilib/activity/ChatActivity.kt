@@ -144,6 +144,8 @@ open class ChatActivity : AppCompatActivity() {
                     override fun onSuccessResponse(output: String) {
                         val jsonObject = JSONObject(output)
                         try {
+                            AppLog.e("Response :: ", jsonObject.toString())
+
                             val status = jsonObject.optString("status")
                             val statusCode = jsonObject.optInt("status_code")
                             val message = jsonObject.optString("message")
@@ -224,8 +226,6 @@ open class ChatActivity : AppCompatActivity() {
                                     chatBubbleConfigModel,
                                     cardViewConfigModel
                                 )
-                            } else {
-                                AppLog.e("Response :: ", jsonObject.toString())
                             }
                         } catch (e: Exception) {
                             e.printStackTrace()
@@ -239,7 +239,6 @@ open class ChatActivity : AppCompatActivity() {
         }
 
         rlConversationBar.visibility = View.VISIBLE
-        rlRoundedRect.visibility = View.VISIBLE
     }
 
     /**
@@ -297,7 +296,6 @@ open class ChatActivity : AppCompatActivity() {
      */
     private fun setUpButtonShapesRecyclerViewDisplay(buttonConfigModel: ButtonConfigModel) {
         rlConversationBar.visibility = View.GONE
-        rlButtonList.visibility = View.VISIBLE
         changeBg(
             rlButtonList,
             getDesiredColorFromXML(this, R.color.lib_colorWhite)

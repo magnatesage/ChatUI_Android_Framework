@@ -57,9 +57,8 @@ class MainActivity : ChatActivity() {
             }, 3000)
         }
 
-        et = chatScreen.getEditText()
-
         chatScreen.getSendButtonImageView().setOnClickListener {
+            et = chatScreen.getEditText()
             val etValue = et?.text.toString()
             et?.text?.clear()
             var time = ""
