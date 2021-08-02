@@ -39,8 +39,7 @@ import kotlin.collections.ArrayList
 
 open class ChatActivity : AppCompatActivity() {
     private val TAG = ChatActivity::class.java.simpleName
-    private var companyId = ""
-    private var apiUrl = ""
+    private var jsonObject: JSONObject? = null
     private var chatButtonListAdapter: ChatButtonListAdapter? = null
     private var chatListAdapter: ChatListAdapter? = null
     private var chatList: ArrayList<MessageModel> = ArrayList()
@@ -136,106 +135,94 @@ open class ChatActivity : AppCompatActivity() {
             finish()
         }
 
-        if (companyId.isNotBlank()) {
-            val hashMap: HashMap<String, String> = HashMap()
-            hashMap["application_id"] = companyId
-            httpRequest = HTTPRequest(apiUrl, hashMap,
-                object : HTTPCallback {
-                    override fun onSuccessResponse(output: String) {
-                        val jsonObject = JSONObject(output)
-                        try {
-                            AppLog.e("Response :: ", jsonObject.toString())
+        if (jsonObject == null) {
+            jsonObject = Utils.getJSONObject(this)
+        }
 
-                            val status = jsonObject.optString("status")
-                            val statusCode = jsonObject.optInt("status_code")
-                            val message = jsonObject.optString("message")
-                            val data = jsonObject.optJSONObject("data")
-                            if (status == "success" && statusCode == 200) {
+        try {
+            AppLog.e("Chat Object :: ", jsonObject.toString())
 
-                                val headerTabBarObject = data?.optJSONObject("Header & Tab Bar")
-                                val headerTabBarModel = HeaderTabBarModel(
-                                    headerTabBarObject?.optString("headerBgColor")!!,
-                                    headerTabBarObject.optString("headerFontColor"),
-                                    headerTabBarObject.optString("headerFontSize"),
-                                    headerTabBarObject.optString("tabBgColor"),
-                                    headerTabBarObject.optString("tabFontColor"),
-                                    headerTabBarObject.optString("tabFontSize")
-                                )
+            val themeJsonObject = jsonObject!!.optJSONObject("theme_color")
 
-                                titleLayout.setBackgroundColor(getParsedColorValue(headerTabBarModel.headerBgColor))
-                                tvTitle.setTextColor(getParsedColorValue(headerTabBarModel.headerFontColor))
-                                tvTitle.textSize = headerTabBarModel.headerFontSize.toFloat()
-                                tvBack.setTextColor(getParsedColorValue(headerTabBarModel.headerFontColor))
+            val themeModel = ThemeModel(
+                themeJsonObject?.optString("primary_color"),
+                themeJsonObject?.optString("secondary_color"),
+                themeJsonObject?.optString("common_font_color")
+            )
 
-                                val chatBubbleObject = data.optJSONObject("Chat Bubble")
-                                val chatBubbleConfigModel = ChatBubbleConfigModel(
-                                    chatBubbleObject?.optInt("chatBubbleStyle")!!,
-                                    chatBubbleObject.optString("chatBotBgType"),
-                                    chatBubbleObject.optString("chatBotBgColor"),
-                                    chatBubbleObject.optString("chatBotBgImageUrl"),
-                                    chatBubbleObject.optString("senderChatBubbleColor"),
-                                    chatBubbleObject.optString("senderTextColor"),
-                                    chatBubbleObject.optString("receiverChatBubbleColor"),
-                                    chatBubbleObject.optString("receiverTextColor"),
-                                    chatBubbleObject.optBoolean("cardBgDropShadow")
-                                )
-                                setBackgroundOfRecyclerView(chatBubbleConfigModel)
+            titleLayout.setBackgroundColor(getParsedColorValue(themeModel.secondaryColor!!))
+            tvTitle.setTextColor(getParsedColorValue(themeModel.primaryColor!!))
+            jsonObject?.optJSONObject("font_size")?.optString("title_header")?.let {
+                Utils.getFontSizeInSSP(
+                    it
+                )
+            }?.let {
+                Utils.setTextSizeInSSP(tvTitle,
+                    it
+                )
+            }
 
-                                val buttonObject = data.optJSONObject("Button")
-                                val buttonConfigModel = ButtonConfigModel(
-                                    buttonObject?.optInt("buttonShapeSelectedBg")!!,
-                                    buttonObject.optString("normalButtonColor"),
-                                    buttonObject.optString("normalTextColor"),
-                                    buttonObject.optString("normalBorderColor"),
-                                    buttonObject.optString("normalBorderSize"),
-                                    buttonObject.optString("clickedButtonColor"),
-                                    buttonObject.optString("clickedTextColor"),
-                                    buttonObject.optString("clickedBorderColor"),
-                                    buttonObject.optString("clickedBorderSize"),
-                                    buttonObject.optString("normalIconColor"),
-                                    buttonObject.optString("clickedIconColor"),
-                                    buttonObject.optString("iconSize"),
-                                    buttonObject.optString("buttonPlacementStyle"),
-                                    buttonObject.optBoolean("buttonBgDropShadow"),
-                                    buttonObject.optInt("buttonShapeSelectedId")
-                                )
-                                setUpButtonShapesRecyclerViewDisplay(buttonConfigModel)
+            tvBack.setTextColor(getParsedColorValue(themeModel.primaryColor))
 
-                                val conversationBarStylingObject =
-                                    data.optJSONObject("Conversation Bar Styling")
-                                val conversationBarConfigModel = ConversationBarConfigModel(
-                                    conversationBarStylingObject?.optString("conversationBarShapeSelected"),
-                                    conversationBarStylingObject?.optString("floatingIconUrl")
-                                )
-                                setUpConversationBarStylingDisplay(conversationBarConfigModel)
+            val chatObject = jsonObject?.optJSONObject("chat")
 
-                                val cardViewObject = data.optJSONObject("Card View")
-                                val cardViewConfigModel = CardViewConfigModel(
-                                    cardViewObject?.optInt("cardviewShapeSelectedId")!!,
-                                    cardViewObject.optBoolean("cardviewBgDropShadow"),
-                                    cardViewObject.optString("cardviewBorderColor"),
-                                    cardViewObject.optString("cardviewBorderSize"),
-                                    cardViewObject.optString("cardviewHeaderBgColor"),
-                                    cardViewObject.optString("cardviewHeaderTextColor"),
-                                    cardViewObject.optString("cardviewHeaderTextSize"),
-                                    cardViewObject.optString("cardviewFooterButtonBgColor"),
-                                    cardViewObject.optString("cardviewFooterButtonTextColor"),
-                                    cardViewObject.optString("cardviewFooterButtonTextSize")
-                                )
-                                setupChatRecyclerViewDisplay(
-                                    chatBubbleConfigModel,
-                                    cardViewConfigModel
-                                )
-                            }
-                        } catch (e: Exception) {
-                            e.printStackTrace()
-                        }
-                    }
+            val chatBubbleObject = chatObject?.optJSONObject("chat_bubble")
+            val chatBubbleConfigModel = ChatBubbleConfigModel(
+                chatBubbleObject?.optInt("chat_bubble_style")!!,
+                chatBubbleObject.optString("chat_screen_bg_type"),
+                chatBubbleObject.optString("chat_screen_bg_color"),
+                chatBubbleObject.optString("chat_screen_bg_image_url"),
+                chatBubbleObject.optString("sender_chat_bubble_color"),
+                chatBubbleObject.optString("sender_text_color"),
+                chatBubbleObject.optString("receiver_chat_bubble_color"),
+                chatBubbleObject.optString("receiver_text_color"),
+                chatBubbleObject.optBoolean("card_bg_drop_shadow")
+            )
+            setBackgroundOfRecyclerView(chatBubbleConfigModel)
 
-                    override fun onErrorResponse(responseCode: Int, output: String) {
-                        AppLog.e(TAG, getString(R.string.lib_error_api_msg))
-                    }
-                })
+            val buttonObject = chatObject.optJSONObject("button")
+            val buttonConfigModel = ButtonConfigModel(
+                buttonObject?.optString("normal_button_color"),
+                buttonObject?.optString("normal_text_color"),
+                buttonObject?.optString("normal_border_color"),
+                buttonObject?.optString("normal_border_size"),
+                buttonObject?.optString("clicked_button_color"),
+                buttonObject?.optString("clicked_text_color"),
+                buttonObject?.optString("clicked_border_color"),
+                buttonObject?.optString("clicked_border_size"),
+                buttonObject?.optString("button_placement_style"),
+                buttonObject?.optBoolean("button_bg_drop_shadow")!!,
+                buttonObject?.optInt("button_shape_id")!!
+            )
+            setUpButtonShapesRecyclerViewDisplay(buttonConfigModel)
+
+            val conversationBarStylingObject =
+                chatObject.optJSONObject("conversation_bar")
+            val conversationBarConfigModel = ConversationBarConfigModel(
+                conversationBarStylingObject?.optString("conversation_bar_shape"),
+                conversationBarStylingObject?.optString("floating_icon_url")
+            )
+            setUpConversationBarStylingDisplay(conversationBarConfigModel)
+
+            val cardViewObject = chatObject.optJSONObject("card_view")
+            val cardViewConfigModel = CardViewConfigModel(
+                cardViewObject?.optInt("cardview_shape_id")!!,
+                cardViewObject.optBoolean("cardview_bg_drop_shadow"),
+                cardViewObject.optString("cardview_border_color"),
+                cardViewObject.optString("cardview_border_size"),
+                cardViewObject.optString("cardview_header_bg_color"),
+                cardViewObject.optString("cardview_header_text_color"),
+                cardViewObject.optString("cardview_header_text_size"),
+                cardViewObject.optString("cardview_footer_button_bg_color"),
+                cardViewObject.optString("cardview_footer_button_text_color"),
+                cardViewObject.optString("cardview_footer_button_text_size")
+            )
+            setupChatRecyclerViewDisplay(
+                chatBubbleConfigModel,
+                cardViewConfigModel
+            )
+        } catch (e: Exception) {
+            e.printStackTrace()
         }
 
         rlConversationBar.visibility = View.VISIBLE
@@ -477,18 +464,17 @@ open class ChatActivity : AppCompatActivity() {
         chatListAdapter?.notifyDataSetChanged()
     }
 
-    open inner class ChatScreen(userApiUrl: String, userCompanyId: String) {
+    open inner class ChatScreen(jsonObject: JSONObject?) {
         init {
-            companyId = userCompanyId
-            apiUrl = userApiUrl
+            this@ChatActivity.jsonObject = jsonObject
             init()
         }
 
         /**
-         * Returns Company Id
+         * Returns JSONObject
          */
-        fun getCompanyId(): String {
-            return companyId
+        fun getChatJsonObject(): JSONObject? {
+            return this@ChatActivity.jsonObject
         }
 
         /**

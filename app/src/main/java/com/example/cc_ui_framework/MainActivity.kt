@@ -4,11 +4,13 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.util.Log
-import android.view.View
 import com.example.chatuilib.activity.ChatActivity
 import com.example.chatuilib.customviews.CustomEditText
 import com.example.chatuilib.listener.OnButtonClickListener
 import com.example.chatuilib.model.MessageModel
+import org.json.JSONObject
+import java.io.IOException
+import java.nio.charset.StandardCharsets
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
@@ -33,9 +35,21 @@ class MainActivity : ChatActivity() {
         cal.add(Calendar.DATE, -1)
         val yesterdayDate = sdf.format(cal.time)
 
+        var json = ""
+        try {
+            val inputStream = assets.open("default.json")
+            val size = inputStream.available()
+            val buffer = ByteArray(size)
+            inputStream.read(buffer)
+            inputStream.close()
+            json = String(buffer, StandardCharsets.UTF_8)
+        } catch (ex: IOException) {
+            ex.printStackTrace()
+        }
+        val jsonObject = JSONObject(json)
+
         val chatScreen = ChatScreen(
-            userCompanyId = "2",
-            userApiUrl = "http://app-demo.core-chat.magnatesage.net/api/get-app-config"
+            jsonObject = jsonObject
         )
         chatScreen.apply {
             setTitle(getString(R.string.hp))
@@ -107,7 +121,7 @@ class MainActivity : ChatActivity() {
         })
 
         chatScreen.apply {
-            Log.e("CompanyId:: ", getCompanyId())
+            Log.e("Chat Json Object:: ", getChatJsonObject().toString())
             Log.e("Title:: ", getTitle())
             Log.e("ChatListRecyclerview:: ", getChatListRecyclerview().toString())
             Log.e("ButtonListRecyview:: ", getButtonListRecyclerview().toString())

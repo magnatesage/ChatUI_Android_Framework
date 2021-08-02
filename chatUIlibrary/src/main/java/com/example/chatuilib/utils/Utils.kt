@@ -17,14 +17,22 @@ import android.util.TypedValue
 import android.view.*
 import android.view.inputmethod.InputMethodManager
 import android.widget.TextView
+import androidx.appcompat.widget.AppCompatCheckBox
 import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.example.chatuilib.R
+import com.example.chatuilib.customviews.CustomButton
+import com.example.chatuilib.customviews.CustomEditText
 import com.example.chatuilib.customviews.CustomShapeableImageView
+import com.example.chatuilib.customviews.CustomTextView
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.card.MaterialCardView
+import com.google.android.material.textfield.TextInputEditText
+import org.json.JSONObject
+import java.io.IOException
 import java.net.URL
+import java.nio.charset.StandardCharsets
 import java.util.concurrent.Executors
 
 /**
@@ -345,4 +353,87 @@ internal object Utils {
         return isConnected
     }
 
+    /**
+     * This method will set Text size in SSP
+     * @param dimenSize: Int
+     */
+    fun setTextSizeInSSP(view: View, dimenSize: Int) {
+        val fontSize = getSizeInSDP(view.context, dimenSize).toFloat()
+        when (view) {
+            is CustomTextView -> {
+                view.setTextSize(
+                    TypedValue.COMPLEX_UNIT_PX,
+                    fontSize
+                )
+            }
+            is CustomEditText -> {
+                view.setTextSize(
+                    TypedValue.COMPLEX_UNIT_PX,
+                    fontSize
+                )
+            }
+            is CustomButton -> {
+                view.setTextSize(
+                    TypedValue.COMPLEX_UNIT_PX,
+                    fontSize
+                )
+            }
+        }
+    }
+
+    /**
+     * This method used to get size in ssp
+     * @param fontSize: String
+     */
+    fun getFontSizeInSSP(fontSize: String): Int {
+        return when (fontSize) {
+            "5" -> R.dimen._5ssp
+            "6" -> R.dimen._6ssp
+            "7" -> R.dimen._7ssp
+            "8" -> R.dimen._8ssp
+            "9" -> R.dimen._9ssp
+            "10" -> R.dimen._10ssp
+            "11" -> R.dimen._11ssp
+            "12" -> R.dimen._12ssp
+            "13" -> R.dimen._13ssp
+            "14" -> R.dimen._14ssp
+            "15" -> R.dimen._15ssp
+            "16" -> R.dimen._16ssp
+            "17" -> R.dimen._17ssp
+            "18" -> R.dimen._18ssp
+            "19" -> R.dimen._19ssp
+            "20" -> R.dimen._20ssp
+            "21" -> R.dimen._21ssp
+            "22" -> R.dimen._22ssp
+            "23" -> R.dimen._23ssp
+            "24" -> R.dimen._24ssp
+            "25" -> R.dimen._25ssp
+            "26" -> R.dimen._26ssp
+            "27" -> R.dimen._27ssp
+            "28" -> R.dimen._28ssp
+            "29" -> R.dimen._29ssp
+            "30" -> R.dimen._30ssp
+            else -> R.dimen._10ssp
+        }
+    }
+
+    /**
+     * This method is used to get default json object
+     *
+     * @param activity
+     */
+    fun getJSONObject(activity: Activity): JSONObject {
+        var json = ""
+        try {
+            val inputStream = activity.assets.open("default.json")
+            val size = inputStream.available()
+            val buffer = ByteArray(size)
+            inputStream.read(buffer)
+            inputStream.close()
+            json = String(buffer, StandardCharsets.UTF_8)
+        } catch (ex: IOException) {
+            ex.printStackTrace()
+        }
+        return JSONObject(json)
+    }
 }

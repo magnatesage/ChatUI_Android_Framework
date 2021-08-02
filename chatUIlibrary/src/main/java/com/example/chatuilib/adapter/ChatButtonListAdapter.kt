@@ -100,7 +100,7 @@ class ChatButtonListAdapter(
                 }, 1000)
             }
 
-            when (buttonConfigModel.buttonShapeSelectedId) {
+            when (buttonConfigModel.buttonShapeId) {
                 AppConstants.BUTTON_CORNER_RADIUS -> {
                     customMaterialButton.setCornerFamily(CornerFamily.ROUNDED)
                     customMaterialButton.setAllCornersInPercent(0.25F)

@@ -507,7 +507,7 @@ class ChatListAdapter(
                     cardViewParent.viewTreeObserver.removeOnPreDrawListener(this)
                     val headerHeight = header.height.toFloat()
                     val footerHeight = footer.height.toFloat()
-                    when (cardViewConfigModel.cardviewShapeSelectedId) {
+                    when (cardViewConfigModel.cardviewShapeId) {
                         AppConstants.CARDVIEW_CORNER_RADIUS_SMALL -> {
                             cardViewParent.setCornerFamily(CornerFamily.ROUNDED)
                             cardViewParent.setTopLeftCorner(headerHeight / 2)
