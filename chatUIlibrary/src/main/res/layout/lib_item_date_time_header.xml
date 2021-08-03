@@ -12,14 +12,14 @@
         android:layout_height="@dimen/_1sdp"
         android:layout_centerVertical="true"
         android:layout_toStartOf="@id/cv_date_time_stamp"
-        android:background="@android:color/black" />
+        android:background="@color/lib_colorBorder" />
 
     <View
         android:layout_width="wrap_content"
         android:layout_height="@dimen/_1sdp"
         android:layout_centerVertical="true"
         android:layout_toEndOf="@id/cv_date_time_stamp"
-        android:background="@android:color/black" />
+        android:background="@color/lib_colorBorder" />
 
     <com.example.chatuilib.customviews.CustomMaterialCardView
         android:id="@+id/cv_date_time_stamp"
@@ -32,7 +32,7 @@
         app:allCornerSize="50%"
         app:cardBackgroundColor="@android:color/transparent"
         app:cardElevation="0dp"
-        app:strokeColor="@android:color/black"
+        app:strokeColor="@color/lib_colorBorder"
         app:strokeWidth="@dimen/_1sdp">
 
         <com.example.chatuilib.customviews.CustomTextView
@@ -43,8 +43,8 @@
             android:layout_marginTop="@dimen/_5sdp"
             android:layout_marginEnd="@dimen/_10sdp"
             android:layout_marginBottom="@dimen/_5sdp"
-            android:textColor="@android:color/black"
-            android:textSize="@dimen/_12ssp"
+            android:textColor="@color/lib_colorBorder"
+            android:textSize="@dimen/_10ssp"
             tools:text="01 April 2021" />
 
     </com.example.chatuilib.customviews.CustomMaterialCardView>

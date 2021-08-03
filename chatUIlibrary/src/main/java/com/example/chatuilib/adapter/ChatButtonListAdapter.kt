@@ -10,14 +10,12 @@ import android.widget.RelativeLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.example.chatuilib.R
 import com.example.chatuilib.activity.ChatActivity
-import com.example.chatuilib.customviews.CustomButton
 import com.example.chatuilib.customviews.CustomMaterialButton
 import com.example.chatuilib.listener.OnButtonClickListener
 import com.example.chatuilib.model.ButtonConfigModel
 import com.example.chatuilib.utils.AppConstants
 import com.example.chatuilib.utils.Utils.changeBg
 import com.example.chatuilib.utils.Utils.changeTextColor
-import com.example.chatuilib.utils.Utils.getFontsFromApp
 import com.example.chatuilib.utils.Utils.getParsedColorValue
 import com.example.chatuilib.utils.Utils.setElevationShadow
 import com.example.chatuilib.utils.Utils.setStrokeColorAndWidth
@@ -27,7 +25,8 @@ import java.util.*
 class ChatButtonListAdapter(
     val context: Activity,
     private val buttonConfigModel: ButtonConfigModel?,
-    private val buttonTitleList: ArrayList<String>
+    private val buttonTitleList: ArrayList<String>,
+    private val fontType: String?,
 ) : RecyclerView.Adapter<ChatButtonListAdapter.ChatButtonListViewHolder>() {
 
     var onButtonClickListener: OnButtonClickListener? = null
@@ -57,7 +56,8 @@ class ChatButtonListAdapter(
                 context,
                 buttonConfigModel,
                 buttonTitleList[position],
-                onButtonClickListener
+                onButtonClickListener,
+                fontType
             )
         }
     }
@@ -68,6 +68,7 @@ class ChatButtonListAdapter(
             buttonConfigModel: ButtonConfigModel,
             buttonTitle: String,
             onButtonClickListener: OnButtonClickListener?,
+            fontType: String?,
         ) {
             val parentLayout: RelativeLayout = itemView.findViewById(R.id.rl_parent)
             val customMaterialButton: CustomMaterialButton =
@@ -75,15 +76,14 @@ class ChatButtonListAdapter(
 
             customMaterialButton.text = buttonTitle
 
-            if (buttonConfigModel.buttonPlacementStyle?.toLowerCase(Locale.ROOT) == AppConstants.HORIZONTAL) {
+            if (buttonConfigModel.buttonPlacementStyle?.lowercase(Locale.ROOT) == AppConstants.HORIZONTAL) {
                 val params = parentLayout.layoutParams
                 params.width = ViewGroup.LayoutParams.WRAP_CONTENT
                 params.height = ViewGroup.LayoutParams.WRAP_CONTENT
                 parentLayout.layoutParams = params
             }
 
-            val font = getFontsFromApp(context, R.string.lib_Roboto_Light)
-            customMaterialButton.setCustomFont(font)
+            customMaterialButton.setCustomFont("$fontType.ttf")
             setElevationShadow(
                 context,
                 customMaterialButton,
@@ -184,12 +184,6 @@ class ChatButtonListAdapter(
                 buttonShapeLayout, clickedButtonColor, clickedTextColor,
                 clickedBorderColor, clickedBorderSize!!
             )
-        }
-
-        fun setIcon(buttonShapeLayout: CustomButton, buttonConfigModel: ButtonConfigModel) {
-            val normalIconColor = getParsedColorValue(buttonConfigModel.normalIconColor!!)
-            val clickedIconColor = getParsedColorValue(buttonConfigModel.clickedIconColor!!)
-            val iconSize = buttonConfigModel.iconSize?.toInt()
         }
     }
 

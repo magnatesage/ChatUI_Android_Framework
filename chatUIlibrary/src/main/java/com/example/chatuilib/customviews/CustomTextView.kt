@@ -4,6 +4,7 @@ import android.content.Context
 import android.graphics.Typeface
 import android.util.AttributeSet
 import androidx.appcompat.widget.AppCompatTextView
+import androidx.core.text.HtmlCompat
 import com.example.chatuilib.R
 
 /**
@@ -37,11 +38,18 @@ class CustomTextView : AppCompatTextView {
     fun setCustomFont(fontName: String?) {
         var myTypeface: Typeface? = null
         try {
-            if (!fontName.isNullOrBlank())
-                myTypeface = Typeface.createFromAsset(context.assets, "fonts/" + fontName)
+            myTypeface = if (!fontName.isNullOrBlank()) {
+                Typeface.createFromAsset(context.assets, "fonts/$fontName")
+            } else {
+                Typeface.createFromAsset(context.assets, "fonts/" + context.getString(R.string.lib_Roboto_Regular))
+            }
         } catch (e: Exception) {
             e.printStackTrace()
         }
         typeface = myTypeface
+    }
+
+    override fun setText(text: CharSequence, type: BufferType?) {
+        super.setText(HtmlCompat.fromHtml(text.toString(), HtmlCompat.FROM_HTML_MODE_LEGACY), type)
     }
 }

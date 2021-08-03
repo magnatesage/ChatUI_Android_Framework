@@ -19,9 +19,9 @@
         android:paddingTop="@dimen/_6sdp"
         android:paddingBottom="@dimen/_6sdp"
         android:textColor="@color/lib_colorWhite"
-        android:text="@string/lib_back_icon"
+        android:text="@string/lib_icon_back_arrow"
         android:textSize="@dimen/_18ssp"
-        app:customTextViewFont="@string/lib_icons_new" />
+        app:customTextViewFont="@string/lib_font_icons" />
 
     <com.example.chatuilib.customviews.CustomTextView
         android:id="@+id/tv_title"
@@ -35,7 +35,21 @@
         android:text=""
         android:textColor="@color/lib_colorWhite"
         android:textSize="@dimen/_18ssp"
-        app:customTextViewFont="@string/lib_Roboto_Bold"
         tools:text="@string/lib_app_name" />
+
+    <com.example.chatuilib.customviews.CustomTextView
+        android:id="@+id/tv_menu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        android:paddingStart="@dimen/_10sdp"
+        android:paddingEnd="@dimen/_10sdp"
+        android:paddingTop="@dimen/_6sdp"
+        android:paddingBottom="@dimen/_6sdp"
+        android:textColor="@color/lib_colorWhite"
+        android:text="@string/lib_icon_menu"
+        android:textSize="@dimen/_18ssp"
+        app:customTextViewFont="@string/lib_font_icons" />
 
 </RelativeLayout>

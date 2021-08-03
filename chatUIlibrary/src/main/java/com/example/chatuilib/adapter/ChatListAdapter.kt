@@ -20,6 +20,7 @@ import com.example.chatuilib.model.CardViewConfigModel
 import com.example.chatuilib.model.ChatBubbleConfigModel
 import com.example.chatuilib.model.MessageModel
 import com.example.chatuilib.utils.AppConstants
+import com.example.chatuilib.utils.Utils
 import com.example.chatuilib.utils.Utils.changeBg
 import com.example.chatuilib.utils.Utils.changeTextColor
 import com.example.chatuilib.utils.Utils.getFontsFromApp
@@ -41,7 +42,8 @@ class ChatListAdapter(
     val context: Activity, private val chatList: ArrayList<MessageModel>,
     private val chatBubbleConfigModel: ChatBubbleConfigModel?,
     private val cardViewConfigModel: CardViewConfigModel?,
-    private val loaderList: ArrayList<Int>
+    private val loaderList: ArrayList<Int>,
+    private val fontType: String?
 ) : RecyclerView.Adapter<ChatListAdapter.ChatListViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ChatListViewHolder {
@@ -67,7 +69,8 @@ class ChatListAdapter(
                     context,
                     chatList,
                     position,
-                    cardViewConfigModel
+                    cardViewConfigModel,
+                    fontType
                 )
             }
         } else {
@@ -77,7 +80,8 @@ class ChatListAdapter(
                     chatList,
                     chatBubbleConfigModel,
                     position,
-                    loaderList
+                    loaderList,
+                    fontType
                 )
             }
         }
@@ -93,8 +97,6 @@ class ChatListAdapter(
         )!!
         private val tvDateTimeStamp: CustomTextView =
             timeStampLayout.findViewById(R.id.tv_date_time_stamp)
-        private val cvDateTimeStamp: CustomMaterialCardView =
-            timeStampLayout.findViewById(R.id.cv_date_time_stamp)
 
         @SuppressLint("ClickableViewAccessibility")
         fun bindMessageView(
@@ -102,11 +104,13 @@ class ChatListAdapter(
             chatList: ArrayList<MessageModel>,
             chatBubbleConfigModel: ChatBubbleConfigModel,
             position: Int,
-            loaderList: ArrayList<Int>
+            loaderList: ArrayList<Int>,
+            fontType: String?
         ) {
             val chatListModel = chatList[position]
             llParent.removeAllViews()
 
+            tvDateTimeStamp.setCustomFont("$fontType.ttf")
             showDateSectionHeader(chatList, position)
 
             val chatBubbleShape = when (chatBubbleConfigModel.chatBubbleStyle) {
@@ -133,7 +137,8 @@ class ChatListAdapter(
                 chatBubbleLayout.findViewById<CustomTextView>(R.id.tv_chat_bubble)
 
             "${chatListModel.senderName} : ${chatListModel.data}".also { tvChatBubble.text = it }
-            tvChatBubble.textSize = getSizeInSDP(context, R.dimen._5ssp).toFloat()
+            Utils.setTextSizeInSSP(tvChatBubble, R.dimen._12ssp)
+            tvChatBubble.setCustomFont("$fontType.ttf")
 
             var llChatBubble: LinearLayout? = null
             if (chatBubbleShape == R.layout.lib_item_chat_bubble_image) {
@@ -396,7 +401,8 @@ class ChatListAdapter(
             val sectionDateFormat = SimpleDateFormat(AppConstants.sectionDateFormat, Locale.ENGLISH)
 
             val currentMessageModelDate = sdf.parse(chatList[position].date)
-            val currentMessageModelDateInString = sectionDateFormat.format(currentMessageModelDate!!)
+            val currentMessageModelDateInString =
+                sectionDateFormat.format(currentMessageModelDate!!)
 
             val cal = Calendar.getInstance()
             cal.add(Calendar.DATE, -1)
@@ -404,9 +410,14 @@ class ChatListAdapter(
             val yesterdayDate = sectionDateFormat.format(cal.time)
 
             if (position > 0) {
-                val previousMessageModelDate = sdf.parse(chatList[position -1].date)
-                val previousMessageModelDateInString = sectionDateFormat.format(previousMessageModelDate!!)
-                if (currentMessageModelDateInString.equals(previousMessageModelDateInString, true)) {
+                val previousMessageModelDate = sdf.parse(chatList[position - 1].date)
+                val previousMessageModelDateInString =
+                    sectionDateFormat.format(previousMessageModelDate!!)
+                if (currentMessageModelDateInString.equals(
+                        previousMessageModelDateInString,
+                        true
+                    )
+                ) {
                     timeStampLayout.visibility = View.GONE
                 } else {
                     timeStampLayout.visibility = View.VISIBLE
@@ -431,7 +442,8 @@ class ChatListAdapter(
             context: Activity,
             chatList: ArrayList<MessageModel>,
             position: Int,
-            cardViewConfigModel: CardViewConfigModel
+            cardViewConfigModel: CardViewConfigModel,
+            fontType: String?
         ) {
             val cardViewParent: CustomMaterialCardView = itemView.findViewById(R.id.cv_parent)
             val header: CustomMaterialButton = itemView.findViewById(R.id.btn_header)
@@ -467,36 +479,23 @@ class ChatListAdapter(
 
             header.text = messageModel.cardViewHeader
             footer.text = getStringFromXML(context, R.string.lib_full_view)
-            header.textSize = cardViewConfigModel.cardviewHeaderTextSize!!.toFloat()
-            footer.textSize = cardViewConfigModel.cardviewFooterButtonTextSize!!.toFloat()
+            Utils.setTextSizeInSSP(
+                header,
+                Utils.getFontSizeInSSP(cardViewConfigModel.cardviewHeaderTextSize!!)
+            )
+            Utils.setTextSizeInSSP(
+                footer,
+                Utils.getFontSizeInSSP(cardViewConfigModel.cardviewFooterButtonTextSize!!)
+            )
+            header.setCustomFont("$fontType.ttf")
+            footer.setCustomFont("$fontType.ttf")
             content.gravity = Gravity.CENTER
             header.isAllCaps = false
             footer.isAllCaps = false
 
-            if (messageModel.data == "attendance") {
-                content.visibility = View.GONE
-                val imageView = ImageView(context)
-                val params = LinearLayout.LayoutParams(
-                    LinearLayout.LayoutParams.MATCH_PARENT,
-                    LinearLayout.LayoutParams.MATCH_PARENT
-                )
-                params.setMargins(
-                    getSizeInSDP(context, R.dimen._5sdp), getSizeInSDP(context, R.dimen._5sdp),
-                    getSizeInSDP(context, R.dimen._5sdp), getSizeInSDP(context, R.dimen._5sdp)
-                )
-                imageView.layoutParams = params
-                imageView.setImageDrawable(
-                    ContextCompat.getDrawable(
-                        context,
-                        R.drawable.lib_attendance
-                    )
-                )
-                llContent.addView(imageView)
-            } else {
-                content.visibility = View.VISIBLE
-                content.text = messageModel.data
-                content.setCustomFont(getFontsFromApp(context, R.string.lib_Roboto_Regular))
-            }
+            content.visibility = View.VISIBLE
+            content.text = messageModel.data
+            content.setCustomFont("$fontType.ttf")
 
             changeTextColor(content, Color.BLACK)
             changeBg(llContent, Color.WHITE)

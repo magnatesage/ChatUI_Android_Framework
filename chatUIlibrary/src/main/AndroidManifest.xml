@@ -10,7 +10,9 @@
         android:largeHeap="true"
         android:usesCleartextTraffic="true"
         tools:targetApi="m">
-        <activity android:name="com.example.chatuilib.activity.ChatActivity" />
+        <activity
+            android:name="com.example.chatuilib.activity.ChatActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize" />
     </application>
 
 </manifest>

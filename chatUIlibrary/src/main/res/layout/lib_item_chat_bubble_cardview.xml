@@ -13,8 +13,8 @@
         <com.example.chatuilib.customviews.CustomTextView
             android:id="@+id/tv_chat_bubble"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_margin="@dimen/_5sdp"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/_8sdp"
             android:fadeScrollbars="false"
             android:scrollbars="vertical"
             android:text="@string/lib_lorem_ipsum" />

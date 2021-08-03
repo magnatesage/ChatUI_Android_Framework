@@ -1,10 +1,6 @@
 {
   "company_id": "1",
   "font_family": "Roboto",
-  "setting": {
-    "backgroundAppTimeoutNotUsedMinutes": 5,
-    "foregroundAppTimeoutNotUsedMinutes": 10
-  },
   "theme_color": {
     "primary_color": "#07B8E4",
     "secondary_color": "#FFFFFF",
@@ -20,136 +16,6 @@
     "bottom_menu": "12",
     "tab": "12",
     "common": "10"
-  },
-  "splash": {
-    "logo_url": "https://seeklogo.com/images/S/skype-icon-logo-62E333BBBA-seeklogo.com.png",
-    "logo_bg_shape": "3",
-    "logo_bg_drop_shadow": true,
-    "org_name": "xyz.com",
-    "org_name_font_color": "#ff000000",
-    "org_name_font_size": "18",
-    "org_name_font_type": "Roboto-BoldItalic",
-    "splash_screen_bg_color": "#ffffffff",
-    "splash_screen_bg_image_url": "",
-    "splash_screen_bg_type": "Color"
-  },
-  "side_menu": [
-    {
-      "text_value": "Account",
-      "icon_type": "text",
-      "icon_value": "e90f",
-      "font_type": "regular"
-    },
-    {
-      "text_value": "About Us",
-      "icon_type": "text",
-      "icon_value": "e90d",
-      "font_type": "regular"
-    },
-    {
-      "text_value": "Select Topics",
-      "icon_type": "text",
-      "icon_value": "e903",
-      "font_type": "regular"
-    },
-    {
-      "text_value": "Privacy",
-      "icon_type": "text",
-      "icon_value": "e907",
-      "font_type": "regular"
-    },
-    {
-      "text_value": "T&C",
-      "icon_type": "text",
-      "icon_value": "e900",
-      "font_type": "regular"
-    },
-    {
-      "text_value": "Notification",
-      "icon_type": "text",
-      "icon_value": "e90a",
-      "font_type": "regular"
-    },
-    {
-      "text_value": "EULA",
-      "icon_type": "text",
-      "icon_value": "e906",
-      "font_type": "regular"
-    },
-    {
-      "text_value": "Download Data",
-      "icon_type": "text",
-      "icon_value": "e974",
-      "font_type": "regular"
-    }
-  ],
-  "bottom_tab_bar": [
-    {
-      "text_value": "Dashboard",
-      "icon_type": "text",
-      "icon_value": "e902",
-      "font_type": "regular"
-    },
-    {
-      "text_value": "History",
-      "icon_type": "text",
-      "icon_value": "e910",
-      "font_type": "regular"
-    },
-    {
-      "text_value": "Live chat",
-      "icon_type": "text",
-      "icon_value": "e917",
-      "font_type": "regular"
-    }
-  ],
-  "dashboard": {
-    "tab_1": {
-      "text_value": "Public",
-      "font_type": "regular"
-    },
-    "tab_2": {
-      "text_value": "Support",
-      "font_type": "regular"
-    }
-  },
-  "icons": {
-    "profile": {
-      "icon_type": "text",
-      "icon_value": "f2bd"
-    },
-    "notification_selected": {
-      "icon_type": "text",
-      "icon_value": "f0f3"
-    },
-    "notification_unselected": {
-      "icon_type": "text",
-      "icon_value": "e927"
-    },
-    "favourites_selected": {
-      "icon_type": "text",
-      "icon_value": "e973"
-    },
-    "favourites_unselected": {
-      "icon_type": "text",
-      "icon_value": "e972"
-    },
-    "notes": {
-      "icon_type": "text",
-      "icon_value": "e912"
-    },
-    "live": {
-      "icon_type": "text",
-      "icon_value": "e908"
-    },
-    "timer": {
-      "icon_type": "text",
-      "icon_value": "e971"
-    },
-    "message": {
-      "icon_type": "text",
-      "icon_value": "f27a"
-    }
   },
   "chat": {
     "chat_bubble": {
@@ -191,14 +57,6 @@
     "conversation_bar": {
       "conversation_bar_shape": "style4",
       "floating_icon_url": "https://seeklogo.com/images/S/skype-icon-logo-62E333BBBA-seeklogo.com.png"
-    },
-    "top_menu": [
-      "Delete All Chat",
-      "Search",
-      "Report",
-      "Info",
-      "Download Chat",
-      "Add Notes"
-    ]
+    }
   }
 }

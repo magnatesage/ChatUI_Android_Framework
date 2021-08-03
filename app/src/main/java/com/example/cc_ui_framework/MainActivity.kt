@@ -4,9 +4,11 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.util.Log
+import android.widget.Toast
 import com.example.chatuilib.activity.ChatActivity
 import com.example.chatuilib.customviews.CustomEditText
 import com.example.chatuilib.listener.OnButtonClickListener
+import com.example.chatuilib.listener.OnTopMenuItemClickListener
 import com.example.chatuilib.model.MessageModel
 import org.json.JSONObject
 import java.io.IOException
@@ -24,10 +26,10 @@ class MainActivity : ChatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        buttonTitleList.add("2001")
-        buttonTitleList.add("2002")
-        buttonTitleList.add("2003")
-        buttonTitleList.add("2004")
+        buttonTitleList.add("Button 1")
+        buttonTitleList.add("Button 2")
+        buttonTitleList.add("Button 3")
+        buttonTitleList.add("Button 4")
 
         val sdf = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.ENGLISH)
         val todayDate = sdf.format(Date())
@@ -118,6 +120,13 @@ class MainActivity : ChatActivity() {
                     )
                 )
             }
+        })
+
+        chatScreen.setTopMenuItemClickListener(object : OnTopMenuItemClickListener {
+            override fun onTopMenuItemClick(position: Int) {
+                Toast.makeText(this@MainActivity, "Menu Item $position clicked", Toast.LENGTH_SHORT).show()
+            }
+
         })
 
         chatScreen.apply {

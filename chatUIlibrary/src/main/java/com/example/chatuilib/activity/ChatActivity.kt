@@ -3,9 +3,12 @@ package com.example.chatuilib.activity
 import android.annotation.SuppressLint
 import android.content.res.Configuration
 import android.os.Bundle
+import android.view.MenuInflater
 import android.view.View
 import android.widget.RelativeLayout
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.PopupMenu
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.chatuilib.R
@@ -14,8 +17,8 @@ import com.example.chatuilib.adapter.ChatListAdapter
 import com.example.chatuilib.customviews.CustomEditText
 import com.example.chatuilib.customviews.CustomShapeableImageView
 import com.example.chatuilib.customviews.CustomTextView
-import com.example.chatuilib.listener.HTTPCallback
 import com.example.chatuilib.listener.OnButtonClickListener
+import com.example.chatuilib.listener.OnTopMenuItemClickListener
 import com.example.chatuilib.model.*
 import com.example.chatuilib.utils.*
 import com.example.chatuilib.utils.AppConstants.CIRCLE_RECT
@@ -37,17 +40,17 @@ import org.json.JSONObject
 import java.util.*
 import kotlin.collections.ArrayList
 
+
 open class ChatActivity : AppCompatActivity() {
     private val TAG = ChatActivity::class.java.simpleName
     private var jsonObject: JSONObject? = null
+    private var onTopMenuItemClickListener: OnTopMenuItemClickListener? = null
     private var chatButtonListAdapter: ChatButtonListAdapter? = null
     private var chatListAdapter: ChatListAdapter? = null
     private var chatList: ArrayList<MessageModel> = ArrayList()
     private var loaderList: ArrayList<Int> = ArrayList()
     private var buttonTitleList: ArrayList<String> = ArrayList()
-    private var organizationName = "ABC"
     private var editTextView: CustomEditText? = null
-    private lateinit var httpRequest: HTTPRequest
     private lateinit var etRoundedRect: CustomEditText
     private lateinit var etSquareRect: CustomEditText
     private lateinit var etSemiRoundedRect: CustomEditText
@@ -82,6 +85,7 @@ open class ChatActivity : AppCompatActivity() {
     private lateinit var titleLayout: View
     private lateinit var tvBack: CustomTextView
     private lateinit var tvTitle: CustomTextView
+    private lateinit var tvMenu: CustomTextView
 
     override fun setContentView(layoutResID: Int) {}
 
@@ -91,12 +95,13 @@ open class ChatActivity : AppCompatActivity() {
     }
 
     private fun init() {
-        chatListAdapter = ChatListAdapter(this, chatList, null, null, loaderList)
-        chatButtonListAdapter = ChatButtonListAdapter(this, null, buttonTitleList)
+        chatListAdapter = ChatListAdapter(this, chatList, null, null, loaderList, "Roboto")
+        chatButtonListAdapter = ChatButtonListAdapter(this, null, buttonTitleList, "Roboto")
 
         titleLayout = findViewById(R.id.title_layout)
         tvBack = titleLayout.findViewById(R.id.tv_back)
         tvTitle = titleLayout.findViewById(R.id.tv_title)
+        tvMenu = titleLayout.findViewById(R.id.tv_menu)
         etRoundedRect = findViewById(R.id.et_rounded_rect)
         etSquareRect = findViewById(R.id.et_square_rect)
         etSemiRoundedRect = findViewById(R.id.et_semi_rounded_rect)
@@ -131,6 +136,10 @@ open class ChatActivity : AppCompatActivity() {
         flashButtonImageView = ivSemiRoundedRectFlash
         editTextView = etRoundedRect
 
+        tvMenu.setOnClickListener {
+            showPopup(tvMenu)
+        }
+
         tvBack.setOnClickListener {
             finish()
         }
@@ -140,8 +149,6 @@ open class ChatActivity : AppCompatActivity() {
         }
 
         try {
-            AppLog.e("Chat Object :: ", jsonObject.toString())
-
             val themeJsonObject = jsonObject!!.optJSONObject("theme_color")
 
             val themeModel = ThemeModel(
@@ -152,17 +159,20 @@ open class ChatActivity : AppCompatActivity() {
 
             titleLayout.setBackgroundColor(getParsedColorValue(themeModel.secondaryColor!!))
             tvTitle.setTextColor(getParsedColorValue(themeModel.primaryColor!!))
+            tvTitle.setCustomFont("${jsonObject?.optString("font_family")}.ttf")
             jsonObject?.optJSONObject("font_size")?.optString("title_header")?.let {
                 Utils.getFontSizeInSSP(
                     it
                 )
             }?.let {
-                Utils.setTextSizeInSSP(tvTitle,
+                Utils.setTextSizeInSSP(
+                    tvTitle,
                     it
                 )
             }
 
             tvBack.setTextColor(getParsedColorValue(themeModel.primaryColor))
+            tvMenu.setTextColor(getParsedColorValue(themeModel.primaryColor))
 
             val chatObject = jsonObject?.optJSONObject("chat")
 
@@ -192,7 +202,7 @@ open class ChatActivity : AppCompatActivity() {
                 buttonObject?.optString("clicked_border_size"),
                 buttonObject?.optString("button_placement_style"),
                 buttonObject?.optBoolean("button_bg_drop_shadow")!!,
-                buttonObject?.optInt("button_shape_id")!!
+                buttonObject.optInt("button_shape_id")
             )
             setUpButtonShapesRecyclerViewDisplay(buttonConfigModel)
 
@@ -256,23 +266,22 @@ open class ChatActivity : AppCompatActivity() {
             layoutManager = LinearLayoutManager(this@ChatActivity)
         }
 
-        if (cardViewConfigModel != null) {
-            chatListAdapter = ChatListAdapter(
-                this,
-                chatList,
-                chatBubbleConfigModel,
-                cardViewConfigModel,
-                loaderList
-            )
-            rvChatList.adapter = chatListAdapter
+        chatListAdapter = ChatListAdapter(
+            this,
+            chatList,
+            chatBubbleConfigModel,
+            cardViewConfigModel,
+            loaderList,
+            jsonObject?.optString("font_family")
+        )
+        rvChatList.adapter = chatListAdapter
 
-            rvChatList.addOnLayoutChangeListener { _, _, _, _, bottom, _, _, _, oldBottom ->
-                if (bottom < oldBottom) {
-                    if (rvChatList.adapter?.itemCount!! > 0) {
-                        rvChatList.adapter?.itemCount?.minus(
-                            1
-                        )?.let { it1 -> rvChatList.smoothScrollToPosition(it1) }
-                    }
+        rvChatList.addOnLayoutChangeListener { _, _, _, _, bottom, _, _, _, oldBottom ->
+            if (bottom < oldBottom) {
+                if (rvChatList.adapter?.itemCount!! > 0) {
+                    rvChatList.adapter?.itemCount?.minus(
+                        1
+                    )?.let { it1 -> rvChatList.smoothScrollToPosition(it1) }
                 }
             }
         }
@@ -295,7 +304,12 @@ open class ChatActivity : AppCompatActivity() {
         }
 
         val onButtonClickListener = chatButtonListAdapter?.onButtonClickListener
-        chatButtonListAdapter = ChatButtonListAdapter(this, buttonConfigModel, buttonTitleList)
+        chatButtonListAdapter = ChatButtonListAdapter(
+            this,
+            buttonConfigModel,
+            buttonTitleList,
+            jsonObject?.optString("font_family")
+        )
         rvButtonList.adapter = chatButtonListAdapter
         if (onButtonClickListener != null) {
             chatButtonListAdapter?.setButtonListClickListener(onButtonClickListener)
@@ -438,6 +452,8 @@ open class ChatActivity : AppCompatActivity() {
             }
         }
 
+        editTextView?.setCustomFont("${jsonObject?.optString("font_family")}.ttf")
+
         if (onClickListener != null) {
             sendButtonImageView.setOnClickListener(onClickListener)
         }
@@ -459,9 +475,32 @@ open class ChatActivity : AppCompatActivity() {
         )?.show()
     }
 
-    override fun onConfigurationChanged(newConfig: Configuration) {
-        super.onConfigurationChanged(newConfig)
-        chatListAdapter?.notifyDataSetChanged()
+    /**
+     * This method is used to show top menu
+     */
+    private fun showPopup(v: View) {
+        val popup = PopupMenu(this, v)
+        val inflater: MenuInflater = popup.menuInflater
+
+        val chatObject = jsonObject?.optJSONObject("chat")
+        val topMenuArray = chatObject?.optJSONArray("top_menu")
+
+        if (topMenuArray != null && topMenuArray.length() > 0) {
+            tvMenu.visibility = View.VISIBLE
+            for (i in 0 until topMenuArray.length()) {
+                val menuName: String = topMenuArray[i] as String
+                popup.menu.add(0, i, 0, menuName)
+            }
+        } else {
+            tvMenu.visibility = View.GONE
+        }
+
+        inflater.inflate(R.menu.lib_top_menu, popup.menu)
+        popup.setOnMenuItemClickListener { menuItem ->
+            onTopMenuItemClickListener?.onTopMenuItemClick(menuItem.itemId)
+            true
+        }
+        popup.show()
     }
 
     open inner class ChatScreen(jsonObject: JSONObject?) {
@@ -549,6 +588,14 @@ open class ChatActivity : AppCompatActivity() {
         }
 
         /**
+         * Set Top Menu Item click Listener
+         * @param onTopMenuItemClickListener: OnTopMenuItemClickListener
+         */
+        fun setTopMenuItemClickListener(onTopMenuItemClickListener: OnTopMenuItemClickListener) {
+            this@ChatActivity.onTopMenuItemClickListener = onTopMenuItemClickListener
+        }
+
+        /**
          * Set Title of Chat Screen
          * @param title: String
          */
@@ -591,6 +638,4 @@ open class ChatActivity : AppCompatActivity() {
             chatButtonListAdapter?.notifyDataSetChanged()
         }
     }
-
-
 }
