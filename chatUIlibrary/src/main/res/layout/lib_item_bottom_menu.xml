@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="horizontal"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:gravity="center_vertical"
+    android:layout_marginStart="@dimen/_5sdp"
+    android:layout_marginEnd="@dimen/_5sdp">
+
+    <com.example.chatuilib.customviews.CustomTextView
+        android:id="@+id/tv_menu_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/_5sdp"
+        android:textColor="@color/lib_colorPrimary"
+        android:text="@string/lib_icon_back_arrow"
+        android:textSize="@dimen/_18ssp"
+        app:customTextViewFont="@string/lib_font_icons"
+        android:layout_margin="@dimen/_10sdp"/>
+
+    <com.example.chatuilib.customviews.CustomTextView
+        android:id="@+id/tv_menu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_5sdp"
+        android:layout_marginEnd="@dimen/_10sdp"
+        android:textColor="@color/lib_colorPrimary"
+        android:text="Menu"
+        android:textSize="@dimen/_12ssp"
+        app:customTextViewFont="@string/lib_Roboto_Regular" />
+
+</LinearLayout>

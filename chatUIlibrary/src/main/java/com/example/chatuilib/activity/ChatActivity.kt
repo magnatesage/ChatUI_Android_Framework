@@ -1,12 +1,18 @@
 package com.example.chatuilib.activity
 
 import android.annotation.SuppressLint
-import android.content.res.Configuration
+import android.content.Context
+import android.graphics.Color
+import android.graphics.Point
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.view.Gravity
+import android.view.LayoutInflater
 import android.view.MenuInflater
 import android.view.View
+import android.widget.LinearLayout
+import android.widget.PopupWindow
 import android.widget.RelativeLayout
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.PopupMenu
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -137,7 +143,7 @@ open class ChatActivity : AppCompatActivity() {
         editTextView = etRoundedRect
 
         tvMenu.setOnClickListener {
-            showPopup(tvMenu)
+            showTopMenuPopup(tvMenu)
         }
 
         tvBack.setOnClickListener {
@@ -454,6 +460,15 @@ open class ChatActivity : AppCompatActivity() {
 
         editTextView?.setCustomFont("${jsonObject?.optString("font_family")}.ttf")
 
+        flashButtonImageView.setOnClickListener { v ->
+            val location = IntArray(2)
+            v.getLocationOnScreen(location)
+            val point = Point()
+            point.x = location[0]
+            point.y = location[1]
+            showBottomMenuPopUp(point)
+        }
+
         if (onClickListener != null) {
             sendButtonImageView.setOnClickListener(onClickListener)
         }
@@ -478,7 +493,7 @@ open class ChatActivity : AppCompatActivity() {
     /**
      * This method is used to show top menu
      */
-    private fun showPopup(v: View) {
+    private fun showTopMenuPopup(v: View) {
         val popup = PopupMenu(this, v)
         val inflater: MenuInflater = popup.menuInflater
 
@@ -501,6 +516,39 @@ open class ChatActivity : AppCompatActivity() {
             true
         }
         popup.show()
+    }
+
+    private fun showBottomMenuPopUp(point: Point) {
+        val layoutInflater: LayoutInflater =
+            getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+        val menuItem: View = layoutInflater.inflate(R.layout.lib_item_bottom_menu, null)
+        val menuItem1: View = layoutInflater.inflate(R.layout.lib_item_bottom_menu, null)
+        val menuItem2: View = layoutInflater.inflate(R.layout.lib_item_bottom_menu, null)
+        val menuItem3: View = layoutInflater.inflate(R.layout.lib_item_bottom_menu, null)
+        val layout: View = layoutInflater.inflate(R.layout.lib_layout_bottom_menu, null)
+
+        val llMain: LinearLayout = layout.findViewById(R.id.ll_main)
+        llMain.addView(menuItem)
+        llMain.addView(menuItem1)
+        llMain.addView(menuItem2)
+        llMain.addView(menuItem3)
+
+        val changeStatusPopUp = PopupWindow(this)
+        changeStatusPopUp.contentView = layout
+        changeStatusPopUp.width = LinearLayout.LayoutParams.WRAP_CONTENT
+        changeStatusPopUp.height = LinearLayout.LayoutParams.WRAP_CONTENT
+        changeStatusPopUp.isFocusable = true
+        changeStatusPopUp.setBackgroundDrawable(ColorDrawable(Color.WHITE))
+        changeStatusPopUp.elevation = 10F
+
+        val offsetX = 0
+        val offsetY = -150
+        changeStatusPopUp.showAtLocation(
+            layout,
+            Gravity.NO_GRAVITY,
+            point.x + offsetX,
+            point.y + offsetY
+        )
     }
 
     open inner class ChatScreen(jsonObject: JSONObject?) {
