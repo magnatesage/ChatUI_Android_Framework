@@ -1,5 +1,6 @@
 package com.example.chatuilib.adapter
 
+import activity.ChatActivity
 import android.app.Activity
 import android.os.Handler
 import android.os.Looper
@@ -9,7 +10,6 @@ import android.view.ViewGroup
 import android.widget.RelativeLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.example.chatuilib.R
-import com.example.chatuilib.activity.ChatActivity
 import com.example.chatuilib.customviews.CustomMaterialButton
 import com.example.chatuilib.listener.OnButtonClickListener
 import com.example.chatuilib.model.ButtonConfigModel

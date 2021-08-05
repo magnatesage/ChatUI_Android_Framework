@@ -4,9 +4,7 @@
     android:orientation="horizontal"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:gravity="center_vertical"
-    android:layout_marginStart="@dimen/_5sdp"
-    android:layout_marginEnd="@dimen/_5sdp">
+    android:gravity="center_vertical">
 
     <com.example.chatuilib.customviews.CustomTextView
         android:id="@+id/tv_menu_icon"
@@ -15,15 +13,14 @@
         android:padding="@dimen/_5sdp"
         android:textColor="@color/lib_colorPrimary"
         android:text="@string/lib_icon_back_arrow"
-        android:textSize="@dimen/_18ssp"
+        android:textSize="@dimen/_12ssp"
         app:customTextViewFont="@string/lib_font_icons"
-        android:layout_margin="@dimen/_10sdp"/>
+        android:layout_margin="@dimen/_5sdp"/>
 
     <com.example.chatuilib.customviews.CustomTextView
         android:id="@+id/tv_menu"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/_5sdp"
         android:layout_marginEnd="@dimen/_10sdp"
         android:textColor="@color/lib_colorPrimary"
         android:text="Menu"

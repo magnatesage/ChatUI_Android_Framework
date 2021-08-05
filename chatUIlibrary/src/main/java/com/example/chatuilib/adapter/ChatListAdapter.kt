@@ -20,6 +20,7 @@ import com.example.chatuilib.model.CardViewConfigModel
 import com.example.chatuilib.model.ChatBubbleConfigModel
 import com.example.chatuilib.model.MessageModel
 import com.example.chatuilib.utils.AppConstants
+import com.example.chatuilib.utils.AppLog
 import com.example.chatuilib.utils.Utils
 import com.example.chatuilib.utils.Utils.changeBg
 import com.example.chatuilib.utils.Utils.changeTextColor
@@ -136,6 +137,14 @@ class ChatListAdapter(
             val tvChatBubble =
                 chatBubbleLayout.findViewById<CustomTextView>(R.id.tv_chat_bubble)
 
+            val tvIcon = chatBubbleLayout.findViewById<CustomTextView>(R.id.tv_icon)
+
+            if (!chatListModel.isBot){
+                tvIcon.text = context.getString(R.string.lib_icon_whisper)
+            }else{
+                tvIcon.text = context.getString(R.string.lib_icon_bot)
+            }
+
             "${chatListModel.senderName} : ${chatListModel.data}".also { tvChatBubble.text = it }
             Utils.setTextSizeInSSP(tvChatBubble, R.dimen._12ssp)
             tvChatBubble.setCustomFont("$fontType.ttf")
@@ -155,6 +164,7 @@ class ChatListAdapter(
 
             if (chatListModel.isSender) {
                 tvChatBubble.setTextColor(getParsedColorValue(chatBubbleConfigModel.senderTextColor!!))
+                tvIcon.setTextColor(getParsedColorValue(chatBubbleConfigModel.senderTextColor))
 
                 if (chatBubbleShape == R.layout.lib_item_chat_bubble_image) {
                     when (chatBubbleConfigModel.chatBubbleStyle) {

@@ -1,11 +1,11 @@
 package com.example.cc_ui_framework
 
+import activity.ChatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.util.Log
 import android.widget.Toast
-import com.example.chatuilib.activity.ChatActivity
 import com.example.chatuilib.customviews.CustomEditText
 import com.example.chatuilib.listener.OnButtonClickListener
 import com.example.chatuilib.listener.OnTopMenuItemClickListener
@@ -59,7 +59,7 @@ class MainActivity : ChatActivity() {
                 MessageModel(
                     data = "Welcome to Chatbot", isSender = false,
                     isCardView = false, cardViewHeader = "",
-                    date = "2021-03-31T11:55:53.004Z", senderName = "Test User"
+                    date = "2021-03-31T11:55:53.004Z", senderName = "Test User",isBot = true
                 )
             )
             Handler(Looper.getMainLooper()).postDelayed({
@@ -67,7 +67,7 @@ class MainActivity : ChatActivity() {
                     MessageModel(
                         data = "Please Enter your Org Name", isSender = false,
                         isCardView = false, cardViewHeader = "",
-                        date = yesterdayDate, senderName = "Test User"
+                        date = yesterdayDate, senderName = "Test User",isBot = false
                     )
                 )
             }, 3000)
@@ -89,7 +89,8 @@ class MainActivity : ChatActivity() {
                         etValue, isSender = true,
                         isCardView = false,
                         cardViewHeader = "",
-                        date = time, senderName = "Test User"
+                        date = time, senderName = "Test User",
+                        isBot = true
                     )
                 )
             }
@@ -99,7 +100,7 @@ class MainActivity : ChatActivity() {
                         MessageModel(
                             data = "Welcome $etValue", isSender = false,
                             isCardView = true, cardViewHeader = "",
-                            date = todayDate, senderName = "Test User"
+                            date = todayDate, senderName = "Test User",isBot = true
                         )
                     )
                 }
@@ -116,7 +117,7 @@ class MainActivity : ChatActivity() {
                     MessageModel(
                         data = buttonTitle, isSender = true,
                         isCardView = false, cardViewHeader = "",
-                        date = todayDate, senderName = "Test User"
+                        date = todayDate, senderName = "Test User",isBot = true
                     )
                 )
             }

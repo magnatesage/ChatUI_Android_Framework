@@ -10,6 +10,77 @@
         android:id="@+id/title_layout"
         layout="@layout/lib_toolbar_layout" />
 
+    <RelativeLayout
+        android:id="@+id/rl_top"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.example.chatuilib.customviews.CustomMaterialCardView
+            android:id="@+id/cv_flag"
+            android:layout_width="@dimen/_22sdp"
+            android:layout_height="@dimen/_22sdp"
+            app:allCornerFamily="0"
+            app:allCornerSize="50%"
+            app:cardBackgroundColor="@color/lib_colorPrimaryDark"
+            app:cardElevation="0dp"
+            android:layout_margin="@dimen/_10sdp">
+
+            <com.example.chatuilib.customviews.CustomTextView
+                android:id="@+id/tv_flag"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@string/lib_icon_flag"
+                android:textColor="@color/lib_colorGreenButton"
+                android:textSize="@dimen/_12ssp"
+                app:customTextViewFont="@string/lib_font_icons" />
+
+        </com.example.chatuilib.customviews.CustomMaterialCardView>
+
+        <RelativeLayout
+            android:id="@+id/rl_user"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="@dimen/_5sdp">
+
+            <com.example.chatuilib.customviews.CustomTextView
+                android:id="@+id/tv_user"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_margin="@dimen/_10sdp"
+                android:text="@string/lib_icon_profile"
+                android:textColor="@color/lib_colorPrimaryDark"
+                android:textSize="@dimen/_22ssp"
+                app:customTextViewFont="@string/lib_font_icons" />
+
+            <com.example.chatuilib.customviews.CustomMaterialCardView
+                android:id="@+id/cv_user_number"
+                android:layout_width="@dimen/_14sdp"
+                android:layout_height="@dimen/_14sdp"
+                android:layout_below="@+id/tv_user"
+                android:layout_marginStart="@dimen/_22sdp"
+                android:layout_marginTop="-28dp"
+                app:allCornerFamily="0"
+                app:allCornerSize="50%"
+                app:cardBackgroundColor="@color/lib_colorPrimaryDark"
+                app:cardElevation="0dp">
+
+                <com.example.chatuilib.customviews.CustomTextView
+                    android:id="@+id/tv_user_number"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="2"
+                    android:textColor="@color/lib_colorWhite"
+                    android:textSize="@dimen/_10ssp"
+                    app:customTextViewFont="@string/lib_font_icons" />
+            </com.example.chatuilib.customviews.CustomMaterialCardView>
+
+        </RelativeLayout>
+    </RelativeLayout>
+
     <LinearLayout
         android:id="@+id/ll_chat_list"
         android:layout_width="match_parent"
@@ -415,5 +486,5 @@
         </RelativeLayout>
 
     </LinearLayout>
-    
+
 </LinearLayout>

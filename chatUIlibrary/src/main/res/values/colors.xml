@@ -9,6 +9,10 @@
     <color name="lib_colorWhite">#FFFFFF</color>
     <color name="lib_colorBorder">#CCCCCC</color>
     <color name="lib_colorGreenButton">#39B54A</color>
+    <color name="lib_colorGreenFlag">#089103</color>
+    <color name="lib_colorUmberFlag">#FF6D00</color>
+    <color name="lib_colorRedFlag">#FE0000</color>
+    <color name="lib_colorBlack">#000000</color>
 
     <!-- Material Design Arritibute Colors-->
 

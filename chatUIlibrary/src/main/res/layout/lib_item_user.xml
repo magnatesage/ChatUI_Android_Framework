@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center_horizontal"
+        android:padding="@dimen/_5sdp">
+
+        <com.example.chatuilib.customviews.CustomTextView
+            android:id="@+id/tv_user"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="@string/lib_icon_profile"
+            android:textColor="@color/lib_colorPrimaryDark"
+            android:textSize="@dimen/_22ssp"
+            app:customTextViewFont="@string/lib_font_icons" />
+
+        <com.example.chatuilib.customviews.CustomTextView
+            android:id="@+id/tv_user_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="@string/lib_agent"
+            android:textColor="@color/lib_colorBlack"
+            android:textSize="@dimen/_10ssp"
+            android:layout_marginTop="@dimen/_2sdp"
+            android:padding="@dimen/_2sdp"
+            app:customTextViewFont="@string/lib_font_icons" />
+
+        <com.example.chatuilib.customviews.CustomTextView
+            android:id="@+id/tv_user_designation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="@string/lib_agent_1"
+            android:textColor="@color/lib_colorAccent"
+            android:textSize="@dimen/_8ssp"
+            android:padding="@dimen/_2sdp"
+            android:layout_marginTop="@dimen/_2sdp"
+            app:customTextViewFont="@string/lib_font_icons" />
+
+    </LinearLayout>
+
+</LinearLayout>

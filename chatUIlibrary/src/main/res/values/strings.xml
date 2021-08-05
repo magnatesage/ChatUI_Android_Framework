@@ -19,6 +19,10 @@
     <!--========================================= Icons =========================================-->
     <string name="lib_icon_back_arrow">&amp;#xf053</string>
     <string name="lib_icon_menu">&amp;#xe916</string>
+    <string name="lib_icon_flag">&amp;#xe92b</string>
+    <string name="lib_icon_profile">&amp;#xf2bd</string>
+    <string name="lib_icon_whisper">&amp;#xf1fa</string>
+    <string name="lib_icon_bot">&amp;#xe921</string>
 
     <!--========================================= Strings =========================================-->
     <string name="lib_select_company">Select Company</string>
@@ -43,4 +47,8 @@
     <string name="lib_no">No</string>
     <string name="lib_today">Today</string>
     <string name="lib_yesterday">Yesterday</string>
+    <string name="lib_agent">Agent</string>
+    <string name="lib_agent_1">Agent 1</string>
+    <string name="lib_manager">Manager</string>
+    <string name="lib_manager_1">Manager 1</string>
 </resources>

@@ -10,5 +10,6 @@ data class MessageModel(
     val isCardView: Boolean,
     val cardViewHeader: String,
     val date: String,
-    val senderName : String
+    val senderName : String,
+    val isBot : Boolean
 )
