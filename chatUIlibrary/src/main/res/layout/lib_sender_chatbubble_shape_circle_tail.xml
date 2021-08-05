@@ -27,8 +27,7 @@
             android:padding="@dimen/_2sdp"
             android:text="@string/lib_icon_bot"
             android:textSize="@dimen/_14ssp"
-            app:customTextViewFont="@string/lib_font_icons"
-            android:visibility="gone"/>
+            app:customTextViewFont="@string/lib_font_icons"/>
 
         <com.example.chatuilib.customviews.CustomTextView
             android:id="@+id/tv_chat_bubble"
