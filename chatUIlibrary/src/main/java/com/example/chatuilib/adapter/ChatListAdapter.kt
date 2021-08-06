@@ -208,19 +208,19 @@ class ChatListAdapter(
                         AppConstants.CHAT_BUBBLE_ROUND -> {
                             cvChatBubble.setCornerFamily(CornerFamily.ROUNDED)
                             cvChatBubble.setAllCornersInPercent(0.5F)
-//                            setBothLeftRightMargin(cvChatBubble, tvChatBubble, 0.4F)
+                            setBothLeftRightMargin(cvChatBubble, tvChatBubble, 0.4F)
                         }
                         AppConstants.CHAT_BUBBLE_ARROW_INSIDE -> {
                             cvChatBubble.setCornerFamily(CornerFamily.CUT)
                             cvChatBubble.setTopRightCornerInPercent(0.5F)
                             cvChatBubble.setBottomRightCornerInPercent(0.5F)
-//                            setRightMargin(cvChatBubble, tvChatBubble, 0.5F)
+                            setRightMargin(cvChatBubble, tvChatBubble, 0.5F)
                         }
                         AppConstants.CHAT_BUBBLE_ARROW_OUTSIDE -> {
                             cvChatBubble.setCornerFamily(CornerFamily.CUT)
                             cvChatBubble.setTopLeftCornerInPercent(0.5F)
                             cvChatBubble.setBottomLeftCornerInPercent(0.5F)
-//                            setLeftMargin(cvChatBubble, tvChatBubble, 0.5F)
+                            setLeftMargin(cvChatBubble, tvChatBubble, 0.5F)
                         }
                         AppConstants.CHAT_BUBBLE_ARROW_BOTH -> {
                             cvChatBubble.setCornerFamily(CornerFamily.CUT)

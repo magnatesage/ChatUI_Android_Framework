@@ -19,11 +19,13 @@
             android:id="@+id/cv_flag"
             android:layout_width="@dimen/_22sdp"
             android:layout_height="@dimen/_22sdp"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_marginEnd="@dimen/_10sdp"
+            android:layout_marginBottom="@dimen/_10sdp"
             app:allCornerFamily="0"
             app:allCornerSize="50%"
-            app:cardBackgroundColor="@color/lib_colorPrimaryDark"
-            app:cardElevation="0dp"
-            android:layout_margin="@dimen/_10sdp">
+            app:cardElevation="0dp">
 
             <com.example.chatuilib.customviews.CustomTextView
                 android:id="@+id/tv_flag"
@@ -51,7 +53,6 @@
                 android:layout_gravity="center"
                 android:layout_margin="@dimen/_10sdp"
                 android:text="@string/lib_icon_profile"
-                android:textColor="@color/lib_colorPrimaryDark"
                 android:textSize="@dimen/_22ssp"
                 app:customTextViewFont="@string/lib_font_icons" />
 
@@ -64,7 +65,7 @@
                 android:layout_marginTop="-28dp"
                 app:allCornerFamily="0"
                 app:allCornerSize="50%"
-                app:cardBackgroundColor="@color/lib_colorPrimaryDark"
+                app:cardBackgroundColor="@color/blue"
                 app:cardElevation="0dp">
 
                 <com.example.chatuilib.customviews.CustomTextView

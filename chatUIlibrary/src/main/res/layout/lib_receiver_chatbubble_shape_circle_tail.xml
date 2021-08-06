@@ -4,50 +4,47 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <com.example.chatuilib.customviews.CustomMaterialCardView
-        android:id="@+id/cv_chat_bubble"
+    <RelativeLayout
+        android:id="@+id/rl_chat_bubble"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/_22sdp"
-        android:layout_marginTop="@dimen/_6sdp"
-        android:layout_marginEnd="@dimen/_50sdp"
-        app:cardPreventCornerOverlap="false">
+        android:layout_marginEnd="@dimen/_50sdp">
 
-        <LinearLayout
-            android:layout_width="match_parent"
+        <com.example.chatuilib.customviews.CustomMaterialCardView
+            android:id="@+id/cv_chat_bubble"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_marginTop="@dimen/_10sdp"
+            app:cardPreventCornerOverlap="false">
 
-            <com.example.chatuilib.customviews.CustomTextView
-                android:id="@+id/tv_icon"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="top|center"
-                android:padding="@dimen/_2sdp"
-                android:text="@string/lib_icon_bot"
-                android:textSize="@dimen/_14ssp"
-                app:customTextViewFont="@string/lib_font_icons"/>
+                <com.example.chatuilib.customviews.CustomTextView
+                    android:id="@+id/tv_chat_bubble"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/_10sdp"
+                    android:fadeScrollbars="false"
+                    android:scrollbars="vertical"
+                    android:text="@string/lib_lorem_ipsum" />
 
-            <com.example.chatuilib.customviews.CustomTextView
-                android:id="@+id/tv_chat_bubble"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/_8sdp"
-                android:layout_marginEnd="@dimen/_8sdp"
-                android:layout_marginBottom="@dimen/_8sdp"
-                android:layout_marginTop="@dimen/_4sdp"
-                android:fadeScrollbars="false"
-                android:scrollbars="vertical"
-                android:text="@string/lib_lorem_ipsum" />
+        </com.example.chatuilib.customviews.CustomMaterialCardView>
 
-        </LinearLayout>
-
-    </com.example.chatuilib.customviews.CustomMaterialCardView>
+        <com.example.chatuilib.customviews.CustomTextView
+            android:id="@+id/tv_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/_2sdp"
+            android:text="@string/lib_icon_bot"
+            android:textSize="@dimen/_14ssp"
+            android:elevation="@dimen/_12sdp"
+            android:layout_centerHorizontal="true"
+            app:customTextViewFont="@string/lib_font_icons"/>
+    </RelativeLayout>
 
     <RelativeLayout
         android:layout_width="@dimen/_25sdp"
         android:layout_height="@dimen/_25sdp"
-        android:layout_below="@id/cv_chat_bubble">
+        android:layout_below="@id/rl_chat_bubble">
 
         <com.example.chatuilib.customviews.CustomShapeableImageView
             android:id="@+id/iv_circle_1"

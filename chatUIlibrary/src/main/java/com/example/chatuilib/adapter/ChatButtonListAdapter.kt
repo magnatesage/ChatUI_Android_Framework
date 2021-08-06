@@ -1,6 +1,6 @@
 package com.example.chatuilib.adapter
 
-import activity.ChatActivity
+import com.example.chatuilib.activity.ChatActivity
 import android.app.Activity
 import android.os.Handler
 import android.os.Looper

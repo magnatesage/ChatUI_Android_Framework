@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="horizontal"
-    android:layout_width="match_parent"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content">
 
     <LinearLayout
@@ -12,15 +12,12 @@
         android:gravity="center_horizontal"
         android:padding="@dimen/_5sdp">
 
-        <com.example.chatuilib.customviews.CustomTextView
-            android:id="@+id/tv_user"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="@string/lib_icon_profile"
-            android:textColor="@color/lib_colorPrimaryDark"
-            android:textSize="@dimen/_22ssp"
-            app:customTextViewFont="@string/lib_font_icons" />
+        <com.example.chatuilib.customviews.CustomShapeableImageView
+            android:id="@+id/iv_user"
+            android:layout_width="@dimen/_30sdp"
+            android:layout_height="@dimen/_30sdp"
+            app:srcCompat="@drawable/group_hug"
+            android:layout_gravity="center" />
 
         <com.example.chatuilib.customviews.CustomTextView
             android:id="@+id/tv_user_name"

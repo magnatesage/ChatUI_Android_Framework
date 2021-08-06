@@ -1,8 +1,12 @@
 {
   "company_id": "1",
   "font_family": "Roboto",
+  "setting": {
+    "backgroundAppTimeoutNotUsedMinutes": 5,
+    "foregroundAppTimeoutNotUsedMinutes": 10
+  },
   "theme_color": {
-    "primary_color": "#07B8E4",
+    "primary_color": "#272d3d",
     "secondary_color": "#FFFFFF",
     "common_font_color": "#000000"
   },
@@ -13,9 +17,237 @@
     "header": "12",
     "sub_header": "10",
     "side_menu": "14",
-    "bottom_menu": "12",
+    "bottom_menu": "8",
     "tab": "12",
     "common": "10"
+  },
+  "splash": {
+    "logo_url": "https://seeklogo.com/images/S/skype-icon-logo-62E333BBBA-seeklogo.com.png",
+    "logo_bg_shape": "3",
+    "logo_bg_drop_shadow": true,
+    "org_name": "xyz.com",
+    "org_name_font_color": "#ff000000",
+    "org_name_font_size": "18",
+    "org_name_font_type": "Roboto-BoldItalic",
+    "splash_screen_bg_color": "#ffffffff",
+    "splash_screen_bg_image_url": "",
+    "splash_screen_bg_type": "Color"
+  },
+  "side_menu": [
+    {
+      "text_value": "Account",
+      "icon_type": "text",
+      "icon_value": "e91b",
+      "font_type": "regular"
+    },
+    {
+      "text_value": "Settings",
+      "icon_type": "text",
+      "icon_value": "f013",
+      "font_type": "regular"
+    },
+    {
+      "text_value": "Admin Section",
+      "icon_type": "text",
+      "icon_value": "e91c",
+      "font_type": "regular"
+    },
+    {
+      "text_value": "Privacy & Policy",
+      "icon_type": "text",
+      "icon_value": "e919",
+      "font_type": "regular"
+    },
+    {
+      "text_value": "T&C",
+      "icon_type": "text",
+      "icon_value": "e91a",
+      "font_type": "regular"
+    }
+  ],
+  "bottom_tab_bar": [
+    {
+      "text_value": "Dashboard",
+      "icon_type": "text",
+      "icon_value": "e913",
+      "font_type": "regular"
+    },
+    {
+      "text_value": "Waiting",
+      "icon_type": "text",
+      "icon_value": "e91f",
+      "font_type": "regular"
+    },
+    {
+      "text_value": "Live chat",
+      "icon_type": "text",
+      "icon_value": "e917",
+      "font_type": "regular"
+    },
+    {
+      "text_value": "History",
+      "icon_type": "text",
+      "icon_value": "e910",
+      "font_type": "regular"
+    },
+    {
+      "text_value": "Notification",
+      "icon_type": "text",
+      "icon_value": "e927",
+      "font_type": "regular"
+    }
+  ],
+  "dashboard": {
+    "main_tab_1": {
+      "text_value": "Home",
+      "font_type": "regular",
+      "sub_tab_1": {
+        "text_value": "Public",
+        "font_type": "regular"
+      },
+      "sub_tab_2": {
+        "text_value": "Support",
+        "font_type": "regular"
+      }
+    },
+    "main_tab_2": {
+      "text_value": "Group",
+      "font_type": "regular",
+      "sub_group_1": {
+        "text_value": "Public",
+        "font_type": "regular"
+      },
+      "sub_group_2": {
+        "text_value": "Support",
+        "font_type": "regular"
+      }
+    }
+  },
+  "chat_list_members": {
+    "tab_1": {
+      "text_value": "Session",
+      "font_type": "regular"
+    },
+    "tab_2": {
+      "text_value": "Members",
+      "font_type": "regular"
+    },
+    "tab_3": {
+      "text_value": "Bot",
+      "font_type": "regular"
+    }
+  },
+  "icons": {
+    "profile": {
+      "icon_type": "text",
+      "icon_value": "f2bd"
+    },
+    "live": {
+      "icon_type": "text",
+      "icon_value": "e908"
+    },
+    "tickets": {
+      "icon_type": "text",
+      "icon_value": "e909"
+    },
+    "bot": {
+      "icon_type": "text",
+      "icon_value": "e921"
+    },
+    "message": {
+      "icon_type": "text",
+      "icon_value": "f27a"
+    },
+    "timer": {
+      "icon_type": "text",
+      "icon_value": "e971"
+    },
+    "disconnect": {
+      "icon_type": "text",
+      "icon_value": "e922"
+    },
+    "schedule": {
+      "icon_type": "text",
+      "icon_value": "e90c"
+    },
+    "all_time": {
+      "icon_type": "text",
+      "icon_value": "f534"
+    },
+    "user": {
+      "icon_type": "text",
+      "icon_value": "e923"
+    },
+    "info": {
+      "icon_type": "text",
+      "icon_value": "f05a"
+    },
+    "notes": {
+      "icon_type": "text",
+      "icon_value": "e912"
+    },
+    "remove": {
+      "icon_type": "text",
+      "icon_value": "f056"
+    },
+    "training_mode": {
+      "icon_type": "text",
+      "icon_value": "e91e"
+    },
+    "end_session": {
+      "icon_type": "text",
+      "icon_value": "f2f5"
+    },
+    "manager": {
+      "icon_type": "text",
+      "icon_value": "e923",
+      "icon_color": "#0F10DE"
+    },
+    "supervisor": {
+      "icon_type": "text",
+      "icon_value": "e923",
+      "icon_color": "#57DE0F"
+    },
+    "agent": {
+      "icon_type": "text",
+      "icon_value": "e923",
+      "icon_color": "#00B8D4"
+    },
+    "green_flag": {
+      "icon_type": "text",
+      "icon_value": "e92b",
+      "icon_color": "#089103"
+    },
+    "umber_flag": {
+      "icon_type": "text",
+      "icon_value": "e92b",
+      "icon_color": "#FF6D00"
+    },
+    "red_flag": {
+      "icon_type": "text",
+      "icon_value": "e92b",
+      "icon_color": "#FE0000"
+    },
+    "online": {
+      "icon_type": "text",
+      "icon_value": "f011",
+      "icon_color": "#089103"
+    },
+    "offline": {
+      "icon_type": "text",
+      "icon_value": "f011",
+      "icon_color": "#FE0000"
+    },
+    "upcoming": {
+      "icon_type": "text",
+      "icon_value": "e950",
+      "icon_color": "#FF6D00"
+    },
+    "pause": {
+      "icon_type": "text",
+      "icon_value": "f04c",
+      "icon_color": "#000000"
+    }
   },
   "chat": {
     "chat_bubble": {
@@ -25,21 +257,21 @@
       "chat_screen_bg_type": "Color",
       "chat_bubble_style": 4,
       "receiver_chat_bubble_color": "#ffffffff",
-      "receiver_text_color": "#ff07B8E4",
-      "sender_chat_bubble_color": "#ff07B8E4",
+      "receiver_text_color": "#ff272d3d",
+      "sender_chat_bubble_color": "#ff272d3d",
       "sender_text_color": "#ffffffff"
     },
     "button": {
       "button_bg_drop_shadow": true,
       "button_placement_style": "Vertical",
       "button_shape_id": 18,
-      "clicked_border_color": "#ff07B8E4",
+      "clicked_border_color": "#ff272d3d",
       "clicked_border_size": "2",
       "clicked_button_color": "#ffffffff",
-      "clicked_text_color": "#ff07B8E4",
+      "clicked_text_color": "#ff272d3d",
       "normal_border_color": "#ffffffff",
       "normal_border_size": "2",
-      "normal_button_color": "#ff07B8E4",
+      "normal_button_color": "#ff272d3d",
       "normal_text_color": "#ffffffff"
     },
     "card_view": {
@@ -47,16 +279,44 @@
       "cardview_border_color": "#ffffffff",
       "cardview_border_size": "2",
       "cardview_shape_id": 24,
-      "cardview_footer_button_bg_color": "#ff07B8E4",
+      "cardview_footer_button_bg_color": "#ff272d3d",
       "cardview_footer_button_text_color": "#ffffffff",
       "cardview_footer_button_text_size": "15",
-      "cardview_header_bg_color": "#ff07B8E4",
+      "cardview_header_bg_color": "#ff272d3d",
       "cardview_header_text_color": "#ffffffff",
       "cardview_header_text_size": "15"
     },
     "conversation_bar": {
       "conversation_bar_shape": "style4",
       "floating_icon_url": "https://seeklogo.com/images/S/skype-icon-logo-62E333BBBA-seeklogo.com.png"
-    }
+    },
+    "top_menu": [
+      "Notes",
+      "Invite",
+      "Handover Chat",
+      "Assigned Tags"
+    ],
+    "bottom_menu": [
+      {
+        "text_value": "Whisper",
+        "icon_type": "text",
+        "icon_value": "f1fa"
+      },
+      {
+        "text_value": "Interact",
+        "icon_type": "text",
+        "icon_value": "f00d"
+      },
+      {
+        "text_value": "Bot Start",
+        "icon_type": "text",
+        "icon_value": "e929"
+      },
+      {
+        "text_value": "Get User Location",
+        "icon_type": "text",
+        "icon_value": "e92a"
+      }
+    ]
   }
 }

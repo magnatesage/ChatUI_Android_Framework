@@ -1,6 +1,6 @@
 package com.example.cc_ui_framework
 
-import activity.ChatActivity
+import com.example.chatuilib.activity.ChatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper

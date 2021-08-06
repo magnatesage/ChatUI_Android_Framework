@@ -13,6 +13,8 @@
         android:layout_gravity="center"
         android:padding="@dimen/_5sdp"
         android:text="@string/lib_icon_flag"
+        android:layout_marginStart="@dimen/_10sdp"
+        android:layout_marginEnd="@dimen/_10sdp"
         android:textColor="@color/lib_colorGreenButton"
         android:textSize="@dimen/_14ssp"
         app:customTextViewFont="@string/lib_font_icons" />

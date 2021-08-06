@@ -1,4 +1,4 @@
-package activity
+package com.example.chatuilib.activity
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -55,7 +55,10 @@ import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.core.view.get
 import com.example.chatuilib.customviews.CustomMaterialCardView
-
+import android.view.Gravity
+import android.view.LayoutInflater
+import com.example.chatuilib.adapter.UserAdapter
+import kotlin.math.roundToInt
 
 open class ChatActivity : AppCompatActivity() {
     private val TAG = ChatActivity::class.java.simpleName
@@ -211,6 +214,9 @@ open class ChatActivity : AppCompatActivity() {
                     it
                 )
             }
+
+            cvFlag.setCardBackgroundColor(getParsedColorValue(themeModel.primaryColor))
+            tvUser.setTextColor(getParsedColorValue(themeModel.primaryColor))
 
             tvBack.setTextColor(getParsedColorValue(themeModel.primaryColor))
             tvMenu.setTextColor(getParsedColorValue(themeModel.primaryColor))
@@ -390,6 +396,7 @@ open class ChatActivity : AppCompatActivity() {
     /**
      * This method is used to set conversation bar style
      */
+    @RequiresApi(Build.VERSION_CODES.M)
     private fun setUpConversationBarStylingDisplay(conversationBarConfigModel: ConversationBarConfigModel) {
         val bgColor = getDesiredColorFromXML(this, R.color.lib_colorBorder)
         val floatingImageUrl = conversationBarConfigModel.floatingIconUrl
@@ -496,7 +503,12 @@ open class ChatActivity : AppCompatActivity() {
         editTextView?.setCustomFont("${jsonObject?.optString("font_family")}.ttf")
 
         flashButtonImageView.setOnClickListener { v ->
-            showBottomMenuPopUp(v)
+            showBottomMenuPopUp(v ,
+            object : BottomMenuClickListener{
+                override fun onClick(menuId: Int) {
+                    AppLog.e("test","Item: $menuId")
+                }
+            })
         }
 
         if (onClickListener != null) {
@@ -548,11 +560,16 @@ open class ChatActivity : AppCompatActivity() {
         popup.show()
     }
 
+    interface BottomMenuClickListener{
+        fun onClick(menuId: Int)
+    }
+
     /**
      * This method is used to show bottom menu
      */
+    @RequiresApi(Build.VERSION_CODES.M)
     @SuppressLint("InflateParams")
-    private fun showBottomMenuPopUp(v: View) {
+    private fun showBottomMenuPopUp(v: View, onClickListener: BottomMenuClickListener) {
         val changeStatusPopUp = PopupWindow(this)
         val layoutInflater: LayoutInflater =
             getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
@@ -586,14 +603,17 @@ open class ChatActivity : AppCompatActivity() {
         changeStatusPopUp.isFocusable = true
         changeStatusPopUp.setBackgroundDrawable(ColorDrawable(Color.WHITE))
         changeStatusPopUp.elevation = 10F
-        val metrics = DisplayMetrics()
-        val windowManager = getSystemService(WINDOW_SERVICE) as WindowManager
-        windowManager.defaultDisplay.getRealMetrics(metrics)
-        val deviceHeight = metrics.heightPixels
-        val height = deviceHeight - v.height - changeStatusPopUp.height - titleLayout.height
-        changeStatusPopUp.showAtLocation(
-            v, Gravity.START or Gravity.TOP, v.width, height
-        )
+        changeStatusPopUp.overlapAnchor = false
+        changeStatusPopUp.showAsDropDown(v,0, (-0.2 * v.height).roundToInt(),Gravity.CENTER)
+
+        val linearLayout = layout as LinearLayout
+        for (i in 0 until linearLayout.childCount) {
+            val view = linearLayout.getChildAt(i)
+            view.setOnClickListener { viewId ->
+                onClickListener.onClick(viewId.id)
+                changeStatusPopUp.dismiss()
+            }
+        }
     }
 
     /**
@@ -627,27 +647,24 @@ open class ChatActivity : AppCompatActivity() {
         changeStatusPopUp.isFocusable = true
         changeStatusPopUp.setBackgroundDrawable(ColorDrawable(Color.WHITE))
         changeStatusPopUp.elevation = 10F
+        changeStatusPopUp.overlapAnchor = false
         changeStatusPopUp.showAsDropDown(v,0,15)
     }
 
     /**
      * This method is used to show top user dialog
      */
-    @SuppressLint("InflateParams")
+    @RequiresApi(Build.VERSION_CODES.M)
+    @SuppressLint("InflateParams", "WrongConstant")
     private fun showTopUserDialogPopUp(v: View) {
         val layoutInflater: LayoutInflater =
             getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-        val menuItem: View = layoutInflater.inflate(R.layout.lib_item_user, null)
-        val menuItem1: View = layoutInflater.inflate(R.layout.lib_item_user, null)
-        val layout: View = layoutInflater.inflate(R.layout.lib_layout_top_user, null)
 
-        val llMain: LinearLayout = layout.findViewById(R.id.ll_main)
-        val tvUserName1: CustomTextView = menuItem.findViewById(R.id.tv_user_name)
-        val tvUserDesignation1: CustomTextView = menuItem1.findViewById(R.id.tv_user_designation)
-        tvUserName1.text = getString(R.string.lib_manager)
-        tvUserDesignation1.text = getString(R.string.lib_manager_1)
-        llMain.addView(menuItem)
-        llMain.addView(menuItem1)
+        val layout: View = layoutInflater.inflate(R.layout.lib_layout_top_user, null)
+        val rvUser = layout.findViewById<RecyclerView>(R.id.rv_user)
+        rvUser.layoutManager = LinearLayoutManager(context,LinearLayout.HORIZONTAL,false)
+        val adapter = UserAdapter(context, arrayListOf("Agent","Manager"))
+        rvUser.adapter = adapter
 
         val changeStatusPopUp = PopupWindow(this)
         changeStatusPopUp.contentView = layout
@@ -656,6 +673,7 @@ open class ChatActivity : AppCompatActivity() {
         changeStatusPopUp.isFocusable = true
         changeStatusPopUp.setBackgroundDrawable(ColorDrawable(Color.WHITE))
         changeStatusPopUp.elevation = 10F
+        changeStatusPopUp.overlapAnchor = false
         changeStatusPopUp.showAsDropDown(v,0,15)
     }
 
