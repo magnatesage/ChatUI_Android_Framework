@@ -139,10 +139,18 @@ class ChatListAdapter(
 
             val tvIcon = chatBubbleLayout.findViewById<CustomTextView>(R.id.tv_icon)
 
-            if (!chatListModel.isBot){
-                tvIcon.text = context.getString(R.string.lib_icon_whisper)
-            }else{
-                tvIcon.text = context.getString(R.string.lib_icon_bot)
+            when(chatListModel.type){
+                MessageModel.NOPE -> {
+                    tvIcon.visibility = View.GONE
+                }
+                MessageModel.BOT -> {
+                    tvIcon.visibility = View.VISIBLE
+                    tvIcon.text = context.getString(R.string.lib_icon_bot)
+                }
+                MessageModel.WHISPER -> {
+                    tvIcon.visibility = View.VISIBLE
+                    tvIcon.text = context.getString(R.string.lib_icon_whisper)
+                }
             }
 
             "${chatListModel.senderName} : ${chatListModel.data}".also { tvChatBubble.text = it }
@@ -200,19 +208,19 @@ class ChatListAdapter(
                         AppConstants.CHAT_BUBBLE_ROUND -> {
                             cvChatBubble.setCornerFamily(CornerFamily.ROUNDED)
                             cvChatBubble.setAllCornersInPercent(0.5F)
-                            setBothLeftRightMargin(cvChatBubble, tvChatBubble, 0.4F)
+//                            setBothLeftRightMargin(cvChatBubble, tvChatBubble, 0.4F)
                         }
                         AppConstants.CHAT_BUBBLE_ARROW_INSIDE -> {
                             cvChatBubble.setCornerFamily(CornerFamily.CUT)
                             cvChatBubble.setTopRightCornerInPercent(0.5F)
                             cvChatBubble.setBottomRightCornerInPercent(0.5F)
-                            setRightMargin(cvChatBubble, tvChatBubble, 0.5F)
+//                            setRightMargin(cvChatBubble, tvChatBubble, 0.5F)
                         }
                         AppConstants.CHAT_BUBBLE_ARROW_OUTSIDE -> {
                             cvChatBubble.setCornerFamily(CornerFamily.CUT)
                             cvChatBubble.setTopLeftCornerInPercent(0.5F)
                             cvChatBubble.setBottomLeftCornerInPercent(0.5F)
-                            setLeftMargin(cvChatBubble, tvChatBubble, 0.5F)
+//                            setLeftMargin(cvChatBubble, tvChatBubble, 0.5F)
                         }
                         AppConstants.CHAT_BUBBLE_ARROW_BOTH -> {
                             cvChatBubble.setCornerFamily(CornerFamily.CUT)
@@ -676,8 +684,8 @@ class ChatListAdapter(
             tvChatBubble: CustomTextView,
             shapeSize: Float
         ) {
-            val layoutParams: FrameLayout.LayoutParams =
-                tvChatBubble.layoutParams as FrameLayout.LayoutParams
+            val layoutParams: LinearLayout.LayoutParams =
+                tvChatBubble.layoutParams as LinearLayout.LayoutParams
 
             cvChatBubble.viewTreeObserver.addOnPreDrawListener(object :
                 ViewTreeObserver.OnPreDrawListener {
@@ -719,8 +727,8 @@ class ChatListAdapter(
             tvChatBubble: CustomTextView,
             shapeSize: Float
         ) {
-            val layoutParams: FrameLayout.LayoutParams =
-                tvChatBubble.layoutParams as FrameLayout.LayoutParams
+            val layoutParams: LinearLayout.LayoutParams =
+                tvChatBubble.layoutParams as LinearLayout.LayoutParams
 
             cvChatBubble.viewTreeObserver.addOnPreDrawListener(object :
                 ViewTreeObserver.OnPreDrawListener {
@@ -762,8 +770,8 @@ class ChatListAdapter(
             tvChatBubble: CustomTextView,
             shapeSize: Float
         ) {
-            val layoutParams: FrameLayout.LayoutParams =
-                tvChatBubble.layoutParams as FrameLayout.LayoutParams
+            val layoutParams: LinearLayout.LayoutParams =
+                tvChatBubble.layoutParams as LinearLayout.LayoutParams
 
             cvChatBubble.viewTreeObserver.addOnPreDrawListener(object :
                 ViewTreeObserver.OnPreDrawListener {

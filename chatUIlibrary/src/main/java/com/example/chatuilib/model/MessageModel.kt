@@ -11,5 +11,11 @@ data class MessageModel(
     val cardViewHeader: String,
     val date: String,
     val senderName : String,
-    val isBot : Boolean
-)
+    val type : Int
+){
+    companion object{
+        const val NOPE = 0
+        const val BOT = 1
+        const val WHISPER = 2
+    }
+}

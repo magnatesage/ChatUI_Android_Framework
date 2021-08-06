@@ -589,8 +589,8 @@ open class ChatActivity : AppCompatActivity() {
         val metrics = DisplayMetrics()
         val windowManager = getSystemService(WINDOW_SERVICE) as WindowManager
         windowManager.defaultDisplay.getRealMetrics(metrics)
-        val realHeight = metrics.heightPixels
-        val height = realHeight - v.height - changeStatusPopUp.height - titleLayout.height
+        val deviceHeight = metrics.heightPixels
+        val height = deviceHeight - v.height - changeStatusPopUp.height - titleLayout.height
         changeStatusPopUp.showAtLocation(
             v, Gravity.START or Gravity.TOP, v.width, height
         )
@@ -659,6 +659,7 @@ open class ChatActivity : AppCompatActivity() {
         changeStatusPopUp.showAsDropDown(v,0,15)
     }
 
+    @RequiresApi(Build.VERSION_CODES.M)
     open inner class ChatScreen(jsonObject: JSONObject?) {
         init {
             this@ChatActivity.jsonObject = jsonObject

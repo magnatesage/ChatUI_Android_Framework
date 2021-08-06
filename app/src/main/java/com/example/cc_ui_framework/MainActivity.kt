@@ -59,7 +59,7 @@ class MainActivity : ChatActivity() {
                 MessageModel(
                     data = "Welcome to Chatbot", isSender = false,
                     isCardView = false, cardViewHeader = "",
-                    date = "2021-03-31T11:55:53.004Z", senderName = "Test User",isBot = true
+                    date = "2021-03-31T11:55:53.004Z", senderName = "Test User",MessageModel.BOT
                 )
             )
             Handler(Looper.getMainLooper()).postDelayed({
@@ -67,10 +67,19 @@ class MainActivity : ChatActivity() {
                     MessageModel(
                         data = "Please Enter your Org Name", isSender = false,
                         isCardView = false, cardViewHeader = "",
-                        date = yesterdayDate, senderName = "Test User",isBot = false
+                        date = yesterdayDate, senderName = "Test User",MessageModel.WHISPER
                     )
                 )
             }, 3000)
+            Handler(Looper.getMainLooper()).postDelayed({
+                addMessage(
+                    MessageModel(
+                        data = "Please Enter your Name", isSender = false,
+                        isCardView = false, cardViewHeader = "",
+                        date = yesterdayDate, senderName = "Test User",MessageModel.NOPE
+                    )
+                )
+            }, 5000)
         }
 
         chatScreen.getSendButtonImageView().setOnClickListener {
@@ -90,7 +99,7 @@ class MainActivity : ChatActivity() {
                         isCardView = false,
                         cardViewHeader = "",
                         date = time, senderName = "Test User",
-                        isBot = true
+                        MessageModel.NOPE
                     )
                 )
             }
@@ -100,7 +109,7 @@ class MainActivity : ChatActivity() {
                         MessageModel(
                             data = "Welcome $etValue", isSender = false,
                             isCardView = true, cardViewHeader = "",
-                            date = todayDate, senderName = "Test User",isBot = true
+                            date = todayDate, senderName = "Test User",MessageModel.BOT
                         )
                     )
                 }
@@ -117,7 +126,7 @@ class MainActivity : ChatActivity() {
                     MessageModel(
                         data = buttonTitle, isSender = true,
                         isCardView = false, cardViewHeader = "",
-                        date = todayDate, senderName = "Test User",isBot = true
+                        date = todayDate, senderName = "Test User",MessageModel.NOPE
                     )
                 )
             }
