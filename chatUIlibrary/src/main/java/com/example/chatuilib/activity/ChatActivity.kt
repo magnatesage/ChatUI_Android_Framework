@@ -226,6 +226,13 @@ open class ChatActivity : AppCompatActivity() {
 
             val chatObject = jsonObject?.optJSONObject("chat")
 
+            val topMenuArray = chatObject?.optJSONArray("top_menu")
+            if (topMenuArray != null && topMenuArray.length() > 0) {
+                tvMenu.visibility = View.VISIBLE
+            } else {
+                tvMenu.visibility = View.GONE
+            }
+
             if (chatObject?.optBoolean("flag_popup", false)!!) {
                 cvFlag.visibility = View.VISIBLE
             } else {
@@ -516,6 +523,14 @@ open class ChatActivity : AppCompatActivity() {
 
         editTextView?.setCustomFont("${jsonObject?.optString("font_family")}.ttf")
 
+        val chatObject = jsonObject?.optJSONObject("chat")
+        val bottomMenuArray = chatObject?.optJSONArray("bottom_menu")
+        if (bottomMenuArray != null && bottomMenuArray.length() > 0) {
+            flashButtonImageView.visibility = View.VISIBLE
+        } else {
+            flashButtonImageView.visibility = View.GONE
+        }
+
         flashButtonImageView.setOnClickListener { v ->
             showBottomMenuPopUp(v)
         }
@@ -690,12 +705,13 @@ open class ChatActivity : AppCompatActivity() {
         val changeStatusPopUp = PopupWindow(this)
         layout.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED)
         changeStatusPopUp.contentView = layout
-        changeStatusPopUp.width = View.MeasureSpec.makeMeasureSpec(layout.measuredWidth, View.MeasureSpec.UNSPECIFIED)
+        changeStatusPopUp.width =
+            View.MeasureSpec.makeMeasureSpec(layout.measuredWidth, View.MeasureSpec.UNSPECIFIED)
         changeStatusPopUp.height = LinearLayout.LayoutParams.WRAP_CONTENT
         changeStatusPopUp.isFocusable = true
         changeStatusPopUp.setBackgroundDrawable(ColorDrawable(Color.WHITE))
         changeStatusPopUp.elevation = 10F
-        changeStatusPopUp.showAsDropDown(v,(-0.2 * v.width).roundToInt(),15,Gravity.END)
+        changeStatusPopUp.showAsDropDown(v, (-0.2 * v.width).roundToInt(), 15, Gravity.END)
     }
 
     open inner class ChatScreen(jsonObject: JSONObject?) {
