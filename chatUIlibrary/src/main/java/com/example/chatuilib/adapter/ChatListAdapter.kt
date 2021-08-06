@@ -132,6 +132,8 @@ class ChatListAdapter(
                 llParent, RelativeLayout::class.java
             )!!
 
+            val rlChatBubble =
+                chatBubbleLayout.findViewById<RelativeLayout>(R.id.rl_chat_bubble)
             val cvChatBubble =
                 chatBubbleLayout.findViewById<CustomMaterialCardView>(R.id.cv_chat_bubble)
             val tvChatBubble =
@@ -139,7 +141,7 @@ class ChatListAdapter(
 
             val tvIcon = chatBubbleLayout.findViewById<CustomTextView>(R.id.tv_icon)
 
-            when(chatListModel.type){
+            when (chatListModel.type) {
                 MessageModel.NOPE -> {
                     tvIcon.visibility = View.GONE
                 }
@@ -153,6 +155,27 @@ class ChatListAdapter(
                 }
             }
 
+            val layoutParams = RelativeLayout.LayoutParams(
+                RelativeLayout.LayoutParams.WRAP_CONTENT,
+                RelativeLayout.LayoutParams.WRAP_CONTENT
+            )
+            val margin = getSizeInSDP(context, R.dimen._6sdp)
+
+            if (tvIcon.isVisible) {
+                layoutParams.setMargins(
+                    margin,
+                    getSizeInSDP(context, R.dimen._12sdp),
+                    margin,
+                    margin
+                )
+            } else {
+                layoutParams.setMargins(margin, margin, margin, margin)
+            }
+
+            if (chatBubbleShape == R.layout.lib_item_chat_bubble_cardview) {
+                cvChatBubble.layoutParams = layoutParams
+            }
+
             "${chatListModel.senderName} : ${chatListModel.data}".also { tvChatBubble.text = it }
             Utils.setTextSizeInSSP(tvChatBubble, R.dimen._12ssp)
             tvChatBubble.setCustomFont("$fontType.ttf")
@@ -160,6 +183,7 @@ class ChatListAdapter(
             var llChatBubble: LinearLayout? = null
             if (chatBubbleShape == R.layout.lib_item_chat_bubble_image) {
                 llChatBubble = chatBubbleLayout.findViewById(R.id.ll_chat_bubble)
+                llChatBubble.layoutParams = layoutParams
             }
             tvChatBubble.maxLines = MAX_LINES
             tvChatBubble.movementMethod = ScrollingMovementMethod()
@@ -272,19 +296,16 @@ class ChatListAdapter(
                     )
                 }
 
-                val layoutParams = RelativeLayout.LayoutParams(
+                val layoutParams1 = RelativeLayout.LayoutParams(
                     RelativeLayout.LayoutParams.WRAP_CONTENT,
                     RelativeLayout.LayoutParams.WRAP_CONTENT
                 )
-                layoutParams.setMargins(
-                    getSizeInSDP(context, R.dimen._50sdp), getSizeInSDP(context, R.dimen._6sdp),
-                    getSizeInSDP(context, R.dimen._6sdp), getSizeInSDP(context, R.dimen._6sdp)
-                )
+                layoutParams1.setMargins(getSizeInSDP(context, R.dimen._45sdp), 0, 0, 0)
 
-                if (chatBubbleShape == R.layout.lib_item_chat_bubble_image) {
-                    llChatBubble?.layoutParams = layoutParams
-                } else if (chatBubbleShape == R.layout.lib_item_chat_bubble_cardview) {
-                    cvChatBubble.layoutParams = layoutParams
+                if (chatBubbleShape == R.layout.lib_item_chat_bubble_image
+                    || chatBubbleShape == R.layout.lib_item_chat_bubble_cardview
+                ) {
+                    rlChatBubble?.layoutParams = layoutParams1
                 }
 
                 chatBubbleLayout.gravity = Gravity.END
@@ -389,19 +410,16 @@ class ChatListAdapter(
                     )
                 }
 
-                val layoutParams = RelativeLayout.LayoutParams(
+                val layoutParams2 = RelativeLayout.LayoutParams(
                     RelativeLayout.LayoutParams.WRAP_CONTENT,
                     RelativeLayout.LayoutParams.WRAP_CONTENT
                 )
-                layoutParams.setMargins(
-                    getSizeInSDP(context, R.dimen._6sdp), getSizeInSDP(context, R.dimen._6sdp),
-                    getSizeInSDP(context, R.dimen._50sdp), getSizeInSDP(context, R.dimen._6sdp)
-                )
+                layoutParams2.setMargins(0, 0, getSizeInSDP(context, R.dimen._45sdp), 0)
 
-                if (chatBubbleShape == R.layout.lib_item_chat_bubble_image) {
-                    llChatBubble?.layoutParams = layoutParams
-                } else if (chatBubbleShape == R.layout.lib_item_chat_bubble_cardview) {
-                    cvChatBubble.layoutParams = layoutParams
+                if (chatBubbleShape == R.layout.lib_item_chat_bubble_image
+                    || chatBubbleShape == R.layout.lib_item_chat_bubble_cardview
+                ) {
+                    rlChatBubble?.layoutParams = layoutParams2
                 }
 
                 chatBubbleLayout.gravity = Gravity.START

@@ -2,30 +2,30 @@ package com.example.chatuilib.activity
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.content.res.Configuration
 import android.graphics.Color
-import android.graphics.Point
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.util.Size
 import android.view.*
 import android.widget.LinearLayout
 import android.widget.PopupWindow
 import android.widget.RelativeLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.PopupMenu
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.chatuilib.R
 import com.example.chatuilib.adapter.ChatButtonListAdapter
 import com.example.chatuilib.adapter.ChatListAdapter
+import com.example.chatuilib.adapter.UserAdapter
 import com.example.chatuilib.customviews.CustomEditText
+import com.example.chatuilib.customviews.CustomMaterialCardView
 import com.example.chatuilib.customviews.CustomShapeableImageView
 import com.example.chatuilib.customviews.CustomTextView
+import com.example.chatuilib.listener.OnBottomMenuItemClickListener
 import com.example.chatuilib.listener.OnButtonClickListener
 import com.example.chatuilib.listener.OnTopMenuItemClickListener
 import com.example.chatuilib.model.*
-import com.example.chatuilib.utils.AlertDialogView
 import com.example.chatuilib.utils.AppConstants
 import com.example.chatuilib.utils.AppConstants.CIRCLE_RECT
 import com.example.chatuilib.utils.AppConstants.HORIZONTAL
@@ -46,29 +46,20 @@ import com.google.android.material.card.MaterialCardView
 import org.json.JSONObject
 import java.util.*
 import kotlin.collections.ArrayList
-import android.os.Build
-import android.view.WindowManager
-import android.util.DisplayMetrics
-import com.example.chatuilib.utils.AppLog
-import android.view.MotionEvent
-import android.widget.Toast
-import androidx.annotation.RequiresApi
-import androidx.core.view.get
-import com.example.chatuilib.customviews.CustomMaterialCardView
-import android.view.Gravity
-import android.view.LayoutInflater
-import com.example.chatuilib.adapter.UserAdapter
 import kotlin.math.roundToInt
 
 open class ChatActivity : AppCompatActivity() {
     private val TAG = ChatActivity::class.java.simpleName
+    private var userAdapter: UserAdapter? = null
     private var jsonObject: JSONObject? = null
     private var onTopMenuItemClickListener: OnTopMenuItemClickListener? = null
+    private var onBottomMenuItemClickListener: OnBottomMenuItemClickListener? = null
     private var chatButtonListAdapter: ChatButtonListAdapter? = null
     private var chatListAdapter: ChatListAdapter? = null
     private var chatList: ArrayList<MessageModel> = ArrayList()
     private var loaderList: ArrayList<Int> = ArrayList()
     private var buttonTitleList: ArrayList<String> = ArrayList()
+    private var userList: ArrayList<UserModel> = ArrayList()
     private var editTextView: CustomEditText? = null
     private lateinit var etRoundedRect: CustomEditText
     private lateinit var etSquareRect: CustomEditText
@@ -121,7 +112,7 @@ open class ChatActivity : AppCompatActivity() {
         super.setContentView(R.layout.lib_activity_chat)
     }
 
-    @RequiresApi(Build.VERSION_CODES.M)
+    @SuppressLint("SetTextI18n")
     private fun init() {
         context = this@ChatActivity
         chatListAdapter = ChatListAdapter(this, chatList, null, null, loaderList, "Roboto")
@@ -193,6 +184,18 @@ open class ChatActivity : AppCompatActivity() {
         }
 
         try {
+            val iconObject = jsonObject?.optJSONObject("icons")
+            if (iconObject != null) {
+                val greenFlagValue =
+                    iconObject.optJSONObject("green_flag")?.optString("icon_value")
+                val greenFlagColor =
+                    iconObject.optJSONObject("green_flag")?.optString("icon_color")
+                if (!greenFlagValue.isNullOrEmpty())
+                    tvFlag.text = "&#x$greenFlagValue"
+                if (!greenFlagColor.isNullOrEmpty())
+                    tvFlag.setTextColor(Color.parseColor(greenFlagColor))
+            }
+
             val themeJsonObject = jsonObject!!.optJSONObject("theme_color")
 
             val themeModel = ThemeModel(
@@ -223,7 +226,19 @@ open class ChatActivity : AppCompatActivity() {
 
             val chatObject = jsonObject?.optJSONObject("chat")
 
-            val chatBubbleObject = chatObject?.optJSONObject("chat_bubble")
+            if (chatObject?.optBoolean("flag_popup", false)!!) {
+                cvFlag.visibility = View.VISIBLE
+            } else {
+                cvFlag.visibility = View.GONE
+            }
+
+            if (chatObject.optBoolean("usrelist_popup", false)) {
+                rlUser.visibility = View.VISIBLE
+            } else {
+                rlUser.visibility = View.GONE
+            }
+
+            val chatBubbleObject = chatObject.optJSONObject("chat_bubble")
             val chatBubbleConfigModel = ChatBubbleConfigModel(
                 chatBubbleObject?.optInt("chat_bubble_style")!!,
                 chatBubbleObject.optString("chat_screen_bg_type"),
@@ -396,7 +411,6 @@ open class ChatActivity : AppCompatActivity() {
     /**
      * This method is used to set conversation bar style
      */
-    @RequiresApi(Build.VERSION_CODES.M)
     private fun setUpConversationBarStylingDisplay(conversationBarConfigModel: ConversationBarConfigModel) {
         val bgColor = getDesiredColorFromXML(this, R.color.lib_colorBorder)
         val floatingImageUrl = conversationBarConfigModel.floatingIconUrl
@@ -503,12 +517,7 @@ open class ChatActivity : AppCompatActivity() {
         editTextView?.setCustomFont("${jsonObject?.optString("font_family")}.ttf")
 
         flashButtonImageView.setOnClickListener { v ->
-            showBottomMenuPopUp(v ,
-            object : BottomMenuClickListener{
-                override fun onClick(menuId: Int) {
-                    AppLog.e("test","Item: $menuId")
-                }
-            })
+            showBottomMenuPopUp(v)
         }
 
         if (onClickListener != null) {
@@ -518,18 +527,6 @@ open class ChatActivity : AppCompatActivity() {
         if (flashBtnOnClickListener != null) {
             flashButtonImageView.setOnClickListener(flashBtnOnClickListener)
         }
-    }
-
-    /**
-     * This method is used to show under development dialog
-     */
-    private fun showUnderDevelopmentDialog() {
-        AlertDialogView.showAlert(
-            this,
-            getString(R.string.lib_app_name),
-            getString(R.string.lib_under_development),
-            getString(R.string.lib_ok)
-        )?.show()
     }
 
     /**
@@ -560,20 +557,15 @@ open class ChatActivity : AppCompatActivity() {
         popup.show()
     }
 
-    interface BottomMenuClickListener{
-        fun onClick(menuId: Int)
-    }
-
     /**
      * This method is used to show bottom menu
      */
-    @RequiresApi(Build.VERSION_CODES.M)
     @SuppressLint("InflateParams")
-    private fun showBottomMenuPopUp(v: View, onClickListener: BottomMenuClickListener) {
+    private fun showBottomMenuPopUp(v: View) {
         val changeStatusPopUp = PopupWindow(this)
         val layoutInflater: LayoutInflater =
             getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-        val layout: View = layoutInflater.inflate(R.layout.lib_layout_bottom_menu,null)
+        val layout: View = layoutInflater.inflate(R.layout.lib_layout_bottom_menu, null)
         val llMain: LinearLayout = layout.findViewById(R.id.ll_main)
         changeStatusPopUp.contentView = layout
 
@@ -583,13 +575,17 @@ open class ChatActivity : AppCompatActivity() {
         if (bottomMenuArray != null && bottomMenuArray.length() > 0) {
             flashButtonImageView.visibility = View.VISIBLE
             for (index in 0 until bottomMenuArray.length()) {
-                val menuItem: View = layoutInflater.inflate(R.layout.lib_item_bottom_menu,null)
+                val menuItem: View = layoutInflater.inflate(R.layout.lib_item_bottom_menu, null)
                 val tvMenuIcon: CustomTextView = menuItem.findViewById(R.id.tv_menu_icon)
                 val tvMenu: CustomTextView = menuItem.findViewById(R.id.tv_menu)
                 val textValue: String = bottomMenuArray.getJSONObject(index).getString("text_value")
                 val iconValue: String = bottomMenuArray.getJSONObject(index).getString("icon_value")
                 tvMenu.text = textValue
                 "&#x${iconValue}".also { tvMenuIcon.text = it }
+
+                menuItem.setOnClickListener {
+                    onBottomMenuItemClickListener?.onBottomMenuItemClick(index)
+                }
                 llMain.addView(menuItem)
             }
         } else {
@@ -603,42 +599,69 @@ open class ChatActivity : AppCompatActivity() {
         changeStatusPopUp.isFocusable = true
         changeStatusPopUp.setBackgroundDrawable(ColorDrawable(Color.WHITE))
         changeStatusPopUp.elevation = 10F
-        changeStatusPopUp.overlapAnchor = false
-        changeStatusPopUp.showAsDropDown(v,0, (-0.2 * v.height).roundToInt(),Gravity.CENTER)
-
-        val linearLayout = layout as LinearLayout
-        for (i in 0 until linearLayout.childCount) {
-            val view = linearLayout.getChildAt(i)
-            view.setOnClickListener { viewId ->
-                onClickListener.onClick(viewId.id)
-                changeStatusPopUp.dismiss()
-            }
-        }
+        changeStatusPopUp.showAsDropDown(v, 0, (-0.2 * v.height).roundToInt(), Gravity.CENTER)
     }
 
     /**
      * This method is used to show top flag menu
      */
-    @RequiresApi(Build.VERSION_CODES.M)
-    @SuppressLint("InflateParams")
+    @SuppressLint("InflateParams", "SetTextI18n")
     private fun showTopFlagMenuPopUp(v: View) {
         val layoutInflater: LayoutInflater =
             getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-        val menuItem: View = layoutInflater.inflate(R.layout.lib_item_flag, null)
         val menuItem1: View = layoutInflater.inflate(R.layout.lib_item_flag, null)
         val menuItem2: View = layoutInflater.inflate(R.layout.lib_item_flag, null)
+        val menuItem3: View = layoutInflater.inflate(R.layout.lib_item_flag, null)
         val layout: View = layoutInflater.inflate(R.layout.lib_layout_top_flag_menu, null)
 
         val llMain: LinearLayout = layout.findViewById(R.id.ll_main)
-        val tvFlag: CustomTextView = menuItem.findViewById(R.id.tv_flag)
         val tvFlag1: CustomTextView = menuItem1.findViewById(R.id.tv_flag)
         val tvFlag2: CustomTextView = menuItem2.findViewById(R.id.tv_flag)
-        tvFlag.setTextColor(getColor(R.color.lib_colorGreenFlag))
-        tvFlag1.setTextColor(getColor(R.color.lib_colorUmberFlag))
-        tvFlag2.setTextColor(getColor(R.color.lib_colorRedFlag))
-        llMain.addView(menuItem)
+        val tvFlag3: CustomTextView = menuItem3.findViewById(R.id.tv_flag)
+
+        tvFlag1.setTextColor(ContextCompat.getColor(context, R.color.lib_colorGreenFlag))
+        tvFlag2.setTextColor(ContextCompat.getColor(context, R.color.lib_colorUmberFlag))
+        tvFlag3.setTextColor(ContextCompat.getColor(context, R.color.lib_colorRedFlag))
+
+        try {
+            if (jsonObject != null) {
+                val iconObject = jsonObject?.optJSONObject("icons")
+                if (iconObject != null) {
+                    val greenFlagValue =
+                        iconObject.optJSONObject("green_flag")?.optString("icon_value")
+                    val greenFlagColor =
+                        iconObject.optJSONObject("green_flag")?.optString("icon_color")
+                    if (!greenFlagValue.isNullOrEmpty())
+                        tvFlag1.text = "&#x$greenFlagValue"
+                    if (!greenFlagColor.isNullOrEmpty())
+                        tvFlag1.setTextColor(Color.parseColor(greenFlagColor))
+
+                    val umberFlagValue =
+                        iconObject.optJSONObject("umber_flag")?.optString("icon_value")
+                    val umberFlagColor =
+                        iconObject.optJSONObject("umber_flag")?.optString("icon_color")
+                    if (!umberFlagValue.isNullOrEmpty())
+                        tvFlag2.text = "&#x$umberFlagValue"
+                    if (!umberFlagColor.isNullOrEmpty())
+                        tvFlag2.setTextColor(Color.parseColor(umberFlagColor))
+
+                    val redFlagValue =
+                        iconObject.optJSONObject("red_flag")?.optString("icon_value")
+                    val redFlagColor =
+                        iconObject.optJSONObject("red_flag")?.optString("icon_color")
+                    if (!greenFlagValue.isNullOrEmpty())
+                        tvFlag3.text = "&#x$redFlagValue"
+                    if (!greenFlagColor.isNullOrEmpty())
+                        tvFlag3.setTextColor(Color.parseColor(redFlagColor))
+                }
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+
         llMain.addView(menuItem1)
         llMain.addView(menuItem2)
+        llMain.addView(menuItem3)
 
         val changeStatusPopUp = PopupWindow(this)
         changeStatusPopUp.contentView = layout
@@ -647,14 +670,12 @@ open class ChatActivity : AppCompatActivity() {
         changeStatusPopUp.isFocusable = true
         changeStatusPopUp.setBackgroundDrawable(ColorDrawable(Color.WHITE))
         changeStatusPopUp.elevation = 10F
-        changeStatusPopUp.overlapAnchor = false
-        changeStatusPopUp.showAsDropDown(v,0,15)
+        changeStatusPopUp.showAsDropDown(v, 0, 15)
     }
 
     /**
      * This method is used to show top user dialog
      */
-    @RequiresApi(Build.VERSION_CODES.M)
     @SuppressLint("InflateParams", "WrongConstant")
     private fun showTopUserDialogPopUp(v: View) {
         val layoutInflater: LayoutInflater =
@@ -662,9 +683,9 @@ open class ChatActivity : AppCompatActivity() {
 
         val layout: View = layoutInflater.inflate(R.layout.lib_layout_top_user, null)
         val rvUser = layout.findViewById<RecyclerView>(R.id.rv_user)
-        rvUser.layoutManager = LinearLayoutManager(context,LinearLayout.HORIZONTAL,false)
-        val adapter = UserAdapter(context, arrayListOf("Agent","Manager"))
-        rvUser.adapter = adapter
+        rvUser.layoutManager = LinearLayoutManager(context, LinearLayout.HORIZONTAL, false)
+        userAdapter = UserAdapter(context, userList)
+        rvUser.adapter = userAdapter
 
         val changeStatusPopUp = PopupWindow(this)
         changeStatusPopUp.contentView = layout
@@ -673,11 +694,9 @@ open class ChatActivity : AppCompatActivity() {
         changeStatusPopUp.isFocusable = true
         changeStatusPopUp.setBackgroundDrawable(ColorDrawable(Color.WHITE))
         changeStatusPopUp.elevation = 10F
-        changeStatusPopUp.overlapAnchor = false
         changeStatusPopUp.showAsDropDown(v,0,15)
     }
 
-    @RequiresApi(Build.VERSION_CODES.M)
     open inner class ChatScreen(jsonObject: JSONObject?) {
         init {
             this@ChatActivity.jsonObject = jsonObject
@@ -768,6 +787,30 @@ open class ChatActivity : AppCompatActivity() {
          */
         fun setTopMenuItemClickListener(onTopMenuItemClickListener: OnTopMenuItemClickListener) {
             this@ChatActivity.onTopMenuItemClickListener = onTopMenuItemClickListener
+        }
+
+        /**
+         * Set Bottom Menu Item click Listener
+         * @param onBottomMenuItemClickListener: OnTopMenuItemClickListener
+         */
+        fun setBottomMenuItemClickListener(onBottomMenuItemClickListener: OnBottomMenuItemClickListener) {
+            this@ChatActivity.onBottomMenuItemClickListener = onBottomMenuItemClickListener
+        }
+
+        /**
+         * Adds User Model List to User List
+         * @param userModelList: List<UserModel>
+         */
+        fun addUserList(userModelList: List<UserModel>) {
+            if (userModelList.isNotEmpty()) {
+                cvUserNumber.visibility = View.VISIBLE
+                tvUserNumber.text = userModelList.size.toString()
+            } else {
+                cvUserNumber.visibility = View.GONE
+            }
+            userList.clear()
+            userList.addAll(userModelList)
+            userAdapter?.notifyDataSetChanged()
         }
 
         /**

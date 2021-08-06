@@ -10,14 +10,19 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:gravity="center_horizontal"
-        android:padding="@dimen/_5sdp">
+        android:paddingTop="@dimen/_5sdp"
+        android:paddingBottom="@dimen/_5sdp"
+        android:paddingStart="@dimen/_10sdp"
+        android:paddingEnd="@dimen/_10sdp">
 
         <com.example.chatuilib.customviews.CustomShapeableImageView
             android:id="@+id/iv_user"
-            android:layout_width="@dimen/_30sdp"
-            android:layout_height="@dimen/_30sdp"
-            app:srcCompat="@drawable/group_hug"
-            android:layout_gravity="center" />
+            android:layout_width="@dimen/_35sdp"
+            android:layout_height="@dimen/_35sdp"
+            app:srcCompat="@drawable/lib_ic_user"
+            android:layout_gravity="center"
+            android:background="@android:color/white"
+            app:shapeAppearanceOverlay="@style/lib_CircleShapeImageView"/>
 
         <com.example.chatuilib.customviews.CustomTextView
             android:id="@+id/tv_user_name"
@@ -32,7 +37,7 @@
             app:customTextViewFont="@string/lib_font_icons" />
 
         <com.example.chatuilib.customviews.CustomTextView
-            android:id="@+id/tv_user_designation"
+            android:id="@+id/tv_user_role"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"

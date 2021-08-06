@@ -8,14 +8,16 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.chatuilib.R
 import com.example.chatuilib.customviews.CustomShapeableImageView
 import com.example.chatuilib.customviews.CustomTextView
+import com.example.chatuilib.model.UserModel
+import com.example.chatuilib.utils.Utils
 
-class UserAdapter(val context: Context, private val userList: ArrayList<String>) :
+class UserAdapter(val context: Context, private val userList: ArrayList<UserModel>) :
     RecyclerView.Adapter<UserAdapter.UserViewHolder>() {
 
     class UserViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
-            val ivUser = itemView.findViewById<CustomShapeableImageView>(R.id.iv_user) as CustomShapeableImageView
-            val tvUserName = itemView.findViewById<CustomTextView>(R.id.tv_user_name) as CustomTextView
-            val tvUserDesignation = itemView.findViewById<CustomTextView>(R.id.tv_user_designation) as CustomTextView
+            val ivUser = itemView.findViewById(R.id.iv_user) as CustomShapeableImageView
+            val tvUserName = itemView.findViewById(R.id.tv_user_name) as CustomTextView
+            val tvUserRole = itemView.findViewById(R.id.tv_user_role) as CustomTextView
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UserViewHolder {
@@ -24,8 +26,14 @@ class UserAdapter(val context: Context, private val userList: ArrayList<String>)
     }
 
     override fun onBindViewHolder(holder: UserViewHolder, position: Int) {
-        holder.tvUserName.text = userList[position]
-        holder.tvUserDesignation.text = context.getString(R.string.lib_agent_1)
+        val userModel = userList[position]
+        holder.tvUserName.text = userModel.userName
+        holder.tvUserRole.text = userModel.userRole
+        Utils.loadImageWithExecutor(
+            userModel.userUrl,
+            holder.ivUser,
+            R.drawable.lib_ic_user
+        )
     }
 
     override fun getItemCount(): Int = userList.size

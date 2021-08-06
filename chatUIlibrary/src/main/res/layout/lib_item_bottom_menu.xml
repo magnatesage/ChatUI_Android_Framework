@@ -12,7 +12,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:padding="@dimen/_5sdp"
-        android:textColor="@color/lib_colorPrimary"
+        android:textColor="@android:color/black"
         android:text="@string/lib_icon_back_arrow"
         android:textSize="@dimen/_12ssp"
         app:customTextViewFont="@string/lib_font_icons"
@@ -23,7 +23,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/_10sdp"
-        android:textColor="@color/lib_colorPrimary"
+        android:textColor="@android:color/black"
         android:text="Menu"
         android:textSize="@dimen/_12ssp"
         app:customTextViewFont="@string/lib_Roboto_Regular" />

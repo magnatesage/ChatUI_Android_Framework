@@ -250,6 +250,8 @@
     }
   },
   "chat": {
+    "flag_popup": true,
+    "usrelist_popup": true,
     "chat_bubble": {
       "card_bg_drop_shadow": true,
       "chat_screen_bg_color": "#ffffffff",

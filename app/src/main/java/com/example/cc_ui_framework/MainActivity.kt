@@ -7,9 +7,11 @@ import android.os.Looper
 import android.util.Log
 import android.widget.Toast
 import com.example.chatuilib.customviews.CustomEditText
+import com.example.chatuilib.listener.OnBottomMenuItemClickListener
 import com.example.chatuilib.listener.OnButtonClickListener
 import com.example.chatuilib.listener.OnTopMenuItemClickListener
 import com.example.chatuilib.model.MessageModel
+import com.example.chatuilib.model.UserModel
 import org.json.JSONObject
 import java.io.IOException
 import java.nio.charset.StandardCharsets
@@ -134,10 +136,20 @@ class MainActivity : ChatActivity() {
 
         chatScreen.setTopMenuItemClickListener(object : OnTopMenuItemClickListener {
             override fun onTopMenuItemClick(position: Int) {
-                Toast.makeText(this@MainActivity, "Menu Item $position clicked", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@MainActivity, "Top Menu Item $position clicked", Toast.LENGTH_SHORT).show()
             }
-
         })
+
+        chatScreen.setBottomMenuItemClickListener(object : OnBottomMenuItemClickListener {
+            override fun onBottomMenuItemClick(position: Int) {
+                Toast.makeText(this@MainActivity, "Bottom Menu Item $position clicked", Toast.LENGTH_SHORT).show()
+            }
+        })
+
+        val userList = ArrayList<UserModel>()
+        userList.add(UserModel("https://seeklogo.com/images/S/skype-icon-logo-62E333BBBA-seeklogo.com.png", "Manager 1", "Manager"))
+        userList.add(UserModel("https://seeklogo.com/images/S/skype-icon-logo-62E333BBBA-seeklogo.com.png", "Agent 1", "Agent"))
+        chatScreen.addUserList(userList)
 
         chatScreen.apply {
             Log.e("Chat Json Object:: ", getChatJsonObject().toString())

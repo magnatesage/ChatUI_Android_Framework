@@ -66,14 +66,14 @@
                 app:allCornerFamily="0"
                 app:allCornerSize="50%"
                 app:cardBackgroundColor="@color/blue"
-                app:cardElevation="0dp">
+                app:cardElevation="0dp"
+                android:visibility="gone">
 
                 <com.example.chatuilib.customviews.CustomTextView
                     android:id="@+id/tv_user_number"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:text="2"
                     android:textColor="@color/lib_colorWhite"
                     android:textSize="@dimen/_10ssp"
                     app:customTextViewFont="@string/lib_font_icons" />

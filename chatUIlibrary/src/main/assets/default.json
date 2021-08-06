@@ -289,34 +289,6 @@
     "conversation_bar": {
       "conversation_bar_shape": "style4",
       "floating_icon_url": "https://seeklogo.com/images/S/skype-icon-logo-62E333BBBA-seeklogo.com.png"
-    },
-    "top_menu": [
-      "Notes",
-      "Invite",
-      "Handover Chat",
-      "Assigned Tags"
-    ],
-    "bottom_menu": [
-      {
-        "text_value": "Whisper",
-        "icon_type": "text",
-        "icon_value": "f1fa"
-      },
-      {
-        "text_value": "Interact",
-        "icon_type": "text",
-        "icon_value": "f00d"
-      },
-      {
-        "text_value": "Bot Start",
-        "icon_type": "text",
-        "icon_value": "e929"
-      },
-      {
-        "text_value": "Get User Location",
-        "icon_type": "text",
-        "icon_value": "e92a"
-      }
-    ]
+    }
   }
 }
