@@ -688,13 +688,14 @@ open class ChatActivity : AppCompatActivity() {
         rvUser.adapter = userAdapter
 
         val changeStatusPopUp = PopupWindow(this)
+        layout.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED)
         changeStatusPopUp.contentView = layout
-        changeStatusPopUp.width = LinearLayout.LayoutParams.WRAP_CONTENT
+        changeStatusPopUp.width = View.MeasureSpec.makeMeasureSpec(layout.measuredWidth, View.MeasureSpec.UNSPECIFIED)
         changeStatusPopUp.height = LinearLayout.LayoutParams.WRAP_CONTENT
         changeStatusPopUp.isFocusable = true
         changeStatusPopUp.setBackgroundDrawable(ColorDrawable(Color.WHITE))
         changeStatusPopUp.elevation = 10F
-        changeStatusPopUp.showAsDropDown(v,0,15)
+        changeStatusPopUp.showAsDropDown(v,(-0.2 * v.width).roundToInt(),15,Gravity.END)
     }
 
     open inner class ChatScreen(jsonObject: JSONObject?) {

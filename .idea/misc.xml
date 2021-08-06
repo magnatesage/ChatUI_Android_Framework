@@ -1,33 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="DesignSurface">
-    <option name="filePathToZoomLevelMap">
-      <map>
-        <entry key="../../../../../../../layout/custom_preview.xml" value="0.24814814814814815" />
-        <entry key="app/src/main/res/layout/activity_main.xml" value="0.24322916666666666" />
-        <entry key="chatUIlibrary/src/main/res/layout/lib_activity_chat.xml" value="0.23948717948717949" />
-        <entry key="chatUIlibrary/src/main/res/layout/lib_item_bottom_menu.xml" value="0.5" />
-        <entry key="chatUIlibrary/src/main/res/layout/lib_item_chat_bubble_cardview.xml" value="0.75" />
-        <entry key="chatUIlibrary/src/main/res/layout/lib_item_chat_bubble_image.xml" value="0.49444444444444446" />
-        <entry key="chatUIlibrary/src/main/res/layout/lib_item_chat_button.xml" value="0.24322916666666666" />
-        <entry key="chatUIlibrary/src/main/res/layout/lib_item_chat_list.xml" value="0.24322916666666666" />
-        <entry key="chatUIlibrary/src/main/res/layout/lib_item_date_time_header.xml" value="0.24322916666666666" />
-        <entry key="chatUIlibrary/src/main/res/layout/lib_item_flag.xml" value="0.5" />
-        <entry key="chatUIlibrary/src/main/res/layout/lib_item_user.xml" value="0.375" />
-        <entry key="chatUIlibrary/src/main/res/layout/lib_layout_bottom_menu.xml" value="0.24322916666666666" />
-        <entry key="chatUIlibrary/src/main/res/layout/lib_layout_top_flag_menu.xml" value="0.23948717948717949" />
-        <entry key="chatUIlibrary/src/main/res/layout/lib_layout_top_user.xml" value="0.24322916666666666" />
-        <entry key="chatUIlibrary/src/main/res/layout/lib_receiver_chatbubble_shape_circle_tail.xml" value="0.55" />
-        <entry key="chatUIlibrary/src/main/res/layout/lib_sender_chatbubble_shape_circle_tail.xml" value="0.6008902077151336" />
-        <entry key="chatUIlibrary/src/main/res/layout/lib_toolbar_layout.xml" value="0.24322916666666666" />
-        <entry key="chatUIlibrary/src/main/res/menu/lib_top_menu.xml" value="0.24322916666666666" />
-      </map>
-    </option>
-  </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" default="true" project-jdk-name="JDK" project-jdk-type="JavaSDK">
-    <output url="file://$PROJECT_DIR$/build/classes" />
-  </component>
-  <component name="ProjectType">
-    <option name="id" value="Android" />
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" project-jdk-name="JDK" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/out" />
   </component>
 </project>
