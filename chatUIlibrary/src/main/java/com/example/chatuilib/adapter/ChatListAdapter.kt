@@ -196,7 +196,7 @@ class ChatListAdapter(
 
             if (chatListModel.isSender) {
                 tvChatBubble.setTextColor(getParsedColorValue(chatBubbleConfigModel.senderTextColor!!))
-                tvIcon.setTextColor(getParsedColorValue(chatBubbleConfigModel.senderTextColor))
+                tvIcon.setTextColor(ContextCompat.getColor(context,R.color.blue))
 
                 if (chatBubbleShape == R.layout.lib_item_chat_bubble_image) {
                     when (chatBubbleConfigModel.chatBubbleStyle) {
@@ -315,6 +315,7 @@ class ChatListAdapter(
                 llParent.addView(chatBubbleLayout)
             } else {
                 tvChatBubble.setTextColor(getParsedColorValue(chatBubbleConfigModel.receiverTextColor!!))
+                tvIcon.setTextColor(ContextCompat.getColor(context,R.color.gray))
 
                 if (chatBubbleShape == R.layout.lib_item_chat_bubble_image) {
                     when (chatBubbleConfigModel.chatBubbleStyle) {

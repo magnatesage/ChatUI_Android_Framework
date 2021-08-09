@@ -101,7 +101,7 @@ class MainActivity : ChatActivity() {
                         isCardView = false,
                         cardViewHeader = "",
                         date = time, senderName = "Test User",
-                        MessageModel.NOPE
+                        MessageModel.WHISPER
                     )
                 )
             }
