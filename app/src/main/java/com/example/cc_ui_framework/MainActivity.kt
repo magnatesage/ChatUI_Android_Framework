@@ -1,10 +1,12 @@
 package com.example.cc_ui_framework
 
+import android.annotation.SuppressLint
 import com.example.chatuilib.activity.ChatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.util.Log
+import android.view.View
 import android.widget.Toast
 import com.example.chatuilib.customviews.CustomEditText
 import com.example.chatuilib.listener.OnBottomMenuItemClickListener
@@ -24,6 +26,7 @@ class MainActivity : ChatActivity() {
     private var et: CustomEditText? = null
     private var buttonTitleList: ArrayList<String> = ArrayList()
 
+    @SuppressLint("NewApi")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -57,6 +60,8 @@ class MainActivity : ChatActivity() {
         )
         chatScreen.apply {
             setTitle(getString(R.string.hp))
+            setSubTitle(getString(R.string.app_name))
+
             addMessage(
                 MessageModel(
                     data = "Welcome to Chatbot", isSender = false,

@@ -6,7 +6,7 @@
         <entry key="chatUIlibrary/src/main/res/layout/lib_activity_chat.xml" value="0.23703703703703705" />
         <entry key="chatUIlibrary/src/main/res/layout/lib_item_bottom_menu.xml" value="0.23703703703703705" />
         <entry key="chatUIlibrary/src/main/res/layout/lib_item_chat_list.xml" value="0.23703703703703705" />
-        <entry key="chatUIlibrary/src/main/res/layout/lib_toolbar_layout.xml" value="0.23703703703703705" />
+        <entry key="chatUIlibrary/src/main/res/layout/lib_toolbar_layout.xml" value="0.75" />
       </map>
     </option>
   </component>
