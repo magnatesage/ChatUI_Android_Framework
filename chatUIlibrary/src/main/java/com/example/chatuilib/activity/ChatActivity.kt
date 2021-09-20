@@ -102,6 +102,7 @@ open class ChatActivity : AppCompatActivity() {
     private lateinit var cvFlag: CustomMaterialCardView
     private lateinit var tvFlag: CustomTextView
     private lateinit var tvUser: CustomTextView
+    private lateinit var tvTrainingMode: CustomTextView
     private lateinit var cvUserNumber: CustomMaterialCardView
     private lateinit var tvUserNumber: CustomTextView
     private lateinit var rlUser: RelativeLayout
@@ -164,6 +165,7 @@ open class ChatActivity : AppCompatActivity() {
         cvUserNumber = findViewById(R.id.cv_user_number)
         tvUserNumber = findViewById(R.id.tv_user_number)
         rlTop = findViewById(R.id.rl_top)
+        tvTrainingMode = findViewById(R.id.tv_training_mode)
 
         sendButtonImageView = ivSquareRectSend
         flashButtonImageView = ivSemiRoundedRectFlash
@@ -212,7 +214,7 @@ open class ChatActivity : AppCompatActivity() {
 
             titleLayout.setBackgroundColor(getParsedColorValue(themeModel.primaryColor!!))
             tvTitle.setTextColor(getParsedColorValue(themeModel.secondaryColor!!))
-            tvSubTitle.setTextColor(getColor(R.color.gray))
+            tvSubTitle.setTextColor(ContextCompat.getColor(context,R.color.gray))
             tvTitle.setCustomFont("${jsonObject?.optString("font_family")}.ttf")
             tvSubTitle.setCustomFont("${jsonObject?.optString("font_family")}.ttf")
             jsonObject?.optJSONObject("font_size")?.optString("title_header")?.let {
@@ -244,6 +246,8 @@ open class ChatActivity : AppCompatActivity() {
             tvMenu.setTextColor(getParsedColorValue(themeModel.secondaryColor))
             tvFirstIcon.setTextColor(getParsedColorValue(themeModel.secondaryColor))
             tvSecondIcon.setTextColor(getParsedColorValue(themeModel.secondaryColor))
+            tvTrainingMode.setTextColor(getParsedColorValue(themeModel.primaryColor))
+            tvTrainingMode.setBackgroundColor(ContextCompat.getColor(context,R.color.pink))
 
             val chatObject = jsonObject?.optJSONObject("chat")
 
@@ -819,6 +823,27 @@ open class ChatActivity : AppCompatActivity() {
         }
 
         /**
+         * Returns Visibility of Training Mode of Chat Screen
+         */
+        fun getTrainingModeVisibility(): Int {
+            return tvTrainingMode.visibility
+        }
+
+        /**
+         * Returns CustomTextView first icon in toolbar instance
+         */
+        fun getFirstIconClick(): CustomTextView {
+            return tvFirstIcon
+        }
+
+        /**
+         * Returns CustomTextView second icon in toolbar instance
+         */
+        fun getSecondIconClick(): CustomTextView {
+            return tvSecondIcon
+        }
+
+        /**
          * Returns ChatList Adapter
          */
         fun getChatListAdapter(): ChatListAdapter? {
@@ -854,7 +879,7 @@ open class ChatActivity : AppCompatActivity() {
         }
 
         /**
-         * Returns CustomEditText
+         * Returns CustomShapeableImageView
          */
         fun getSendButtonImageView(): CustomShapeableImageView {
             return sendButtonImageView
@@ -992,6 +1017,26 @@ open class ChatActivity : AppCompatActivity() {
          */
         fun setConversationBarVisibility(visibility: Int) {
             rlConversationBar.visibility = visibility
+        }
+
+        /**
+         * Set Visibility of Rect Flash in chat conversation bar of Chat Screen
+         * @param visibility: Int
+         */
+        fun setRectFlashVisibility(visibility: Int) {
+            ivRoundedRectFlash.visibility = visibility
+            ivSquareRectFlash.visibility = visibility
+            ivSemiRoundedRectFlash.visibility = visibility
+            ivOvalRectFlash.visibility = visibility
+            ivCircleRectFlash.visibility = visibility
+        }
+
+        /**
+         * Set Visibility of Training Mode of Chat Screen
+         * @param visibility: Int
+         */
+        fun setTrainingModeVisibility(visibility: Int) {
+            tvTrainingMode.visibility = visibility
         }
 
         /**

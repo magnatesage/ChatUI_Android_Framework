@@ -61,6 +61,8 @@ class MainActivity : ChatActivity() {
         chatScreen.apply {
             setTitle(getString(R.string.hp))
             setSubTitle(getString(R.string.app_name))
+            chatScreen.setRectFlashVisibility(View.GONE)
+            chatScreen.setTrainingModeVisibility(View.VISIBLE)
 
             addMessage(
                 MessageModel(
