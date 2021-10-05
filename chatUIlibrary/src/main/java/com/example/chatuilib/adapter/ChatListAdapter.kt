@@ -187,11 +187,16 @@ class ChatListAdapter(
             }
 
             tvChatBubble.maxLines = MAX_LINES
-            tvChatBubble.movementMethod = ScrollingMovementMethod()
-            tvChatBubble.setOnTouchListener { v, _ ->
-                // Disallow the touch request for parent scroll on touch of child view
-                v?.parent?.requestDisallowInterceptTouchEvent(true)
-                false
+            tvChatBubble.post {
+                val lineCount = tvChatBubble.lineCount
+                if (lineCount >= 10) {
+                    tvChatBubble.movementMethod = ScrollingMovementMethod()
+                    tvChatBubble.setOnTouchListener { v, _ ->
+                        // Disallow the touch request for parent scroll on touch of child view
+                        v?.parent?.requestDisallowInterceptTouchEvent(true)
+                        false
+                    }
+                }
             }
 
             val smallCornerSize = getSizeInSDP(context, R.dimen._8sdp).toFloat()
