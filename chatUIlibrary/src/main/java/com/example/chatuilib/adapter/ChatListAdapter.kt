@@ -185,18 +185,25 @@ class ChatListAdapter(
                 llChatBubble = chatBubbleLayout.findViewById(R.id.ll_chat_bubble)
                 llChatBubble.layoutParams = layoutParams
             }
+
             tvChatBubble.maxLines = MAX_LINES
-            tvChatBubble.movementMethod = ScrollingMovementMethod()
-            tvChatBubble.setOnTouchListener { v, _ -> // Disallow the touch request for parent scroll on touch of child view
-                v?.parent?.requestDisallowInterceptTouchEvent(true)
-                false
+            tvChatBubble.post {
+                val lineCount = tvChatBubble.lineCount
+                if (lineCount >= 10) {
+                    tvChatBubble.movementMethod = ScrollingMovementMethod()
+                    tvChatBubble.setOnTouchListener { v, _ ->
+                        // Disallow the touch request for parent scroll on touch of child view
+                        v?.parent?.requestDisallowInterceptTouchEvent(true)
+                        false
+                    }
+                }
             }
 
             val smallCornerSize = getSizeInSDP(context, R.dimen._8sdp).toFloat()
 
             if (chatListModel.isSender) {
                 tvChatBubble.setTextColor(getParsedColorValue(chatBubbleConfigModel.senderTextColor!!))
-                tvIcon.setTextColor(getParsedColorValue(chatBubbleConfigModel.senderTextColor))
+                tvIcon.setTextColor(ContextCompat.getColor(context, R.color.blue))
 
                 if (chatBubbleShape == R.layout.lib_item_chat_bubble_image) {
                     when (chatBubbleConfigModel.chatBubbleStyle) {
@@ -315,6 +322,7 @@ class ChatListAdapter(
                 llParent.addView(chatBubbleLayout)
             } else {
                 tvChatBubble.setTextColor(getParsedColorValue(chatBubbleConfigModel.receiverTextColor!!))
+                tvIcon.setTextColor(ContextCompat.getColor(context, R.color.gray))
 
                 if (chatBubbleShape == R.layout.lib_item_chat_bubble_image) {
                     when (chatBubbleConfigModel.chatBubbleStyle) {

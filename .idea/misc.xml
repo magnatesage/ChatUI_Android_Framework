@@ -1,5 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="chatUIlibrary/src/main/res/layout/lib_activity_chat.xml" value="0.3362175525339926" />
+        <entry key="chatUIlibrary/src/main/res/layout/lib_item_bottom_menu.xml" value="0.23703703703703705" />
+        <entry key="chatUIlibrary/src/main/res/layout/lib_item_chat_button.xml" value="0.24583333333333332" />
+        <entry key="chatUIlibrary/src/main/res/layout/lib_item_chat_list.xml" value="0.23703703703703705" />
+        <entry key="chatUIlibrary/src/main/res/layout/lib_item_date_time_header.xml" value="0.75" />
+        <entry key="chatUIlibrary/src/main/res/layout/lib_receiver_chatbubble_shape_circle_tail.xml" value="0.24583333333333332" />
+        <entry key="chatUIlibrary/src/main/res/layout/lib_toolbar_layout.xml" value="0.6495327102803738" />
+      </map>
+    </option>
+  </component>
   <component name="ProjectRootManager" version="2" languageLevel="JDK_11" project-jdk-name="JDK" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/out" />
   </component>

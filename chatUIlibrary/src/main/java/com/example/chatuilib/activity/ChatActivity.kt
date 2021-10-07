@@ -95,10 +95,14 @@ open class ChatActivity : AppCompatActivity() {
     private lateinit var titleLayout: View
     private lateinit var tvBack: CustomTextView
     private lateinit var tvTitle: CustomTextView
+    private lateinit var tvSubTitle: CustomTextView
     private lateinit var tvMenu: CustomTextView
+    private lateinit var tvFirstIcon: CustomTextView
+    private lateinit var tvSecondIcon: CustomTextView
     private lateinit var cvFlag: CustomMaterialCardView
     private lateinit var tvFlag: CustomTextView
     private lateinit var tvUser: CustomTextView
+    private lateinit var tvTrainingMode: CustomTextView
     private lateinit var cvUserNumber: CustomMaterialCardView
     private lateinit var tvUserNumber: CustomTextView
     private lateinit var rlUser: RelativeLayout
@@ -121,7 +125,10 @@ open class ChatActivity : AppCompatActivity() {
         titleLayout = findViewById(R.id.title_layout)
         tvBack = titleLayout.findViewById(R.id.tv_back)
         tvTitle = titleLayout.findViewById(R.id.tv_title)
+        tvSubTitle = titleLayout.findViewById(R.id.tv_sub_title)
         tvMenu = titleLayout.findViewById(R.id.tv_menu)
+        tvFirstIcon = titleLayout.findViewById(R.id.tv_first_icon)
+        tvSecondIcon = titleLayout.findViewById(R.id.tv_second_icon)
         etRoundedRect = findViewById(R.id.et_rounded_rect)
         etSquareRect = findViewById(R.id.et_square_rect)
         etSemiRoundedRect = findViewById(R.id.et_semi_rounded_rect)
@@ -158,6 +165,7 @@ open class ChatActivity : AppCompatActivity() {
         cvUserNumber = findViewById(R.id.cv_user_number)
         tvUserNumber = findViewById(R.id.tv_user_number)
         rlTop = findViewById(R.id.rl_top)
+        tvTrainingMode = findViewById(R.id.tv_training_mode)
 
         sendButtonImageView = ivSquareRectSend
         flashButtonImageView = ivSemiRoundedRectFlash
@@ -204,9 +212,11 @@ open class ChatActivity : AppCompatActivity() {
                 themeJsonObject?.optString("common_font_color")
             )
 
-            titleLayout.setBackgroundColor(getParsedColorValue(themeModel.secondaryColor!!))
-            tvTitle.setTextColor(getParsedColorValue(themeModel.primaryColor!!))
+            titleLayout.setBackgroundColor(getParsedColorValue(themeModel.primaryColor!!))
+            tvTitle.setTextColor(getParsedColorValue(themeModel.secondaryColor!!))
+            tvSubTitle.setTextColor(ContextCompat.getColor(context,R.color.gray))
             tvTitle.setCustomFont("${jsonObject?.optString("font_family")}.ttf")
+            tvSubTitle.setCustomFont("${jsonObject?.optString("font_family")}.ttf")
             jsonObject?.optJSONObject("font_size")?.optString("title_header")?.let {
                 Utils.getFontSizeInSSP(
                     it
@@ -218,11 +228,26 @@ open class ChatActivity : AppCompatActivity() {
                 )
             }
 
+            jsonObject?.optJSONObject("font_size")?.optString("common")?.let {
+                Utils.getFontSizeInSSP(
+                    it
+                )
+            }?.let {
+                Utils.setTextSizeInSSP(
+                    tvSubTitle,
+                    it
+                )
+            }
+
             cvFlag.setCardBackgroundColor(getParsedColorValue(themeModel.primaryColor))
             tvUser.setTextColor(getParsedColorValue(themeModel.primaryColor))
 
-            tvBack.setTextColor(getParsedColorValue(themeModel.primaryColor))
-            tvMenu.setTextColor(getParsedColorValue(themeModel.primaryColor))
+            tvBack.setTextColor(getParsedColorValue(themeModel.secondaryColor))
+            tvMenu.setTextColor(getParsedColorValue(themeModel.secondaryColor))
+            tvFirstIcon.setTextColor(getParsedColorValue(themeModel.secondaryColor))
+            tvSecondIcon.setTextColor(getParsedColorValue(themeModel.secondaryColor))
+            tvTrainingMode.setTextColor(getParsedColorValue(themeModel.primaryColor))
+            tvTrainingMode.setBackgroundColor(ContextCompat.getColor(context,R.color.pink))
 
             val chatObject = jsonObject?.optJSONObject("chat")
 
@@ -735,6 +760,90 @@ open class ChatActivity : AppCompatActivity() {
         }
 
         /**
+         * Returns SubTitle of Chat Screen
+         */
+        fun getSubTitle(): String {
+            return tvSubTitle.text.toString()
+        }
+
+        /**
+         * Returns Visibility of Menu icon in toolbar of Chat Screen
+         */
+        fun getTopMenuIconVisibility(): Int {
+            return tvMenu.visibility
+        }
+
+        /**
+         * Returns Visibility of First icon in toolbar of Chat Screen
+         */
+        fun getFirstIconVisibility(): Int {
+            return tvFirstIcon.visibility
+        }
+
+        /**
+         * Returns First icon in toolbar of Chat Screen
+         */
+        fun getFirstIcon(): String {
+            return tvFirstIcon.text.toString()
+        }
+
+        /**
+         * Returns Visibility of Second icon in toolbar of Chat Screen
+         */
+        fun getSecondIconVisibility(): Int {
+            return tvSecondIcon.visibility
+        }
+
+        /**
+         * Returns Second icon in toolbar of Chat Screen
+         */
+        fun getSecondIcon(): String {
+            return tvSecondIcon.text.toString()
+        }
+
+        /**
+         * Returns Visibility of Flag icon of Chat Screen
+         */
+        fun getFlagIconVisibility(): Int {
+            return cvFlag.visibility
+        }
+
+        /**
+         * Returns Visibility of User icon of Chat Screen
+         */
+        fun getUserIconVisibility(): Int {
+            return rlUser.visibility
+        }
+
+        /**
+         * Returns Visibility of Conversation Bar of Chat Screen
+         */
+        fun getConversationBarVisibility(): Int {
+            return rlConversationBar.visibility
+        }
+
+        /**
+         * Returns Visibility of Training Mode of Chat Screen
+         */
+        fun getTrainingModeVisibility(): Int {
+            return tvTrainingMode.visibility
+        }
+
+        /**
+         * Returns CustomTextView first icon in toolbar instance
+         */
+        fun getFirstIconClick(): CustomTextView {
+            return tvFirstIcon
+        }
+
+        /**
+         * Returns CustomTextView second icon in toolbar instance
+         */
+        fun getSecondIconClick(): CustomTextView {
+            return tvSecondIcon
+        }
+
+        /**
          * Returns ChatList Adapter
          */
         fun getChatListAdapter(): ChatListAdapter? {
@@ -770,7 +879,7 @@ open class ChatActivity : AppCompatActivity() {
         }
 
         /**
-         * Returns CustomEditText
+         * Returns CustomShapeableImageView
          */
         fun getSendButtonImageView(): CustomShapeableImageView {
             return sendButtonImageView
@@ -836,6 +945,98 @@ open class ChatActivity : AppCompatActivity() {
          */
         fun setTitle(title: String) {
             tvTitle.text = title
+        }
+
+        /**
+         * Set SubTitle of Chat Screen
+         * @param subTitle: String
+         */
+        fun setSubTitle(subTitle: String) {
+            tvSubTitle.text = subTitle
+        }
+
+        /**
+         * Set Visibility of Menu icon in toolbar of Chat Screen
+         * @param visibility: Int
+         */
+        fun setTopMenuIconVisibility(visibility: Int) {
+            tvMenu.visibility = visibility
+        }
+
+        /**
+         * Set Visibility of First icon in toolbar of Chat Screen
+         * @param visibility: Int
+         */
+        fun setFirstIconVisibility(visibility: Int) {
+            tvFirstIcon.visibility = visibility
+        }
+
+        /**
+         * Set First icon in toolbar of Chat Screen
+         * @param icon: String
+         */
+        fun setFirstIcon(icon: String) {
+            tvFirstIcon.text = icon
+        }
+
+        /**
+         * Set Visibility of Second icon in toolbar of Chat Screen
+         * @param visibility: Int
+         */
+        fun setSecondIconVisibility(visibility: Int) {
+            tvSecondIcon.visibility = visibility
+        }
+
+        /**
+         * Set Second icon in toolbar of Chat Screen
+         * @param icon: String
+         */
+        fun setSecondIcon(icon: String) {
+            tvSecondIcon.text = icon
+        }
+
+        /**
+         * Set Visibility of Flag icon of Chat Screen
+         * @param visibility: Int
+         */
+        fun setFlagIconVisibility(visibility: Int) {
+            cvFlag.visibility = visibility
+        }
+
+        /**
+         * Set Visibility of User icon of Chat Screen
+         * @param visibility: Int
+         */
+        fun setUserIconVisibility(visibility: Int) {
+            rlUser.visibility = visibility
+        }
+
+        /**
+         * Set Visibility of Conversation Bar of Chat Screen
+         * @param visibility: Int
+         */
+        fun setConversationBarVisibility(visibility: Int) {
+            rlConversationBar.visibility = visibility
+        }
+
+        /**
+         * Set Visibility of Rect Flash in chat conversation bar of Chat Screen
+         * @param visibility: Int
+         */
+        fun setRectFlashVisibility(visibility: Int) {
+            ivRoundedRectFlash.visibility = visibility
+            ivSquareRectFlash.visibility = visibility
+            ivSemiRoundedRectFlash.visibility = visibility
+            ivOvalRectFlash.visibility = visibility
+            ivCircleRectFlash.visibility = visibility
+        }
+
+        /**
+         * Set Visibility of Training Mode of Chat Screen
+         * @param visibility: Int
+         */
+        fun setTrainingModeVisibility(visibility: Int) {
+            tvTrainingMode.visibility = visibility
         }
 
         /**

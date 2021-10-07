@@ -14,7 +14,7 @@
         android:padding="@dimen/_5sdp"
         android:textColor="@android:color/black"
         android:text="@string/lib_icon_back_arrow"
-        android:textSize="@dimen/_12ssp"
+        android:textSize="@dimen/_10ssp"
         app:customTextViewFont="@string/lib_font_icons"
         android:layout_margin="@dimen/_5sdp"/>
 
@@ -25,7 +25,7 @@
         android:layout_marginEnd="@dimen/_10sdp"
         android:textColor="@android:color/black"
         android:text="Menu"
-        android:textSize="@dimen/_12ssp"
+        android:textSize="@dimen/_10ssp"
         app:customTextViewFont="@string/lib_Roboto_Regular" />
 
 </LinearLayout>
