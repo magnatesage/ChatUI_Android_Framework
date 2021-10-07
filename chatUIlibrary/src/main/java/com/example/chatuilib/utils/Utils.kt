@@ -425,7 +425,7 @@ internal object Utils {
     fun getJSONObject(activity: Activity): JSONObject {
         var json = ""
         try {
-            val inputStream = activity.assets.open("default.json")
+            val inputStream = activity.assets.open("lib_default.json")
             val size = inputStream.available()
             val buffer = ByteArray(size)
             inputStream.read(buffer)
