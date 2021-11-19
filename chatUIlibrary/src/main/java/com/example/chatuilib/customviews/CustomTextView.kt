@@ -51,6 +51,5 @@ class CustomTextView : AppCompatTextView {
 
     override fun setText(text: CharSequence, type: BufferType?) {
         super.setText(HtmlCompat.fromHtml(text.toString().replace("\n", "<br/>"), HtmlCompat.FROM_HTML_MODE_LEGACY).toString(), type)
-
     }
 }
